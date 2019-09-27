@@ -21,6 +21,18 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ClientApp\src\components\pages\Cart\" />
+    <Folder Include="ClientApp\src\components\pages\Catalog\" />
+    <Folder Include="ClientApp\src\components\pages\Home\" />
+    <Folder Include="ClientApp\src\components\pages\Product\" />
+    <Folder Include="ClientApp\src\components\pages\Service\" />
+    <Folder Include="ClientApp\src\components\pages\SignIn\" />
+    <Folder Include="ClientApp\src\components\pages\SignUp\" />
+    <Folder Include="ClientApp\src\components\pages\Navbar\" />
+    <Folder Include="ClientApp\src\components\pages\Footer\" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
