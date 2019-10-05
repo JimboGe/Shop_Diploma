@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Shop_Diploma.Migrations
 {
-    public partial class Create : Migration
+    public partial class start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -190,9 +190,9 @@ namespace Shop_Diploma.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    Date = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -234,13 +234,12 @@ namespace Shop_Diploma.Migrations
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Size = table.Column<string>(nullable: true),
-                    Count = table.Column<string>(nullable: true),
+                    Count = table.Column<int>(nullable: false),
                     Color = table.Column<string>(nullable: true),
                     Gender = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     CategoryId = table.Column<int>(nullable: true),
-                    BrandId = table.Column<int>(nullable: true),
-                    OrderId = table.Column<int>(nullable: true)
+                    BrandId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -257,21 +256,16 @@ namespace Shop_Diploma.Migrations
                         principalTable: "tblCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_tblProducts_tblOrder_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "tblOrder",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "tblProductImages",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Path = table.Column<string>(nullable: true),
-                    ProductId = table.Column<int>(nullable: true)
+                    ProductId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -281,7 +275,7 @@ namespace Shop_Diploma.Migrations
                         column: x => x.ProductId,
                         principalTable: "tblProducts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -347,11 +341,6 @@ namespace Shop_Diploma.Migrations
                 name: "IX_tblProducts_CategoryId",
                 table: "tblProducts",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tblProducts_OrderId",
-                table: "tblProducts",
-                column: "OrderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -375,10 +364,16 @@ namespace Shop_Diploma.Migrations
                 name: "tblInCategories");
 
             migrationBuilder.DropTable(
+                name: "tblOrder");
+
+            migrationBuilder.DropTable(
                 name: "tblProductImages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "tblProducts");
@@ -388,12 +383,6 @@ namespace Shop_Diploma.Migrations
 
             migrationBuilder.DropTable(
                 name: "tblCategories");
-
-            migrationBuilder.DropTable(
-                name: "tblOrder");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
         }
     }
 }

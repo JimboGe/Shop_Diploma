@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Shop_Diploma.DAL.Entities;
+using System.Collections.Generic;
 
 namespace Shop_Diploma.DAL
 {
@@ -17,5 +18,7 @@ namespace Shop_Diploma.DAL
         public DbSet<InCategory> CategoriesMenu { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<SizeImage> SizeImages { get; set; }
     }
 }
+

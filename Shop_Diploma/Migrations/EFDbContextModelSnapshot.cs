@@ -139,7 +139,7 @@ namespace Shop_Diploma.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tblBrand");
+                    b.ToTable("tblBrands");
                 });
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Category", b =>
@@ -249,7 +249,7 @@ namespace Shop_Diploma.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("tblOrder");
+                    b.ToTable("tblOrders");
                 });
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Product", b =>
@@ -258,13 +258,13 @@ namespace Shop_Diploma.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BrandId");
+                    b.Property<int>("BrandId");
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Color");
 
-                    b.Property<string>("Count");
+                    b.Property<int>("Count");
 
                     b.Property<string>("Description");
 
@@ -272,11 +272,11 @@ namespace Shop_Diploma.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("OrderId");
-
                     b.Property<decimal>("Price");
 
                     b.Property<string>("Size");
+
+                    b.Property<int>("SizeImageId");
 
                     b.HasKey("Id");
 
@@ -284,25 +284,41 @@ namespace Shop_Diploma.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("SizeImageId");
 
                     b.ToTable("tblProducts");
                 });
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.ProductImage", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Path");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<int>("ProductId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
                     b.ToTable("tblProductImages");
+                });
+
+            modelBuilder.Entity("Shop_Diploma.DAL.Entities.SizeImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName");
+
+                    b.Property<string>("Path");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tblSizeImages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -368,22 +384,26 @@ namespace Shop_Diploma.Migrations
                 {
                     b.HasOne("Shop_Diploma.DAL.Entities.Brand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandId");
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Shop_Diploma.DAL.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Shop_Diploma.DAL.Entities.Order")
+                    b.HasOne("Shop_Diploma.DAL.Entities.SizeImage", "SizeImage")
                         .WithMany("Products")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("SizeImageId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.ProductImage", b =>
                 {
                     b.HasOne("Shop_Diploma.DAL.Entities.Product", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

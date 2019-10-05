@@ -1,0 +1,49 @@
+.sign{
+    margin:40px 0;
+}
+.signin.box{
+    height: 100%;
+    border:1px solid rgb(218, 218, 218);
+    padding:40px;
+}
+.signin.box p{
+    margin-bottom:20px;
+}
+.signin p, .signup p{
+    color: rgb(138, 138, 138);
+    font-size:12.5px;
+}
+.signin h4{
+    margin-bottom: 20px;
+}
+.signin button, .signup button, .cart .result-price button{
+    border-radius: 5px;
+    font-size:15px;
+    margin-top:10px;
+    background: transparent;
+    border:1.5px solid black;
+    min-width:150px;
+    color:black;
+    transition-duration: 400ms;
+}
+.signin button:hover.btn.btn-dark,.signin button:active.btn.btn-dark,.signin button:focus.btn.btn-dark,
+.signup button:hover.btn.btn-dark,.signup button:active.btn.btn-dark,.signup button:focus.btn.btn-dark,
+.cart .result-price button.btn.btn-dark:hover,.cart .result-price button.btn.btn-dark:active,.cart .result-price button.btn.btn-dark:focus {
+    color:white;
+    outline: 0;
+    background: black;
+}
+.signin .form-group input, .signup .form-group input{
+    border-radius:5px;
+    font-size:12.5px;
+    border:1px solid rgb(182, 182, 182);
+    margin-top:0.5px;
+    color:rgb(112, 112, 112);
+}
+.signin .form-group input:hover, .signin .form-group input:active, .signin .form-group input:focus, 
+.signup .form-group input:hover, .signup .form-group:active,.signup .form-group input:focus{
+    border-color:black;
+}
+.signin label, .signup label{
+    font-weight: 400;
+}

@@ -1,0 +1,46 @@
+.carousel {
+    text-align: center;
+}
+
+.item img{
+    width:100%;
+    padding:0px;
+    transition-duration: 400ms;
+}
+.item img:hover{
+    transform: scale(1.009);
+}
+.item{
+    padding:10px 10px 10px 10px;
+    text-align: center;
+}
+.grid {
+    display: grid;
+    grid-template-areas: 
+        "a a a a a a a a"
+        "b b c c d d g g"
+        "e e c c h h h h";
+    margin-bottom:35px;
+  }
+.item1 {
+    grid-area: a;
+    margin-bottom:20px;
+}
+.item2 {
+    grid-area: b;
+}
+.item3 {
+    grid-area: e;
+}
+.item4 {
+    grid-area: c;
+}
+.item5 {
+    grid-area: d;
+}
+.item6 {
+    grid-area: g;
+}
+.item7 {
+    grid-area: h;
+}

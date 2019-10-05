@@ -10,8 +10,8 @@ using Shop_Diploma.DAL;
 namespace Shop_Diploma.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20190927225002_Create")]
-    partial class Create
+    [Migration("20191002130634_Tetet")]
+    partial class Tetet
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -260,21 +260,19 @@ namespace Shop_Diploma.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BrandId");
+                    b.Property<int>("BrandId");
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Color");
 
-                    b.Property<string>("Count");
+                    b.Property<int>("Count");
 
                     b.Property<string>("Description");
 
                     b.Property<string>("Gender");
 
                     b.Property<string>("Name");
-
-                    b.Property<int?>("OrderId");
 
                     b.Property<decimal>("Price");
 
@@ -286,19 +284,18 @@ namespace Shop_Diploma.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("OrderId");
-
                     b.ToTable("tblProducts");
                 });
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.ProductImage", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Path");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<int>("ProductId");
 
                     b.HasKey("Id");
 
@@ -370,22 +367,21 @@ namespace Shop_Diploma.Migrations
                 {
                     b.HasOne("Shop_Diploma.DAL.Entities.Brand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandId");
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Shop_Diploma.DAL.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
-
-                    b.HasOne("Shop_Diploma.DAL.Entities.Order")
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.ProductImage", b =>
                 {
                     b.HasOne("Shop_Diploma.DAL.Entities.Product", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

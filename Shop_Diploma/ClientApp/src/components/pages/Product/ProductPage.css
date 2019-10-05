@@ -1,0 +1,354 @@
+@keyframes show{
+    from {
+        max-height: 0px;
+      }
+      to {
+        max-height: 1000px;
+      }
+}
+@-moz-keyframes show {
+    from {
+        max-height: 0px;
+      }
+      to {
+        max-height: 1000px;
+      }
+  }
+  @-webkit-keyframes show {
+    from {
+        max-height: 0px;
+      }
+      to {
+        max-height: 1000px;
+      }
+  }
+
+.product-page{
+    margin:55px 0px;
+}
+.product-page .carousel{
+    margin:0px 0px 30px 60px;
+}
+/* -----DOT----- */
+.product-page .dot-group{
+    text-align: center;
+}
+button.dot___3c3SI.carousel__dot {
+    border:2px solid rgb(44, 44, 44);
+    border-radius: 50%;
+    height: 15px;
+    width:15px;
+    margin-left:7px;
+    outline: none;
+    background: rgb(255, 255, 255);
+}
+button.dot___3c3SI.carousel__dot.carousel__dot--selected{
+    background: rgb(44, 44, 44);
+}
+button.dot___3c3SI.carousel__dot:hover{
+    background: rgb(145, 145, 145);
+}
+div.dot-group-image{
+    position: absolute;
+    width:60px;
+    left:-130px;
+    top:0;
+}
+button.dot___3c3SI.carousel__dot.dot-image{
+    width:120px;
+    height: 120px;
+    border:none;
+    background: transparent;
+}
+button.dot___3c3SI.carousel__dot.dot-image.carousel__dot--selected,
+button.dot___3c3SI.carousel__dot.dot-image.carousel__dot:hover{
+    opacity:0.6;
+}
+
+/* ----/DOT----- */
+button.button-move{
+    position: absolute;
+    top:45%;
+    font-family: FontAwesome;
+    font-size:20px;
+    background: #f1f1f1;
+    outline: none;
+    border:none;
+    transition: color 0.4s;
+}
+button.button-move.back:hover, button.button-move.next:hover{
+    color:rgb(109, 109, 109);
+}
+button.button-move.back{
+    left:0;
+}
+button.button-move.next{
+    right:0;
+}
+button.button-move.back:after{
+    content: '\f053';
+}
+button.button-move.next:after{
+    content: '\f054';
+}
+.product-page  i.fa-star{
+    color:rgb(207, 207, 207);
+    margin-left:2px;
+    transition-duration: 400ms;
+}
+.product-page .price{
+    margin:0;
+    margin-bottom:10px;
+}
+
+.product-page .review span{
+    margin-left:15px;
+    font-size:15px;
+}
+.product-page div#size-grid-div{
+    overflow: hidden;
+    animation: .6s alternate show;
+    -moz-animation: .6s alternate show;
+    -webkit-animation: .6s alternate show;
+}
+
+.product-page .size-grid button{
+    outline: none;
+    background:transparent;
+    border:none;
+    font-size:15px;
+    font-weight: 600;
+    color:#999999;
+    padding-left:0;
+    margin:10px 0px;
+    transition-duration: 400ms;
+}
+.product-page .size-grid button:after{
+    content: "\f078";
+    font-family: FontAwesome;
+    margin-left:5px;
+    position: absolute;
+    margin-top:-2px;
+}
+.product-page .size-grid button[active='active']:after{
+    content: "\f077";
+    font-family: FontAwesome;
+}
+.product-page .size-grid button:hover{
+    color:black;
+}
+
+.product-page .size{
+    margin-bottom:15px;
+}
+.product-page .size input[type='radio']{
+    appearance: none;
+    outline: none;
+    cursor:pointer;
+    border:1px solid black;
+    margin-right:10px;
+    padding-top:6px;
+    min-width: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    max-width: 30px;
+    border-radius: 5px;
+    transition-duration: 400ms;
+    text-align: center;
+}
+.product-page .size input[type='radio']:checked,
+.product-page .size input[type='radio']:hover{
+    background: black;
+}
+.product-page .size input[type='radio']:checked:after,
+.product-page .size input[type='radio']:hover:after{
+    color:white;
+}
+.product-page .size input[type='radio']:after{
+    content: attr(value);
+    color:rgb(131, 131, 131);
+    font-size:16px;
+    text-shadow: none;
+}
+
+.product-page .counter{
+    margin-bottom:15px;
+}
+.product-page .counter .button-number{
+    float:left;
+}
+.product-page .counter .button-number button{
+    border:1px solid black;
+    width:31px;
+    height: 39px;
+    margin-top:-2px;
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+    color:rgb(151, 151, 151);
+    text-shadow: none;
+    transition:background-color 0.4s;
+}
+.product-page .counter .button-number button:first-child{
+   border-right:none;
+   border-top-right-radius: 0;
+   border-bottom-right-radius: 0;
+   
+}
+.product-page .counter .button-number button:last-child{
+    border-left:none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+ }
+.product-page .counter .button-number input[type='text']{
+    width:53px;
+    border: none;
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+    outline: none;
+    height: 39px;
+    text-align: center;
+}
+.product-page .counter .button-number button.btn.btn-default:hover{
+    background: black;
+    color:white;
+}
+.counter button.order-btn{
+    margin-left:-65px;
+    width:115%;
+    margin-top:0px;
+    background: transparent;
+    border:1px solid black;
+    font-size:18px;
+    transition-duration: 400ms;
+    color:black;
+    text-shadow: none;
+    outline: none;
+}
+
+.product-page .description p{
+    margin-top:-7px;
+    color:#999999;
+    font-size:13.5px;
+}
+.product-page .add-review>button{
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+    border:none;
+    color:#999999;
+    padding-left:0px;
+}
+.product-page .add-review>button:focus{
+    border:none;
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+}
+.product-page .add-review h3{
+    margin:10px 0 20px 0;
+}
+
+.product-page input.form-control,
+.product-page textarea.form-control{
+    border-radius: 5px;
+    border:1px solid #999999;
+    transition-duration: 400ms;
+    margin-bottom:20px;
+    outline: none;
+    box-shadow: none;
+    min-height: 35px;
+}
+.product-page .add-review input.form-control:hover,
+.product-page .add-review input.form-control:focus,
+.product-page .add-review textarea.form-control:hover,
+.product-page .add-review textarea.form-control:focus{
+    border:1px solid black;
+    color:black;
+}
+.product-page .add-review i{
+    margin-top:5px;
+    margin-bottom:20px;
+    cursor: pointer;
+}
+.product-page .add-review i:hover{
+    color:black;
+}
+.product-page #new-review{
+    overflow: hidden;
+    animation: .6s alternate show;
+    -moz-animation: .6s alternate show;
+    -webkit-animation: .6s alternate show;
+}
+.product-page #new-review button.btn.btn-default{
+    border:1px solid black;
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+    text-shadow: none;
+    transition-duration: 400ms;
+}
+.product-page #new-review button.btn.btn-default:hover,
+.product-page #new-review button.btn.btn-default:active,
+.counter button.order-btn:hover,
+.counter button.order-btn:active{
+    background: black;
+    color:white;
+    outline: none;
+    box-shadow: none;
+    text-shadow: none;
+}
+.product-page .modal{
+    position: fixed; 
+    z-index: 10;
+    padding: 25px 30% 25px 30%; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(83, 83, 83, 0.61);  
+}
+.product-page .modal .carousel{
+      width:100%;
+      height: 100%;
+  }
+.product-page .close-modal{
+    background: transparent;
+    font-size:25px;
+    color:white;
+    border:none;
+    outline: none;
+    box-shadow: none;
+    position: absolute;
+    top:0px;
+    right:-50px;
+}
+.product-page .modal button{
+    background: transparent;
+    border:none;
+    color:white;
+    font-size:25px;
+    position: absolute;
+    box-shadow: none;
+    outline: none;
+    transition: color .4s;
+}
+.product-page .modal button:hover{
+    color:black;
+}
+.product-page .modal .button-move.back{
+    top:50%;
+    left:-50px;
+}
+.product-page .modal .button-move.next{
+    top:50%;
+    right:-50px;
+}
+.product-page .modal div.carousel__dot-group.dot-group{
+    visibility: hidden;
+}
+.product-page .modal div.dot-group-image{
+    visibility: hidden;
+}
+

@@ -1,12 +1,18 @@
 import React from 'react';
-import { Container } from 'reactstrap';
-import NavMenu from './NavMenu';
+import { Grid, Row } from 'react-bootstrap';
+import  NavMenu  from './Navbar/NavMenu';
+import  Footer  from './Footer/Footer'
 
 export default props => (
-  <div>
-    <NavMenu />
-    <Container>
+  <Grid fluid>
+    <Row>
+      <NavMenu />
+    </Row>
+    <Row>
       {props.children}
-    </Container>
-  </div>
-);
+    </Row>
+    <Row>
+      <Footer/>
+    </Row>
+  </Grid>
+);  
