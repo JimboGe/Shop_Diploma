@@ -95,8 +95,22 @@ namespace Shop_Diploma.DAL
                         ProductId = products[0].Id
                     }
             };
-           
-            if (!_ctx.ProductImages.Any())
+            var review = new Review[]
+            {
+                    new Review
+                    {
+                        Name = "Sergiy",
+                        Rating = 5,
+                        Text = "TEST REVIEW",
+                        ProductId = products[0].Id,
+                        Date = DateTime.Now.ToShortDateString()
+                    }
+            };
+            if (!_ctx.Reviews.Any())
+            {
+                _ctx.Reviews.AddRange(review);
+            }
+                if (!_ctx.ProductImages.Any())
             {
                 _ctx.ProductImages.AddRange(productImages);
             }

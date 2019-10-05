@@ -55,7 +55,7 @@ div.dot-group-image{
     top:0;
 }
 button.dot___3c3SI.carousel__dot.dot-image{
-    width:120px;
+    width:100px;
     height: 120px;
     border:none;
     background: transparent;
@@ -298,8 +298,14 @@ button.button-move.next:after{
     box-shadow: none;
     text-shadow: none;
 }
-.product-page .modal{
+.product-page #modal{
+    visibility: collapse;
+    position: absolute;
+    overflow: hidden;
+}
+.product-page #modal.modal {
     position: fixed; 
+    visibility: visible;
     z-index: 10;
     padding: 25px 30% 25px 30%; 
     left: 0;
@@ -351,4 +357,34 @@ button.button-move.next:after{
 .product-page .modal div.dot-group-image{
     visibility: hidden;
 }
-
+.product-page .reviews div.fa.fa-user{
+    font-size:35px;
+    background: rgb(187, 187, 187);
+    color:white;
+    width:60px;
+    height: 60px;
+    text-align: center;
+    padding-top:10px;
+    margin-top:3px;
+}
+.product-page .reviews{
+    margin-top:15px;
+    color:rgb(109, 109, 109);
+}
+.product-page .reviews div.fa.fa-star{
+    padding-right:3px;
+}
+.product-page .reviews span{
+    font-size:15px;
+}
+.product-page .reviews>div{
+    margin:15px 0px 15px 0px;
+}
+.product-page .reviews>div div.name{
+    font-size:14px;
+    margin-bottom:5px;
+    margin-top:-2px;
+}
+.product-page .reviews>div div.text{
+    font-size:14px;
+}

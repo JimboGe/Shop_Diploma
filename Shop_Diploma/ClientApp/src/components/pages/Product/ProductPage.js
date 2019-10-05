@@ -11,11 +11,7 @@ class ProductPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            counter: 1,
-            arrImages: ['https://gard.com.ua/image/cache/catalog/shop/products/54a6416c-cbc0-11e8-ab13-ee24cb1b971f-930x1240.jpg',
-                'https://gard.com.ua/image/cache/catalog/shop/products/b917841c-ce0e-11e8-ab13-ee24cb1b971f-930x1240.jpg',
-                'https://gard.com.ua/image/cache/catalog/shop/products/54a6416b-cbc0-11e8-ab13-ee24cb1b971f-930x1240.jpg',
-                'https://gard.com.ua/image/cache/catalog/shop/products/54a6416b-cbc0-11e8-ab13-ee24cb1b971f-930x1240.jpg']
+            counter: 1
         };
     }
     componentDidMount = () => {
@@ -77,7 +73,7 @@ class ProductPage extends Component {
         }
 
     }
-    imageZoom(type, e) {
+    imageZoom(type) {
         var modal = document.getElementById('modal');
         if (type === 'show') {
             modal.setAttribute('class', 'modal');
@@ -101,38 +97,64 @@ class ProductPage extends Component {
                 e.target.setAttribute('active', '');
         }
     }
-
     render() {
-        const { products } = this.props;
-        var product = Object.assign(products);
+        var product = this.props.products;
         var sizes = "";
         if (typeof sizes === 'string') {
             sizes = product.length > 0 ? product[0].size : '';
             sizes = sizes.split(',');
         }
-        console.log(sizes);
+
+        var reviews = product.length > 0 ? product[0].reviews : '';
+        var rating = 0;
+        if (reviews.length > 0) reviews.map((value) => rating = rating + value.rating);
+        rating = rating / reviews.length;
+
         return (
             <div className='product-page container'>
                 <Row>
                     <Col lg={6}>
-                        <div id='modal' className=' '>
+                        <div>
                             <CarouselProvider
                                 naturalSlideWidth={70}
                                 naturalSlideHeight={95}
-                                totalSlides={4}>
+                                totalSlides={product.length > 0 && product[0].images.length}>
                                 <Slider>
-                                    {this.state.arrImages.map((value, index, arr) =>
-                                        <Slide key={index} index={index}><ImageWithZoom src={value} /></Slide>)}
+                                    {product.length > 0 && product[0].images.map((value, index, array) =>
+                                        <Slide key={index} index={index}><ImageWithZoom src={value.path} onClick={() => this.imageZoom("show")} /></Slide>)}
                                 </Slider>
                                 <ButtonBack className='button-move back' />
                                 <ButtonNext className='button-move next' />
                                 <button onClick={() => this.imageZoom('hide', null)} className='close-modal'><i class="fa fa-times"></i></button>
                                 <DotGroup className='dot-group' />
                                 <div className='dot-group-image'>
-                                    {this.state.arrImages.map((value, index, arr) =>
+                                    {product.length > 0 && product[0].images.map((value, index, array) =>
                                         <Dot slide={index} className='dot-image'>
                                             <Image
-                                                src={value}>
+                                                src={value.path}>
+                                            </Image>
+                                        </Dot>)}
+                                </div>
+                            </CarouselProvider>
+                        </div>
+                        <div id='modal'>
+                            <CarouselProvider
+                                naturalSlideWidth={70}
+                                naturalSlideHeight={95}
+                                totalSlides={product.length > 0 && product[0].images.length}>
+                                <Slider>
+                                    {product.length > 0 && product[0].images.map((value, index, array) =>
+                                        <Slide key={index} index={index}><ImageWithZoom src={value.path} onClick={() => this.imageZoom("show")} /></Slide>)}
+                                </Slider>
+                                <ButtonBack className='button-move back' />
+                                <ButtonNext className='button-move next' />
+                                <button onClick={() => this.imageZoom('hide', null)} className='close-modal'><i class="fa fa-times"></i></button>
+                                <DotGroup className='dot-group' />
+                                <div className='dot-group-image'>
+                                    {product.length > 0 && product[0].images.map((value, index, array) =>
+                                        <Dot slide={index} className='dot-image'>
+                                            <Image
+                                                src={value.path}>
                                             </Image>
                                         </Dot>)}
                                 </div>
@@ -144,13 +166,14 @@ class ProductPage extends Component {
                             <div><h2 className='title'>{product.length > 0 && product[0].name}</h2></div>
                             <div><h2 className='price'>{product.length > 0 && product[0].price} грн</h2></div>
                             <div className='review'>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                                {rating >= 1 ? <i style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star"></i> : <i class="fa fa-star"></i>}
+                                {rating >= 2 ? <i style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star"></i> : <i class="fa fa-star"></i>}
+                                {rating >= 3 ? <i style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star"></i> : <i class="fa fa-star"></i>}
+                                {rating >= 4 ? <i style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star"></i> : <i class="fa fa-star"></i>}
+                                {rating >= 5 ? <i style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star"></i> : <i class="fa fa-star"></i>}
                                 <span>
-                                    0 відгуків
+                                    {reviews.length <= 1 ? reviews.length + ' відгук' : ' '}
+                                    {reviews.length > 1 ? reviews.length + ' відгуків' : ' '}
                                 </span>
                             </div>
                             <div className='size-grid'>
@@ -180,11 +203,43 @@ class ProductPage extends Component {
                                 </Row>
                             </div>
                             <div className='description'>
-                                <p>{product.description}</p>
+                                <p>{product.length > 0 && product[0].description}</p>
                             </div>
                             <div className='add-review'>
-                                <Button onClick={() => this.hide_show(null, 'new-review')}>ВІДГУКІВ (0)</Button>
+                                <Button onClick={() => this.hide_show(null, 'new-review')}>ВІДГУКІВ ({reviews.length > 0 && reviews.length})</Button>
+
                                 <div className='hidden' id='new-review'>
+                                    <div className='reviews'>
+                                        <span>ВІДГУКИ КЛІЄНТІВ</span>
+                                        {reviews.length>0&&reviews.map((value)=>
+                                                    <Row>
+                                                    <Col lg={2}>
+                                                        <div className='fa fa-user' />
+                                                    </Col>
+                                                    <Col lg={7}>
+                                                        <div>
+                                                        {value.rating >= 1 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> :
+                                                         <div class="fa fa-star" style={{color:'rgb(207, 207, 207)'}}/>}
+                                                        {value.rating >= 2 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> : 
+                                                        <div class="fa fa-star" style={{color:'rgb(207, 207, 207)'}}/>}
+                                                        {value.rating >= 3 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> : 
+                                                        <div class="fa fa-star" style={{color:'rgb(207, 207, 207)'}}/>}
+                                                        {value.rating >= 4 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> : 
+                                                        <div class="fa fa-star" style={{color:'rgb(207, 207, 207)'}}/>}
+                                                        {value.rating >= 5 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> : 
+                                                        <div class="fa fa-star" style={{color:'rgb(207, 207, 207)'}} />}
+                                                        </div>
+                                                        <div className='name'>
+                                                            {value.name} {value.date}
+                                                        </div>
+                                                        <div className='text'>
+                                                            {value.text}
+                                                        </div>
+                                                    </Col>
+                                                </Row>)}
+                                        
+                                    </div>
+
                                     <h3>Написати відгук</h3>
                                     <input type="text" className="form-control" placeholder="Ваше ім'я" />
                                     <textarea className="form-control" placeholder="Ваш відгук" />

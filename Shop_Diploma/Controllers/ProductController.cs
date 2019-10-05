@@ -34,7 +34,8 @@ namespace Shop_Diploma.Controllers
                     p.Brand,
                     p.Category,
                     p.Images,
-                    p.SizeImage
+                    p.SizeImage,
+                    p.Reviews
                 }));
             if (products != null)
             {
@@ -60,7 +61,8 @@ namespace Shop_Diploma.Controllers
                     p.Brand,
                     p.Category,
                     p.Images,
-                    p.SizeImage
+                    p.SizeImage,
+                    p.Reviews
                 })).SingleOrDefault();
             if (products != null)
             {

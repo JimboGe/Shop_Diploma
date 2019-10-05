@@ -30,5 +30,6 @@ namespace Shop_Diploma.DAL.Entities
         public virtual Category Category { get; set; }
         public virtual Brand Brand { get; set; }
         public virtual ICollection<ProductImage> Images { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace Shop_Diploma.DAL
         public DbSet<Order> Orders { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<SizeImage> SizeImages { get; set; }
+        public DbSet<Review> Reviews { get; set; }
     }
 }
 
