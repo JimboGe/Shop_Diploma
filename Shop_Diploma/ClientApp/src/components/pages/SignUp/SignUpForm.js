@@ -3,6 +3,9 @@ import { Row, Col } from 'react-bootstrap';
 import './SignUp.css';
 import { Redirect } from 'react-router';
 import classnames from 'classnames';
+import { register } from "../../../actions/auth";
+import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -12,10 +15,10 @@ class SignUpForm extends Component {
             lastName: '',
             email: '',
             password: '',
-            phone: '',
+            phonenumber: '',
             region: '',
             city: '',
-            deliveryNumber: '',
+            numberDelivery: '',
             done: false,
             isLoading: false,
             errors: {
@@ -48,16 +51,16 @@ class SignUpForm extends Component {
         if (this.state.firstName === '') errors.firstName = "Ім'я повинне бути від 1 до 32 символів!"
         if (this.state.email === '') errors.email = "Некоректний адрес електронної пошти!"
         if (this.state.password === '') errors.password = "Пароль повинен бути від 4 до 20 символів!"
-        if (this.state.phone === '') errors.phone = "Некоректний телефон!"
+        if (this.state.phonenumber === '') errors.phonenumber = "Некоректний телефон!"
         if (this.state.region === '') errors.region = "Виберіть область!"
         if (this.state.city === '') errors.city = "Виберіть місто!"
-        if (this.state.deliveryNumber === '') errors.deliveryNumber = "Виберіть відділення Нової почти!"
+        if (this.state.numberDelivery === '') errors.numberDelivery = "Виберіть відділення Нової почти!"
 
         const isValid = Object.keys(errors).length === 0;
         if (isValid) {
-            const { lastName, firstName, email, password, phone, region, city, deliveryNumber } = this.state;
+            const { lastName, firstName, email, password, phonenumber, region, city, numberDelivery } = this.state;
             this.setState({ isLoading: true });
-            this.props.register({ lastName, firstName, email, password, phone, region, city, deliveryNumber })
+            this.props.register({email, password, phonenumber, region, city, numberDelivery, firstName, lastName})
                 .then(
                     () => this.setState({ done: true }),
                     (err) => {
@@ -122,11 +125,11 @@ class SignUpForm extends Component {
                                 <div className={classnames('form-group', { 'error': !!errors.password })}>
                                     <label>ТЕЛЕФОН</label>
                                     <input type="text" className="form-control" 
-                                    id="phone"
-                                    name="phone"
-                                    value={this.state.phone}
+                                    id="phonenumber"
+                                    name="phonenumber"
+                                    value={this.state.phonenumber}
                                     onChange={this.handleChange}/>
-                                    {!!errors.phone ? <span className="help-block">{errors.phone}</span> : ''}
+                                    {!!errors.phonenumber ? <span className="help-block">{errors.phonenumber}</span> : ''}
                                 </div>
                                 <div className={classnames('form-group', { 'error': !!errors.region })}>
                                     <label>ОБЛАСТЬ</label>
@@ -146,14 +149,14 @@ class SignUpForm extends Component {
                                     onChange={this.handleChange}/>
                                     {!!errors.city ? <span className="help-block">{errors.city}</span> : ''}
                                 </div>
-                                <div className={classnames('form-group', { 'error': !!errors.deliveryNumber })}>
+                                <div className={classnames('form-group', { 'error': !!errors.numberDelivery })}>
                                     <label>ВІДДІЛЕННЯ НОВОЇ ПОШТИ</label>
                                     <input type="text" className="form-control" 
-                                    id="deliveryNumber"
-                                    name="deliveryNumber"
-                                    value={this.state.deliveryNumber}
+                                    id="numberDelivery"
+                                    name="numberDelivery"
+                                    value={this.state.numberDelivery}
                                     onChange={this.handleChange}/>
-                                    {!!errors.deliveryNumber ? <span className="help-block">{errors.deliveryNumber}</span> : ''}
+                                    {!!errors.numberDelivery ? <span className="help-block">{errors.numberDelivery}</span> : ''}
                                 </div>
                                 <button type="submit" className="btn btn-dark" >Зареєструватися</button>
                             </form>
@@ -168,5 +171,9 @@ class SignUpForm extends Component {
         )
     }
 }
+SignUpForm.propTypes =
+    {
+        register: PropTypes.func.isRequired
+    }
 
-export default SignUpForm;
+export default connect(null, { register })(SignUpForm);

@@ -9,26 +9,31 @@ class NavMenu extends Component {
     this.state = {};
   }
   generic_href=(gender,e)=>{
-    var tag = e.target.parentNode.nodeName;
-    var parentNode = '';
-    if(tag == 'UL')
-    parentNode = e.target;
-    if(tag == 'A')
-    parentNode = e.target.parentNode; 
-    var href = '/catalog/' + gender + '/' + parentNode.name + '/';
-    parentNode.href = href;
+    
+    
+    // var tag = e.target.parentNode.nodeName;
+    // var parentNode = '';
+    // if(tag == 'UL')
+    // parentNode = e.target;
+    // if(tag == 'A')
+    // parentNode = e.target.parentNode; 
+    // var href = '/catalog/' + gender + '/' + parentNode.name + '/';
+    // parentNode.href = href;
+    console.log(e);
+    
   }
   dropItemMan() {
+    
     var gender = 'man';
     return (
       <div className='container dropdown' style={{ marginTop: '0px', marginLeft: '-27px' }}>
         <div className="row">
           <div className="col-sm">
             <ul className='droplist'>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='clothes'>
+              <Link to='/catalog/man/clothes' name='clothes'>
                 ОДЕЖА
-              </a>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='jeens'>
+              </Link>
+              <a href='/catalog/man/jeens'   name='jeens'>
                 <li style={{ paddingTop: '10px' }}>
                   Джинси
                 </li>

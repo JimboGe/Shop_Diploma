@@ -90,7 +90,7 @@ namespace Shop_Diploma
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "products",
+                    name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
 
