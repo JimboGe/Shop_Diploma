@@ -8,60 +8,76 @@ class NavMenu extends Component {
     super(props);
     this.state = {};
   }
+  generic_href=(gender,e)=>{
+    var tag = e.target.parentNode.nodeName;
+    var parentNode = '';
+    if(tag == 'UL')
+    parentNode = e.target;
+    if(tag == 'A')
+    parentNode = e.target.parentNode; 
+    var href = '/catalog/' + gender + '/' + parentNode.name + '/';
+    parentNode.href = href;
+  }
   dropItemMan() {
+    var gender = 'man';
     return (
       <div className='container dropdown' style={{ marginTop: '0px', marginLeft: '-27px' }}>
         <div className="row">
           <div className="col-sm">
             <ul className='droplist'>
-              <Link to='#'>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='clothes'>
                 ОДЕЖА
-              </Link>
-              <Link to='#'>
+              </a>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='jeens'>
                 <li style={{ paddingTop: '10px' }}>
                   Джинси
                 </li>
-              </Link>
-              <Link to='#'>
+              </a>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='jeens-shorts'>
                 <li>
                   Джинсові шорти
                 </li>
-              </Link>
-              <Link to='#'>
+              </a>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='t-shirts'>
                 <li>
                   Футболки
                 </li>
-              </Link>
-              <Link to='#'>
-                <li>
-                  Спорт. штани
-                </li>
-              </Link>
-              <Link to='#'>
-                <li>
-                  Спорт. кофти
-                </li>
-              </Link>
-              <Link to='#'>
-                <li>
-                  Спорт. костюми
-                </li>
-              </Link>
-              <Link to='#'>
+              </a>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='shorts'>
                 <li>
                   Шорти
                 </li>
-              </Link>
-              <Link to='#'>
+              </a>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='sport-trousers'>
                 <li>
-                  Куртки, анораки
+                  Спорт. штани
                 </li>
-              </Link>
-              <Link to='#'>
+              </a>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='sport-sweatshirts'>
                 <li>
-                  Світшоти, толстовки
+                  Спорт. кофти
                 </li>
-              </Link>
+              </a>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='sport-costumes'>
+                <li>
+                  Спорт. костюми
+                </li>
+              </a>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='jackets'>
+                <li>
+                  Куртки
+                </li>
+              </a>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='anoraki'>
+                <li>
+                  Анораки
+                </li>
+              </a>
+              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='sweatshirts'>
+                <li>
+                  Толстовки
+                </li>
+              </a>
             </ul>
           </div>
           <div className="col-sm">
@@ -358,12 +374,11 @@ class NavMenu extends Component {
             <div className='container'>
               <ul className="nav">
                 <li className="nav-item dropdownmenu">
-                  <Link className="nav-link" to="/man">Чоловіче
-                  </Link>
+                  <a className="nav-link" href="/catalog/man">Чоловіче</a>
                   {this.dropItemMan()}
                 </li>
                 <li className="nav-item dropdownmenu" >
-                  <Link className="nav-link" to="/woman">Жіноче</Link>
+                  <a className="nav-link" href="/catalog/woman">Жіноче</a>
                   {this.dropItemWoman()}
                 </li>
                 <li className="nav-item">

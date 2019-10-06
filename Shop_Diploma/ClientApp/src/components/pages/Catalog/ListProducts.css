@@ -1,5 +1,6 @@
 .list-products {
     margin: 40px;
+    margin-right:0px;
 }
 
 .list-products .products {
@@ -12,11 +13,12 @@
     
     margin-top: 20px;
     width: 200px;
+    margin-left:-13px;
     border: 1px solid #dadada;
     padding: 10px;
     position: relative;
     background: white;
-    
+    float:right;
 }
 
 .list-products .filter .title {

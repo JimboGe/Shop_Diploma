@@ -19,6 +19,9 @@ export default () => (
       <Route exact path='/account/signin' component={ SignIn }/>
       <Route exact path='/cart' component={ Cart }/>
       <Route exact path='/catalog' component={ ListProducts }/>
-      <Route exact path='/p/:id' component={ ProductPage }/>
+      <Route exact path='/catalog/:gender' component={ ListProducts }/>
+      <Route exact path='/catalog/:gender/:category' component={ ListProducts }/>
+      <Route exact path='/catalog/:gender/:category/:brand' component={ ListProducts }/>
+      <Route exact path='/catalog/:gender/:category/:brand/p/:id' component={ ProductPage }/>
   </Layout>
 );

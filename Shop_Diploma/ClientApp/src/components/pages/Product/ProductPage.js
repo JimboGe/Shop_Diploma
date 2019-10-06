@@ -122,7 +122,7 @@ class ProductPage extends Component {
                     </Col>
                     <Col lg={6}>
                         <div className='content'>
-                            <div><h2 className='title'>{product.length > 0 && product[0].name}</h2></div>
+                            <div><h2 className='title'>{product.length > 0 && product[0].name} /{product.length > 0 && product[0].brand.name}</h2></div>
                             <div><h2 className='price'>{product.length > 0 && product[0].price} грн</h2></div>
                             <div className='review'>
                                 {rating >= 1 ? <i style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star"></i> : <i class="fa fa-star"></i>}
@@ -169,7 +169,7 @@ class ProductPage extends Component {
                                 <div className='hidden' id='new-review'>
                                     <div className='reviews'>
                                         <span>ВІДГУКИ КЛІЄНТІВ</span>
-                                        <span style={{float:'right'}} onClick={this.scrollTop}>Написати відгук</span>
+                                        <span style={{float:'right',cursor:'pointer'}} onClick={this.scrollTop}>Написати відгук</span>
                                         {reviews.length>0&&reviews.map((value)=>
                                                     <Row>
                                                     <Col lg={2}>

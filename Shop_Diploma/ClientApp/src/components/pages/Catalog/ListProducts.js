@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Grid } from "react-bootstrap";
 import Product from '../../Product/Product';
 import './ListProducts.css';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
-import { getProducts } from '../../../actions/products';
+import { getProducts, getProductByGender, getProductByCategory} from '../../../actions/products';
 import { connect } from "react-redux";
 
 class ListProducts extends Component {
@@ -62,19 +62,38 @@ class ListProducts extends Component {
             return { slidervalue };
         })
     }
-    componentDidMount=()=>{
-        this.props.getProducts()
-        .then(
-            () => { },
-            (err) => { console.log("Error get data ", err); }
-        )
+    componentDidMount = () => {
+
+        var { match } = this.props;
+        var { gender, category } = match.params;
+        if (gender) {
+            this.props.getProductByGender(gender)
+                .then(
+                    () => { },
+                    (err) => { console.log("Error get data ", err); }
+                )
+        }
+        if(category){
+            this.props.getProductByCategory(category)
+            .then(
+                () => { },
+                (err) => { console.log("Error get data ", err); }
+            )
+        }
+        if(!gender&&!category) {
+            this.props.getProducts()
+                .then(
+                    () => { },
+                    (err) => { console.log("Error get data ", err); }
+                )
+        }
     }
     render() {
-        var {products} = this.props;
+        var { products } = this.props;
         return (
             <div className='list-products'>
                 <Row>
-                    <Col lg={2} >
+                    <Col xs={7} lg={2}>
                         <div id='filter' className='filter'>
                             <ul>
                                 <li className='title'>
@@ -213,11 +232,11 @@ class ListProducts extends Component {
                             </ul>
                         </div>
                     </Col>
-                    <Col lg={10}>
+                    <Col xs={8} lg={9}>
                         <div className='products'>
                             <Row>
-                                 {products.map((value, index, array) =>
-                                            <Product product={value} key={index}/>)}
+                                {products.map((value, index, array) =>
+                                    <Product product={value} key={index} />)}
                             </Row>
                         </div>
                     </Col>
@@ -231,4 +250,4 @@ const mapStateToProps = (state) => {
         products: state.products.products
     };
 }
-export default connect(mapStateToProps, { getProducts })(ListProducts);
+export default connect(mapStateToProps, { getProducts, getProductByGender, getProductByCategory })(ListProducts);
