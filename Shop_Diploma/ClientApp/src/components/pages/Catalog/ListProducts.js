@@ -71,7 +71,6 @@ class ListProducts extends Component {
     }
     render() {
         var {products} = this.props;
-        console.log(products);
         return (
             <div className='list-products'>
                 <Row>

@@ -388,3 +388,12 @@ button.button-move.next:after{
 .product-page .reviews>div div.text{
     font-size:14px;
 }
+.help-block.danger{
+    color:red;
+}
+span.help-block.danger {
+    font-size:13px;
+}
+.help-block .fa{
+    margin-right:5px;
+}

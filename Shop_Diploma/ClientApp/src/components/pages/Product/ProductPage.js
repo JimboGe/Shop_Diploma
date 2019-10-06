@@ -4,17 +4,21 @@ import { Row, Col, Button } from "react-bootstrap";
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, Dot, DotGroup, ImageWithZoom, Image } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import Product from '../../Product/Product';
+import AddReview from './AddReview';
 import { getProductById } from '../../../actions/products';
 import { connect } from "react-redux";
+import $ from 'jquery';
 
 class ProductPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            counter: 1
+            counter: 1,
+            idProduct:0
         };
     }
     componentDidMount = () => {
+        this.setState({idProduct:this.props.match.params.id});
         const id = this.props.match.params.id;
         this.props.getProductById(id)
             .then(
@@ -22,57 +26,7 @@ class ProductPage extends Component {
                 (err) => { console.log("Error get data ", err); }
             )
     }
-    choiceRatingComment(type, e) {
-        const span = document.getElementById('rating');
-        let arr = span.children;
-        let elem = '';
-        let id = 0;
-        switch (type) {
-            case 'leave': {
-                for (var i = 0; i < arr.length; i++) {
-                    if (arr[i].getAttribute('canChange') === 'true')
-                        arr[i].style.color = 'rgb(207, 207, 207)';
-                    else {
-                        arr[i].style.color = 'rgb(44, 44, 44)';
-                    }
-                }
-                break;
-            };
-            case 'hover': {
-                elem = e.target;
-                id = parseInt(elem.getAttribute('rating'), 10);
-                for (i = 0; i < arr.length; i++) {
-                    if (arr[i].getAttribute('canChange') === 'true')
-                        arr[i].style.color = 'rgb(207, 207, 207)';
-                    else {
-                        arr[i].style.color = 'rgb(207, 207, 207)';
-                    }
-                }
-                for (i = 0; i < id; i++) {
-                    arr[i].style.color = 'rgb(44, 44, 44)';
-                }
-                break;
-            }
-            case 'click': {
-                elem = e.target;
-                id = parseInt(elem.getAttribute('rating'), 10);
-                alert(id);
-                for (i = 0; i < id; i++) {
-                    arr[i].style.color = 'rgb(44, 44, 44)';
-                    arr[i].setAttribute('canChange', 'false');
-                }
-                for (i = arr.length - 1; i >= id; i--) {
-                    arr[i].setAttribute('canChange', 'true');
-                    if (arr[i].getAttribute('canChange') === 'true') {
-                        arr[i].style.color = 'rgb(207, 207, 207)';
-                    }
-                }
-                break;
-            }
-            default: break;
-        }
-
-    }
+    
     imageZoom(type) {
         var modal = document.getElementById('modal');
         if (type === 'show') {
@@ -96,6 +50,11 @@ class ProductPage extends Component {
             if (e != null)
                 e.target.setAttribute('active', '');
         }
+    }
+    scrollTop=(e)=>{
+        e.preventDefault();
+        var pos = $('#add-review-form').offset().top - 200;
+        $('html,body').animate({scrollTop: pos},1200, 'swing');
     }
     render() {
         var product = this.props.products;
@@ -206,11 +165,11 @@ class ProductPage extends Component {
                                 <p>{product.length > 0 && product[0].description}</p>
                             </div>
                             <div className='add-review'>
-                                <Button onClick={() => this.hide_show(null, 'new-review')}>ВІДГУКІВ ({reviews.length > 0 && reviews.length})</Button>
-
+                                <Button onClick={() => this.hide_show(null, 'new-review')}>ВІДГУКІВ ({reviews.length >= 0 && reviews.length})</Button>
                                 <div className='hidden' id='new-review'>
                                     <div className='reviews'>
                                         <span>ВІДГУКИ КЛІЄНТІВ</span>
+                                        <span style={{float:'right'}} onClick={this.scrollTop}>Написати відгук</span>
                                         {reviews.length>0&&reviews.map((value)=>
                                                     <Row>
                                                     <Col lg={2}>
@@ -237,32 +196,10 @@ class ProductPage extends Component {
                                                         </div>
                                                     </Col>
                                                 </Row>)}
-                                        
+                                        <AddReview idProduct={this.state.idProduct}/>
                                     </div>
 
-                                    <h3>Написати відгук</h3>
-                                    <input type="text" className="form-control" placeholder="Ваше ім'я" />
-                                    <textarea className="form-control" placeholder="Ваш відгук" />
-                                    <span>ОЦІНКА</span><br />
-                                    <span id='rating' onMouseLeave={() => this.choiceRatingComment('leave', null)}>
-                                        <i canChange='true' onMouseEnter={(e) => this.choiceRatingComment('hover', e)}
-                                            onClick={(e) => this.choiceRatingComment('click', e)}
-                                            class="fa fa-star" rating='1'></i>
-                                        <i canChange='true' onMouseEnter={(e) => this.choiceRatingComment('hover', e)}
-                                            onClick={(e) => this.choiceRatingComment('click', e)}
-                                            class="fa fa-star" rating='2'></i>
-                                        <i canChange='true' onMouseEnter={(e) => this.choiceRatingComment('hover', e)}
-                                            onClick={(e) => this.choiceRatingComment('click', e)}
-                                            class="fa fa-star" rating='3'></i>
-                                        <i canChange='true' onMouseEnter={(e) => this.choiceRatingComment('hover', e)}
-                                            onClick={(e) => this.choiceRatingComment('click', e)}
-                                            class="fa fa-star" rating='4'></i>
-                                        <i canChange='true' onMouseEnter={(e) => this.choiceRatingComment('hover', e)}
-                                            onClick={(e) => this.choiceRatingComment('click', e)}
-                                            class="fa fa-star" rating='5'></i>
-                                    </span>
-                                    <br />
-                                    <Button>ВІДПРАВИТИ ВІДГУК</Button>
+                                    
                                 </div>
                             </div>
                         </div>

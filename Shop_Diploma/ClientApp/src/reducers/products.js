@@ -1,4 +1,4 @@
-import { GET_PRODUCTS } from '../actions/types';
+import { GET_PRODUCTS, ADD_PRODUCT_REVIEW } from '../actions/types';
 
 const initialState = {
     products: []
@@ -10,7 +10,12 @@ const initialState = {
       case GET_PRODUCTS:
         return {
           products: action.products
-        }
+        };
+        case ADD_PRODUCT_REVIEW :
+          return { 
+              ...state,
+              products: [...state.products, action.products]
+          }
         default: return state;
     }
   }

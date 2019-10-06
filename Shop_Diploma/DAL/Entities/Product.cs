@@ -25,8 +25,9 @@ namespace Shop_Diploma.DAL.Entities
         [ForeignKey("SizeImage")]
         public int SizeImageId { get; set; }
 
-        //джинси, футбл, взуття
+       
         public virtual SizeImage SizeImage { get; set; }
+        //джинси, футбл, взуття
         public virtual Category Category { get; set; }
         public virtual Brand Brand { get; set; }
         public virtual ICollection<ProductImage> Images { get; set; }
