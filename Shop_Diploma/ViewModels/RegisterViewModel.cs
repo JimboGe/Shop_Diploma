@@ -20,6 +20,7 @@ namespace Shop_Diploma.ViewModels
         [Required(ErrorMessage = "Поле є обов'язковим")]
         public string Password { get; set; }
         [Required(ErrorMessage = "Поле є обов'язковим")]
+        [Phone(ErrorMessage = "Не валідний номер")]
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Поле є обов'язковим")]
         public string Region { get; set; }

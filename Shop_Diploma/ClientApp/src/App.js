@@ -11,6 +11,8 @@ import ProductPage from './components/pages/Product/ProductPage'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
+import Tet from './components/Tet';
+
 export default () => (
   <Layout>
       <Route exact path='/' component={ Home } />
@@ -18,10 +20,9 @@ export default () => (
       <Route exact path='/account/signup' component={ SignUpPage }/>
       <Route exact path='/account/signin' component={ SignIn }/>
       <Route exact path='/cart' component={ Cart }/>
-      <Route exact path='/catalog' component={ ListProducts }/>
-      <Route exact path='/catalog/:gender' component={ ListProducts }/>
-      <Route exact path='/catalog/:gender/:category' component={ ListProducts }/>
-      <Route exact path='/catalog/:gender/:category/:brand' component={ ListProducts }/>
-      <Route exact path='/catalog/:gender/:category/:brand/p/:id' component={ ProductPage }/>
+      <Route exact path='/catalog/:gender?/:category?/:brand?' component={ ListProducts }/>
+      <Route exact path='/catalog/:gender/:category/:brand/p:id' component={ ProductPage }/>
+      <Route exact path='/tet' component={ Tet }/>
   </Layout>
 );
+

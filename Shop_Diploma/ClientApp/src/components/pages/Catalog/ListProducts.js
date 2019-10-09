@@ -5,7 +5,7 @@ import Product from '../../Product/Product';
 import './ListProducts.css';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
-import { getProducts, getProductByGender, getProductByCategory} from '../../../actions/products';
+import { getProducts, getProductsByParams} from '../../../actions/products';
 import { connect } from "react-redux";
 
 class ListProducts extends Component {
@@ -63,30 +63,23 @@ class ListProducts extends Component {
         })
     }
     componentDidMount = () => {
-
-        var { match } = this.props;
-        var { gender, category } = match.params;
-        if (gender) {
-            this.props.getProductByGender(gender)
-                .then(
-                    () => { },
-                    (err) => { console.log("Error get data ", err); }
-                )
-        }
-        if(category){
-            this.props.getProductByCategory(category)
+        let gender = (new URLSearchParams(this.props.location.search).get("gender"))!=null?(new URLSearchParams(this.props.location.search).get("gender")): "";
+        let brand =  (new URLSearchParams(this.props.location.search).get("brand"))!=null?(new URLSearchParams(this.props.location.search).get("brand")):"";
+        let category = (new URLSearchParams(this.props.location.search).get("category"))!=null?(new URLSearchParams(this.props.location.search).get("category")):"";
+            this.props.getProductsByParams(gender,category,brand)
             .then(
                 () => { },
                 (err) => { console.log("Error get data ", err); }
             )
-        }
-        if(!gender&&!category) {
+        
+        if(gender==null && brand==null && category==null){
             this.props.getProducts()
                 .then(
                     () => { },
                     (err) => { console.log("Error get data ", err); }
                 )
         }
+        
     }
     render() {
         var { products } = this.props;
@@ -250,4 +243,4 @@ const mapStateToProps = (state) => {
         products: state.products.products
     };
 }
-export default connect(mapStateToProps, { getProducts, getProductByGender, getProductByCategory })(ListProducts);
+export default connect(mapStateToProps, { getProducts,getProductsByParams })(ListProducts);
