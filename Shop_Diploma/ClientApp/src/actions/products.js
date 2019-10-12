@@ -62,6 +62,7 @@ export function newProduct(product) {
   return dispatch => {
     return axios.post('api/products/newproduct', product)
       .then(res => {
+        console.log(res.data);
         dispatch(addProduct(res.data));
       })
   }

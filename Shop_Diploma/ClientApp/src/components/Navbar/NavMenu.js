@@ -1,29 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, FormControl, Row, Col } from "react-bootstrap";
+import { Form, FormControl, Row, Col, Navbar,  NavItem } from "react-bootstrap";
 import './NavMenu.css';
+import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
+import { logout } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
 class NavMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-  generic_href=(gender,e)=>{
-    
-    
-    // var tag = e.target.parentNode.nodeName;
-    // var parentNode = '';
-    // if(tag == 'UL')
-    // parentNode = e.target;
-    // if(tag == 'A')
-    // parentNode = e.target.parentNode; 
-    // var href = '/catalog/' + gender + '/' + parentNode.name + '/';
-    // parentNode.href = href;
-    console.log(e);
-    
-  }
+
+
   dropItemMan() {
-    
+
     var gender = 'man';
     return (
       <div className='container dropdown' style={{ marginTop: '0px', marginLeft: '-27px' }}>
@@ -33,52 +25,52 @@ class NavMenu extends Component {
               <Link to='/catalog/man/clothes' name='clothes'>
                 ОДЕЖА
               </Link>
-              <a href='/catalog/man/jeens'   name='jeens'>
+              <a href='/catalog/man/jeens' name='jeens'>
                 <li style={{ paddingTop: '10px' }}>
                   Джинси
                 </li>
               </a>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='jeens-shorts'>
+              <a href='#' onClick={(e) => this.generic_href(gender, e)} name='jeens-shorts'>
                 <li>
                   Джинсові шорти
                 </li>
               </a>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='t-shirts'>
+              <a href='#' onClick={(e) => this.generic_href(gender, e)} name='t-shirts'>
                 <li>
                   Футболки
                 </li>
               </a>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='shorts'>
+              <a href='#' onClick={(e) => this.generic_href(gender, e)} name='shorts'>
                 <li>
                   Шорти
                 </li>
               </a>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='sport-trousers'>
+              <a href='#' onClick={(e) => this.generic_href(gender, e)} name='sport-trousers'>
                 <li>
                   Спорт. штани
                 </li>
               </a>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='sport-sweatshirts'>
+              <a href='#' onClick={(e) => this.generic_href(gender, e)} name='sport-sweatshirts'>
                 <li>
                   Спорт. кофти
                 </li>
               </a>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='sport-costumes'>
+              <a href='#' onClick={(e) => this.generic_href(gender, e)} name='sport-costumes'>
                 <li>
                   Спорт. костюми
                 </li>
               </a>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='jackets'>
+              <a href='#' onClick={(e) => this.generic_href(gender, e)} name='jackets'>
                 <li>
                   Куртки
                 </li>
               </a>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='anoraki'>
+              <a href='#' onClick={(e) => this.generic_href(gender, e)} name='anoraki'>
                 <li>
                   Анораки
                 </li>
               </a>
-              <a href='#' onClick={(e)=>this.generic_href(gender,e)}  name='sweatshirts'>
+              <a href='#' onClick={(e) => this.generic_href(gender, e)} name='sweatshirts'>
                 <li>
                   Толстовки
                 </li>
@@ -310,13 +302,32 @@ class NavMenu extends Component {
     );
   }
   render() {
+    
+    const { isAuthenticated, user } = this.props.auth;
+    const userLinks = (
+      <Navbar.Collapse className="justify-content-end">
+        <Navbar.Text>
+          {user.name} &nbsp;
+          Logout
+        </Navbar.Text>
+      </Navbar.Collapse>
+    );
+    const guestLinks = (
+      <Link to={"/login"}>
+        <NavItem>
+          Login
+            </NavItem>
+      </Link>
+    );
+    console.log("USER-----", this.props.auth.user);
     return (
       <div style={{ width: '100%' }}>
+    {isAuthenticated?userLinks:guestLinks}
         <div style={{ borderRadius: '0' }} className='navbar top'>
           <nav>
             <div className='container'>
               <div style={{ float: 'left', marginTop: '3.5px' }}>
-                <i className="fa fa-phone" style={{ fontSize: '25px'}}></i>
+                <i className="fa fa-phone" style={{ fontSize: '25px' }}></i>
               </div>
               <div style={{ float: 'left', marginLeft: '0.7%', marginTop: '3.5px' }} className='phone'>
                 <a href="tel:+3800967872781" className='phone'>+38 (096) 787 27 81</a>
@@ -345,7 +356,7 @@ class NavMenu extends Component {
                 <Col md={8}>
                   <div className='logo'>
                     <Link to='/'>
-                      <img src='/img/logo.png' height='70px' alt='logo'/>
+                      <img src='/img/logo.png' height='70px' alt='logo' />
                       <div>
                         <span>
                           The clothest, that live your life.
@@ -365,7 +376,7 @@ class NavMenu extends Component {
                       <span>УВІЙТИ</span>
                     </Link>
                     <Link to='/account/signup'>
-                    <i className="fa fa-user-plus"></i>
+                      <i className="fa fa-user-plus"></i>
                       <span>ЗАРЕЄСТРУВАТИСЯ</span>
                     </Link>
                   </div>
@@ -406,4 +417,13 @@ class NavMenu extends Component {
     );
   }
 }
-export default NavMenu;
+NavMenu.propTypes =
+  {
+    logout: PropTypes.func.isRequired
+  }
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  };
+}
+export default withRouter(connect(mapStateToProps, { logout })(NavMenu));

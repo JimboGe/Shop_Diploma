@@ -8,10 +8,17 @@ namespace Shop_Diploma.DAL.Entities
     [Table("tblOrders")]
     public class Order
     {
+        public Order()
+        {
+            OrdersProducts = new List<OrdersProducts>();
+        }
         [Key]
         public int Id { get; set; }
-        public decimal Price { get; set; }
+        public decimal FullPrice { get; set; }
         public DateTime Date { get; set; }
+        [ForeignKey ("User")]
+        public string UserId { get; set; }
         public virtual DbUser User { get; set; }
+        public ICollection<OrdersProducts> OrdersProducts { get; set; }
     }
 }

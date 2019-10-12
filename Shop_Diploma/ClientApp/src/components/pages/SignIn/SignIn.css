@@ -47,3 +47,6 @@
 .signin label, .signup label{
     font-weight: 400;
 }
+.signin .alert{
+    margin-top:25px;
+}

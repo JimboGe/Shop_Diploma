@@ -1,38 +1,54 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shop_Diploma.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shop_Diploma.DAL
 {
+    [ValidateAntiForgeryToken]
+
     public class SeederDB
     {
-
-        public static void SeedAdmin(UserManager<DbUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+        public async static Task CreateRoles(IServiceProvider service, List<string> roles)
         {
-            var email = "admin@gmail.com";
-            var roleName = "Admin";
-            var password = "Qwerty1-";
-            var count = userManager.Users.Count();
-
-            var user = new DbUser
+            var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = service.GetRequiredService<UserManager<DbUser>>();
+            var email = String.Empty;
+            var password = String.Empty;
+            DbUser user;
+            bool roleCheck;
+            for (int i = 0; i < roles.Count; i++)
             {
-                Email = email,
-                UserName = email
-            };
-            var result = userManager.CreateAsync(user, password).Result;
-
-            var roleresult = roleManager.CreateAsync(new IdentityRole
-            {
-                Name = roleName
-            }).Result;
-            
-            result = userManager.AddToRoleAsync(user, roleName).Result;
+                if (roles[i] == "Admin")
+                {
+                    email = "admin@gmail.com";
+                    password = "Qwerty1-";
+                }
+                if (roles[i] == "Buyer")
+                {
+                    email = "buyer@gmail.com";
+                    password = "Qwerty1-";
+                }
+                IdentityResult roleResult;
+                roleCheck = await roleManager.RoleExistsAsync(roles[i]);
+                if (!roleCheck)
+                {
+                    roleResult = await roleManager.CreateAsync(new IdentityRole(roles[i]));
+                    user = new DbUser
+                    {
+                        Email = email,
+                        UserName = email
+                    };
+                    await userManager.CreateAsync(user, password);
+                    await userManager.AddToRoleAsync(user, roles[i]);
+                }
+            }
         }
         public static void Seed(EFDbContext _ctx)
         {
@@ -67,32 +83,50 @@ namespace Shop_Diploma.DAL
                 _ctx.SizeImages.Add(weatherSizeImage);
                 _ctx.SizeImages.Add(shoesSizeImage);
             }
-            //string []sizes = {"S","M","L","XL","XXL"};
-            var products = new Product[]
+
+            var product = new Product
             {
-                    new Product{
-                    Name="tet",
-                    Description = "edees",
-                    BrandId = brand.Id,
-                    CategoryId = category.Id,
-                    SizeImageId = shoesSizeImage.Id,
-                    Color = "yellow",
-                    Count = 10,
-                    Price = 1000,
-                    Gender = "Female",
-                    Size = "S,M,L,XL"
-                    }
+                Name = "tet",
+                Description = "edees",
+                BrandId = brand.Id,
+                CategoryId = category.Id,
+                SizeImageId = shoesSizeImage.Id,
+                Color = "yellow",
+                Count = 10,
+                Price = 1000,
+                Gender = "Female",
+                Size = "S,M,L,XL"
             };
+
             if (!_ctx.Products.Any())
             {
-                _ctx.Products.AddRange(products);
+                _ctx.Products.Add(product);
             }
+            
+            var order = new Order
+            {
+                Date = DateTime.Now,
+                FullPrice = 125
+            };
+            
+            var order1 = new Order
+            {
+                Date = DateTime.Now,
+                FullPrice = 12235
+            };
+            if (!_ctx.Orders.Any())
+            {
+                _ctx.Orders.AddRange(new List<Order> { order, order1 });
+            }
+            _ctx.SaveChanges();
+            product.OrdersProducts.Add(new OrdersProducts { OrderId = order.Id, ProductId = product.Id });
+            product.OrdersProducts.Add(new OrdersProducts { OrderId = order1.Id, ProductId = product.Id });
             var productImages = new ProductImage[]
             {
                     new ProductImage
                     {
                         Path = "/png/first.png",
-                        ProductId = products[0].Id
+                        ProductId = product.Id
                     }
             };
             var review = new Review[]
@@ -102,7 +136,7 @@ namespace Shop_Diploma.DAL
                         Name = "Sergiy",
                         Rating = 5,
                         Text = "TEST REVIEW",
-                        ProductId = products[0].Id,
+                        ProductId = product.Id,
                         Date = DateTime.Now.ToShortDateString()
                     }
             };
@@ -110,20 +144,13 @@ namespace Shop_Diploma.DAL
             {
                 _ctx.Reviews.AddRange(review);
             }
-                if (!_ctx.ProductImages.Any())
+            if (!_ctx.ProductImages.Any())
             {
                 _ctx.ProductImages.AddRange(productImages);
             }
             _ctx.SaveChanges();
+            
         }
-        public static void SeedDataByAS(IServiceProvider services)
-        {
-            using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var manager = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
-                var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                SeedAdmin(manager, managerRole);
-            }
-        }
+
     }
 }

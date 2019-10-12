@@ -10,8 +10,8 @@ using Shop_Diploma.DAL;
 namespace Shop_Diploma.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20191005122418_review update")]
-    partial class reviewupdate
+    [Migration("20191012131707_update product user order tables")]
+    partial class updateproductuserordertables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -224,7 +224,7 @@ namespace Shop_Diploma.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Name");
 
@@ -237,19 +237,17 @@ namespace Shop_Diploma.Migrations
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Order", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("UserId");
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<decimal>("Price");
+                    b.Property<decimal>("FullPrice");
 
-                    b.Property<string>("UserId");
+                    b.Property<int?>("ProductId");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("tblOrders");
                 });
@@ -313,6 +311,8 @@ namespace Shop_Diploma.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Date");
 
                     b.Property<string>("Name");
 
@@ -393,14 +393,20 @@ namespace Shop_Diploma.Migrations
                 {
                     b.HasOne("Shop_Diploma.DAL.Entities.Category", "Category")
                         .WithMany("InCategories")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Order", b =>
                 {
+                    b.HasOne("Shop_Diploma.DAL.Entities.Product", "Product")
+                        .WithMany("Orders")
+                        .HasForeignKey("ProductId");
+
                     b.HasOne("Shop_Diploma.DAL.Entities.DbUser", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Product", b =>

@@ -10,7 +10,7 @@ namespace Shop_Diploma.DAL
         public EFDbContext(DbContextOptions<EFDbContext> options)
             : base(options)
         {
-
+           
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
@@ -20,6 +20,25 @@ namespace Shop_Diploma.DAL
         public DbSet<Brand> Brands { get; set; }
         public DbSet<SizeImage> SizeImages { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<OrdersProducts>()
+             .HasKey(t => new { t.OrderId, t.ProductId });
+
+            modelBuilder.Entity<OrdersProducts>()
+                .HasOne(sc => sc.Order)
+                .WithMany(s => s.OrdersProducts)
+                .HasForeignKey(sc => sc.OrderId);
+
+            modelBuilder.Entity<OrdersProducts>()
+                .HasOne(sc => sc.Product)
+                .WithMany(c => c.OrdersProducts)
+                .HasForeignKey(sc => sc.ProductId);
+        }
+        
     }
+   
 }
 

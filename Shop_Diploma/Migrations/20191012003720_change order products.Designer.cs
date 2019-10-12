@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shop_Diploma.DAL;
 
 namespace Shop_Diploma.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    partial class EFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191012003720_change order products")]
+    partial class changeorderproducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,19 +254,6 @@ namespace Shop_Diploma.Migrations
                     b.ToTable("tblOrders");
                 });
 
-            modelBuilder.Entity("Shop_Diploma.DAL.Entities.OrdersProducts", b =>
-                {
-                    b.Property<int>("OrderId");
-
-                    b.Property<int>("ProductId");
-
-                    b.HasKey("OrderId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("tblOrdersProducts");
-                });
-
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -285,6 +274,8 @@ namespace Shop_Diploma.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("OrderId");
+
                     b.Property<decimal>("Price");
 
                     b.Property<string>("Size");
@@ -296,6 +287,8 @@ namespace Shop_Diploma.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("SizeImageId");
 
@@ -417,19 +410,6 @@ namespace Shop_Diploma.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Shop_Diploma.DAL.Entities.OrdersProducts", b =>
-                {
-                    b.HasOne("Shop_Diploma.DAL.Entities.Order", "Order")
-                        .WithMany("OrdersProducts")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Shop_Diploma.DAL.Entities.Product", "Product")
-                        .WithMany("OrdersProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Product", b =>
                 {
                     b.HasOne("Shop_Diploma.DAL.Entities.Brand", "Brand")
@@ -441,6 +421,10 @@ namespace Shop_Diploma.Migrations
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Shop_Diploma.DAL.Entities.Order")
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("Shop_Diploma.DAL.Entities.SizeImage", "SizeImage")
                         .WithMany("Products")

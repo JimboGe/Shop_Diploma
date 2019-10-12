@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Shop_Diploma.DAL;
 using Shop_Diploma.DAL.Entities;
+using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Shop_Diploma
@@ -55,6 +57,7 @@ namespace Shop_Diploma
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Password settings.
+                options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredUniqueChars = 0;
             });
@@ -69,7 +72,7 @@ namespace Shop_Diploma
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, EFDbContext ctx)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, EFDbContext ctx, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -103,7 +106,7 @@ namespace Shop_Diploma
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-            SeederDB.SeedDataByAS(app.ApplicationServices);
+            SeederDB.CreateRoles(services, new List<string> { "Admin", "Buyer" }).Wait();
             SeederDB.Seed(ctx);
         }
     }

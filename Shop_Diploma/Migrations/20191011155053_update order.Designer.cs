@@ -10,8 +10,8 @@ using Shop_Diploma.DAL;
 namespace Shop_Diploma.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20191004231825_UPDATE")]
-    partial class UPDATE
+    [Migration("20191011155053_update order")]
+    partial class updateorder
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -224,7 +224,7 @@ namespace Shop_Diploma.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Name");
 
@@ -243,7 +243,7 @@ namespace Shop_Diploma.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<decimal>("Price");
+                    b.Property<decimal>("FullPrice");
 
                     b.Property<string>("UserId");
 
@@ -274,6 +274,8 @@ namespace Shop_Diploma.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("OrderId");
+
                     b.Property<decimal>("Price");
 
                     b.Property<string>("Size");
@@ -285,6 +287,8 @@ namespace Shop_Diploma.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("SizeImageId");
 
@@ -306,6 +310,29 @@ namespace Shop_Diploma.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("tblProductImages");
+                });
+
+            modelBuilder.Entity("Shop_Diploma.DAL.Entities.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Date");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<int>("Rating");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("tblReviews");
                 });
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.SizeImage", b =>
@@ -372,7 +399,8 @@ namespace Shop_Diploma.Migrations
                 {
                     b.HasOne("Shop_Diploma.DAL.Entities.Category", "Category")
                         .WithMany("InCategories")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Order", b =>
@@ -394,6 +422,11 @@ namespace Shop_Diploma.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Shop_Diploma.DAL.Entities.Order", "Order")
+                        .WithMany("products")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Shop_Diploma.DAL.Entities.SizeImage", "SizeImage")
                         .WithMany("Products")
                         .HasForeignKey("SizeImageId")
@@ -404,6 +437,14 @@ namespace Shop_Diploma.Migrations
                 {
                     b.HasOne("Shop_Diploma.DAL.Entities.Product", "Product")
                         .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Shop_Diploma.DAL.Entities.Review", b =>
+                {
+                    b.HasOne("Shop_Diploma.DAL.Entities.Product", "Product")
+                        .WithMany("Reviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

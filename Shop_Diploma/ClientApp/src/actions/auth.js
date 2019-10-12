@@ -4,30 +4,38 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 import jwt from 'jsonwebtoken';
 
 export function setCurrentUser(user) {
-    return {
-      type: SET_CURRENT_USER,
-      user
-    };
-  }
-  export function logout() {
-    return dispatch => {
-        localStorage.removeItem('jwtToken');
-        setAuthorizationToken(false);
-        dispatch(setCurrentUser({}));
-    };
+  return {
+    type: SET_CURRENT_USER,
+    user
+  };
 }
-const loginByJWT = (token, dispatch) => {
-    var user=jwt.decode(token);
-    localStorage.setItem('jwtToken', token);
-    setAuthorizationToken(token);
-    dispatch(setCurrentUser(user));
-  } 
+export function logout() {
+  return dispatch => {
+    localStorage.removeItem('jwtToken');
+    setAuthorizationToken(false);
+    dispatch(setCurrentUser({}));
+  };
+}
 export function register(data) {
   return dispatch => {
     return axios.post('api/Account/Register', data)
-        .then(res => {
-            //console.log("data register", res);
-            loginByJWT(res.data, dispatch);
-        });
+      .then(res => {
+        console.log("data register", res);
+        loginByJWT(res.data, dispatch);
+      });
+  }
 }
+export function login(data) {
+  return dispatch => {
+      return axios.post('api/Account/Login', data)
+      .then(res => {
+        loginByJWT(res.data, dispatch);
+      });
+  }
+}
+const loginByJWT = (token, dispatch) => {
+  var user = jwt.decode(token);
+  localStorage.setItem('jwtToken', token);
+  setAuthorizationToken(token);
+  dispatch(setCurrentUser(user));
 }

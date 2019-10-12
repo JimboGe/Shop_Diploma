@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col } from "react-bootstrap";
 import './SignIn.css'
+import SignInForm from './SignInForm';
 
 class SignIn extends Component {
     constructor(props) {
@@ -13,21 +14,7 @@ class SignIn extends Component {
             <div className='container sign'>
                 <Row>
                     <Col xs={12} md={6}>
-                        <div className='signin box'>
-                            <h4>УВІЙТИ</h4>
-                            <p>
-                                Увійти в Особистий Кабінет
-                            </p>
-                            <div className="form-group">
-                                <label>E-MAIL</label>
-                                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-Mail" />
-                            </div>
-                            <div className="form-group">
-                                <label>ПАРОЛЬ</label>
-                                <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Пароль" />
-                            </div>
-                            <button type="submit" className="btn btn-dark">УВІЙТИ</button>
-                        </div>
+                        <SignInForm/>
                     </Col>
                     <Col xs={12} md={6}>
                         <div className='signin box'>

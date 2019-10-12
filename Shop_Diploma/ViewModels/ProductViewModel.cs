@@ -9,6 +9,8 @@ namespace Shop_Diploma.ViewModels
     public class ProductViewModel
     {
         [Required(ErrorMessage = "Поле є обов'язковим")]
+        public int Id { get; set; }
+        [Required(ErrorMessage = "Поле є обов'язковим")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Поле є обов'язковим")]
         public string Description { get; set; }
@@ -27,13 +29,17 @@ namespace Shop_Diploma.ViewModels
         [Required(ErrorMessage = "Поле є обов'язковим")]
         public int BrandId { get; set; }
         [Required(ErrorMessage = "Поле є обов'язковим")]
+        public int OrderId { get; set; }
+        [Required(ErrorMessage = "Поле є обов'язковим")]
         public int SizeImageId { get; set; }
+        [Required(ErrorMessage = "Поле є обов'язковим")]
+        public ICollection<ImagesProductViewModel> Images { get; set; }
     }
     public class ImagesProductViewModel
     {
         [Required(ErrorMessage = "Поле є обов'язковим")]
-        public string Path { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "Поле є обов'язковим")]
-        public string ProductId { get; set; }
+        public string Path { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shop_Diploma.DAL;
 using Shop_Diploma.DAL.Entities;
 using Shop_Diploma.Helpers;
@@ -22,9 +23,9 @@ namespace Shop_Diploma.Controllers
             this._ctx = _ctx;
         }
         [HttpGet]
-        public IActionResult All()
+        public async Task<ActionResult<IEnumerable<Product>>>All()
         {
-            var products = _ctx.Products.GroupBy(x => x.Id)
+            var products = await _ctx.Products.GroupBy(x => x.Id)
                 .Select(x => x.Take(1).Select(p => new
                 {
                     p.Id,
@@ -40,7 +41,7 @@ namespace Shop_Diploma.Controllers
                     p.Images,
                     p.SizeImage,
                     p.Reviews
-                }));
+                })).ToListAsync();
             if (products != null)
             {
                 return Ok(products);
@@ -49,9 +50,9 @@ namespace Shop_Diploma.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult ById(int id)
-        {
-            var products = _ctx.Products.Where(x => x.Id == id).GroupBy(x => x.Id)
+        public async Task<ActionResult<IEnumerable<Product>>> ById(int id)
+        {             
+            var products =  await _ctx.Products.Where(x=>x.Id == id).GroupBy(x => x.Id)
                 .Select(x => x.Take(1).Select(p => new
                 {
                     p.Id,
@@ -67,7 +68,7 @@ namespace Shop_Diploma.Controllers
                     p.Images,
                     p.SizeImage,
                     p.Reviews
-                })).SingleOrDefault();
+                })).SingleOrDefaultAsync();
             if (products != null)
             {
                 return Ok(products);
@@ -76,9 +77,9 @@ namespace Shop_Diploma.Controllers
         }
 
         [HttpGet]
-        public IActionResult ByParams(string gender, string category, string brand)
+        public async Task<ActionResult<IEnumerable<Product>>> ByParams(string gender, string category, string brand)
         {
-            var products = _ctx.Products.Select(x => new
+            var products = await _ctx.Products.Select(x => new
             {
                 x.Id,
                 x.Name,
@@ -93,7 +94,7 @@ namespace Shop_Diploma.Controllers
                 x.Images,
                 x.SizeImage,
                 x.Reviews
-            }).ToList();
+            }).ToListAsync();
             if (!String.IsNullOrEmpty(gender)) products = products.Where(x => x.Gender == gender).ToList();
             if (!String.IsNullOrEmpty(brand)) products = products.Where(x => x.Brand.Name == brand).ToList();
             if (!String.IsNullOrEmpty(category)) products = products.Where(x => x.Category.Name == category).ToList();
@@ -105,19 +106,24 @@ namespace Shop_Diploma.Controllers
         }
 
         [HttpPost]
-        public IActionResult NewReview([FromBody] Review review)
+        public async Task<ActionResult<IEnumerable<Product>>> NewReview([FromBody] Review review)
         {
             var newReview = new Review { Name = review.Name, Rating = review.Rating, Text = review.Text, ProductId = review.ProductId, Date = DateTime.Now.ToShortDateString() };
-            _ctx.Reviews.Add(newReview);
-            _ctx.SaveChanges();
+            await _ctx.Reviews.AddAsync(newReview);
+            await _ctx.SaveChangesAsync();
             return Ok(review);
-
         }
 
         //[Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult NewProduct([FromBody] ProductViewModel product)
+        public async Task<ActionResult<IEnumerable<Product>>> NewProduct([FromBody] ProductViewModel product)
         {
+            var newImages = new List<ProductImage>();
+            for (int i = 0; i < product.Images.Count; i++)
+            {
+                newImages.Add(new ProductImage { Path = product.Images.ToList()[i].Path });
+            }
+            await _ctx.ProductImages.AddRangeAsync(newImages);
             var newProduct = new Product
             {
                 Name = product.Name,
@@ -129,24 +135,32 @@ namespace Shop_Diploma.Controllers
                 Gender = product.Gender,
                 Size = product.Size,
                 Price = product.Price,
-                SizeImageId = product.SizeImageId
+                SizeImageId = product.SizeImageId,
+                Images = newImages
             };
-            _ctx.Products.Add(newProduct);
-            _ctx.SaveChanges();
+            await _ctx.Products.AddAsync(newProduct);
+            await _ctx.SaveChangesAsync();
             return Ok(newProduct);
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public IActionResult DeleteProduct([FromRoute]int id)
+        public async Task<ActionResult<IEnumerable<Product>>> DeleteProduct([FromRoute]int id)
         {
-            var product = _ctx.Products.Where(x => x.Id == id).SingleOrDefault();
-            //var imagesFromProduct = _ctx.ProductImages.Where(x => x.ProductId == id).ToList();
-            //for (int i = 0; i < imagesFromProduct.Count; i++)
-            //{
-            //    _ctx.ProductImages.Remove(imagesFromProduct[i]);
-            //}
+            var product = await _ctx.Products.FindAsync(id);
+            var imagesFromProduct = await _ctx.ProductImages.Where(x => x.ProductId == id).ToListAsync();
+            var reviews = await _ctx.Reviews.Where(x => x.ProductId == id).ToListAsync();
+            for (int i = 0; i < imagesFromProduct.Count; i++)
+            {
+                 _ctx.ProductImages.Remove(imagesFromProduct[i]);
+            }
+            for (int i = 0; i < reviews.Count; i++)
+            {
+                _ctx.Reviews.Remove(reviews[i]);
+            }
             _ctx.Products.Remove(product);
-            _ctx.SaveChanges();
-            return Ok("Delete");
+            await _ctx.SaveChangesAsync();
+            return Ok("Deleted product by Id: " + product.Id);
 
         }
 
