@@ -49,9 +49,10 @@ export function addProductReview(review) {
       })
   }
 }
-export function getProductsByParams(gender,category,brand) {
+export function getProductsByParams(gender, category, brand, color, size, minprice, maxprice) {
   return dispatch => {
-    return axios.get('api/products/ByParams?gender=' + gender + '&category=' + category + '&brand=' + brand)
+    return axios.get('api/products/ByParams?gender=' + gender + '&category=' + category + '&brand=' + brand
+      + '&color=' + color + '&size=' + size + '&minprice=' + minprice + '&maxprice=' + maxprice)
       .then(res => {
         dispatch(setProducts(res.data));
       })
@@ -69,7 +70,7 @@ export function newProduct(product) {
 }
 export function deleteProduct(id) {
   return dispatch => {
-    return axios.delete('api/products/DeleteProduct/'+ id)
+    return axios.delete('api/products/DeleteProduct/' + id)
       .then(res => {
         dispatch(delProduct(res.data));
       })

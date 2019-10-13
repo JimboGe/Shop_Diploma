@@ -95,7 +95,7 @@ namespace Shop_Diploma.DAL
                 Count = 10,
                 Price = 1000,
                 Gender = "Female",
-                Size = "S,M,L,XL"
+                Size =  "S,M,L,XL" 
             };
 
             if (!_ctx.Products.Any())

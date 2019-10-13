@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Shop_Diploma.DAL;
 using Shop_Diploma.DAL.Entities;
 using Shop_Diploma.Helpers;
@@ -77,8 +78,10 @@ namespace Shop_Diploma.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> ByParams(string gender, string category, string brand)
+        public async Task<ActionResult<IEnumerable<Product>>> ByParams(string gender, string category, string brand, string color, string size, string minprice, string maxprice)
         {
+            decimal result;
+            decimal result1;
             var products = await _ctx.Products.Select(x => new
             {
                 x.Id,
@@ -98,6 +101,16 @@ namespace Shop_Diploma.Controllers
             if (!String.IsNullOrEmpty(gender)) products = products.Where(x => x.Gender == gender).ToList();
             if (!String.IsNullOrEmpty(brand)) products = products.Where(x => x.Brand.Name == brand).ToList();
             if (!String.IsNullOrEmpty(category)) products = products.Where(x => x.Category.Name == category).ToList();
+            if (!String.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
+            if (!String.IsNullOrEmpty(size))
+            {
+                return Ok(products);
+            }
+           
+            if (Decimal.TryParse(minprice, out result) && Decimal.TryParse(maxprice, out result1))
+            {
+                products = products.Where(x => x.Price >= result && x.Price <= result1).ToList();
+            }
             if (products != null)
             {
                 return Ok(products.GroupBy(x => x.Id));

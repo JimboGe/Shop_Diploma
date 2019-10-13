@@ -20,7 +20,7 @@ export default () => (
       <Route exact path='/account/signup' component={ SignUpPage }/>
       <Route exact path='/account/signin' component={ SignIn }/>
       <Route exact path='/cart' component={ Cart }/>
-      <Route exact path='/catalog/:gender?/:category?/:brand?' component={ ListProducts }/>
+      <Route exact path='/catalog/search/:gender?/:category?/:brand?/:size?/:color?/:price?' component={ ListProducts }/>
       <Route exact path='/catalog/:gender/:category/:brand/p:id' component={ ProductPage }/>
       <Route exact path='/tet' component={ Tet }/>
   </Layout>
