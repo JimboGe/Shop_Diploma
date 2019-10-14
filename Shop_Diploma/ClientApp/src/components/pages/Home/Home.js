@@ -32,32 +32,38 @@ class Home extends Component {
           </div>
           <div className='item item2'>
             <div>
-               <Link to='/catalog/search?category=backpacks'><img src='/img/home/backpacks.jpg' alt='backpacks'/></Link>
+               <Link to='/catalog/search?category=backpacks' ><img src='/img/home/backpacks.jpg' alt='backpacks'/>
+               <div className='tt-description'><span>СУМКИ | РЮКЗАКИ</span></div></Link>
             </div>
           </div>
           <div className='item item3'>
             <div>
-              <Link to='/catalog/search?category=accessories'><img src='/img/home/accessories.jpg' alt='accessories'/></Link>
+              <Link to='/catalog/search?category=accessories'><img src='/img/home/accessories.jpg' alt='accessories'/>
+              <div className='tt-description'><span>АКСЕСУАРИ</span></div></Link>
             </div>
           </div>
           <div className='item item4'>
             <div>
-              <Link to='/catalog/search?category=outerwear'><img src='/img/home/outerwear.jpg' alt='outerwear'/></Link>
+              <Link to='/catalog/search?category=outerwear'><img src='/img/home/outerwear.jpg' alt='outerwear'/>
+              <div className='tt-description'><span>ВЕРХНІЙ ОДЯГ</span></div></Link>
             </div>
           </div>
           <div className='item item5'>
             <div>
-              <Link to='/catalog/search?category=trousers'><img src='/img/home/shtani.jpg' alt='trousers'/></Link>
+              <Link to='/catalog/search?category=trousers'><img src='/img/home/trousers.jpg' alt='trousers'/>
+              <div className='tt-description'><span>ШТАНИ</span></div></Link>
             </div>
           </div>
           <div className='item item6'>
             <div>
-              <Link to='/catalog/search?category=hudi'><img src='/img/home/hudi.jpg' alt='hudi'/></Link>
+              <Link to='/catalog/search?category=hudi'><img src='/img/home/hudi.jpg' alt='hudi'/>
+              <div className='tt-description'><span>ХУДІ | СВІТШОТИ</span></div></Link>
             </div>
           </div>
           <div className='item item7'>
             <div>
-              <Link to='/catalog/search?category=shoes'><img src='/img/home/shoes.jpg' alt='shoes' /></Link>
+              <Link to='/catalog/search?category=shoes'><img src='/img/home/shoes.jpg' alt='shoes' />
+              <div className='tt-description'><span>ВЗУТТЯ</span></div></Link>
             </div>
           </div>
         </div>
