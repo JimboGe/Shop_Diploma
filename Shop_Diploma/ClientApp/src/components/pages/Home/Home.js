@@ -18,7 +18,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className='grid'>
+        <div className='grid' id='grid'>
           <div className='item1'>
             <div className='carousel big' >
                <CarouselProvider naturalSlideWidth={70} naturalSlideHeight={20} totalSlides={4}>
@@ -32,32 +32,32 @@ class Home extends Component {
           </div>
           <div className='item item2'>
             <div>
-              <Link to='#'><img src='/img/home/backpacks.jpg' alt='backpacks'/></Link>
+               <Link to='/catalog/search?category=backpacks'><img src='/img/home/backpacks.jpg' alt='backpacks'/></Link>
             </div>
           </div>
           <div className='item item3'>
             <div>
-              <Link to='#'><img src='/img/home/accessories.jpg' alt='accessories'/></Link>
+              <Link to='/catalog/search?category=accessories'><img src='/img/home/accessories.jpg' alt='accessories'/></Link>
             </div>
           </div>
           <div className='item item4'>
             <div>
-              <Link to='#'><img src='/img/home/outerwear.jpg' alt='outerwear'/></Link>
+              <Link to='/catalog/search?category=outerwear'><img src='/img/home/outerwear.jpg' alt='outerwear'/></Link>
             </div>
           </div>
           <div className='item item5'>
             <div>
-              <Link to='#'><img src='/img/home/shtani.jpg' alt='trousers'/></Link>
+              <Link to='/catalog/search?category=trousers'><img src='/img/home/shtani.jpg' alt='trousers'/></Link>
             </div>
           </div>
           <div className='item item6'>
             <div>
-              <Link to='#'><img src='/img/home/hudi.jpg' alt='hudi'/></Link>
+              <Link to='/catalog/search?category=hudi'><img src='/img/home/hudi.jpg' alt='hudi'/></Link>
             </div>
           </div>
           <div className='item item7'>
             <div>
-              <Link to='/cart'><img src='/img/home/shoes.jpg' alt='shoes' /></Link>
+              <Link to='/catalog/search?category=shoes'><img src='/img/home/shoes.jpg' alt='shoes' /></Link>
             </div>
           </div>
         </div>
