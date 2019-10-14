@@ -22,7 +22,7 @@ namespace Shop_Diploma.Controllers
         public ProductsController(EFDbContext _ctx)
         {
             this._ctx = _ctx;
-        }
+        }   
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>>All()
         {
@@ -104,7 +104,7 @@ namespace Shop_Diploma.Controllers
             if (!String.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
             if (!String.IsNullOrEmpty(size))
             {
-                return Ok(products);
+                products = products.Where(x => x.Size == size).ToList();
             }
            
             if (Decimal.TryParse(minprice, out result) && Decimal.TryParse(maxprice, out result1))
