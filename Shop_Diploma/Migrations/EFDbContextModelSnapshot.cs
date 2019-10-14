@@ -131,12 +131,13 @@ namespace Shop_Diploma.Migrations
 
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Brand", b =>
                 {
-                    b.Property<string>("Name")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Id");
+                    b.Property<string>("Name");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
 
                     b.ToTable("tblBrands");
                 });
@@ -215,23 +216,6 @@ namespace Shop_Diploma.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Shop_Diploma.DAL.Entities.InCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryId");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("tblInCategories");
-                });
-
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -270,7 +254,7 @@ namespace Shop_Diploma.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BrandName");
+                    b.Property<int>("BrandId");
 
                     b.Property<int>("CategoryId");
 
@@ -292,7 +276,7 @@ namespace Shop_Diploma.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandName");
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
 
@@ -401,14 +385,6 @@ namespace Shop_Diploma.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Shop_Diploma.DAL.Entities.InCategory", b =>
-                {
-                    b.HasOne("Shop_Diploma.DAL.Entities.Category", "Category")
-                        .WithMany("InCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Shop_Diploma.DAL.Entities.Order", b =>
                 {
                     b.HasOne("Shop_Diploma.DAL.Entities.DbUser", "User")
@@ -433,10 +409,11 @@ namespace Shop_Diploma.Migrations
                 {
                     b.HasOne("Shop_Diploma.DAL.Entities.Brand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandName");
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Shop_Diploma.DAL.Entities.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 

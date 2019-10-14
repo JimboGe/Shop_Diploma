@@ -304,25 +304,10 @@ class NavMenu extends Component {
   render() {
     
     const { isAuthenticated, user } = this.props.auth;
-    const userLinks = (
-      <Navbar.Collapse className="justify-content-end">
-        <Navbar.Text>
-          {user.name} &nbsp;
-          Logout
-        </Navbar.Text>
-      </Navbar.Collapse>
-    );
-    const guestLinks = (
-      <Link to={"/login"}>
-        <NavItem>
-          Login
-            </NavItem>
-      </Link>
-    );
+   
     console.log("USER-----", this.props.auth.user);
     return (
       <div style={{ width: '100%' }}>
-    {isAuthenticated?userLinks:guestLinks}
         <div style={{ borderRadius: '0' }} className='navbar top'>
           <nav>
             <div className='container'>
