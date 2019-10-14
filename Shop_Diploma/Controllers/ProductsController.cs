@@ -113,7 +113,7 @@ namespace Shop_Diploma.Controllers
             if (!String.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
             if (!String.IsNullOrEmpty(size))
             {
-                products = products.Where(x => x.Size == size).ToList();
+                return Ok(products);
             }
 
             if (Decimal.TryParse(minprice, out result) && Decimal.TryParse(maxprice, out result1))
