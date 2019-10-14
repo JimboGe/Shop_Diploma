@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_PRODUCTS, ADD_PRODUCT_REVIEW, NEW_PRODUCT, DELETE_PRODUCT } from './types';
+import { GET_PRODUCTS, ADD_PRODUCT_REVIEW, NEW_PRODUCT, DELETE_PRODUCT, EDIT_PRODUCT } from './types';
 
 export function setProducts(data) {
   return {
@@ -23,6 +23,12 @@ export function delProduct(id) {
   return {
     type: DELETE_PRODUCT,
     products: id
+  };
+}
+export function putProduct(product) {
+  return {
+    type: EDIT_PRODUCT,
+    products: product
   };
 }
 export function getProducts() {
@@ -73,6 +79,14 @@ export function deleteProduct(id) {
     return axios.delete('api/products/DeleteProduct/' + id)
       .then(res => {
         dispatch(delProduct(res.data));
+      })
+  }
+}
+export function editProduct(id, product) {
+  return dispatch => {
+    return axios.put('api/products/EditProduct/' + id, product)
+      .then(res => {
+        dispatch(putProduct(res.data));
       })
   }
 }

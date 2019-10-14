@@ -27,7 +27,7 @@ class ScrollUp extends Component {
     render() {
         return (
             <div className='ScrollUp hide' id='scrollUp' name='scrollUp'>
-                <Button onClick = {this.click}><i class="fa fa-angle-up"></i></Button>
+                <Button onClick = {this.click}><i className="fa fa-angle-up"></i></Button>
             </div>
         );
     }

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Configuration;
 using Shop_Diploma.DAL;
 using Shop_Diploma.DAL.Entities;
 using Shop_Diploma.Helpers;
@@ -19,12 +23,17 @@ namespace Shop_Diploma.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly EFDbContext _ctx;
-        public ProductsController(EFDbContext _ctx)
+        private readonly IConfiguration _configuration;
+        private readonly IHostingEnvironment _env;
+
+        public ProductsController(EFDbContext _ctx, IConfiguration _configuration, IHostingEnvironment _env)
         {
             this._ctx = _ctx;
-        }   
+            this._configuration = _configuration;
+            this._env = _env;
+        }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>>All()
+        public async Task<ActionResult<IEnumerable<Product>>> All()
         {
             var products = await _ctx.Products.GroupBy(x => x.Id)
                 .Select(x => x.Take(1).Select(p => new
@@ -52,8 +61,8 @@ namespace Shop_Diploma.Controllers
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<IEnumerable<Product>>> ById(int id)
-        {             
-            var products =  await _ctx.Products.Where(x=>x.Id == id).GroupBy(x => x.Id)
+        {
+            var products = await _ctx.Products.Where(x => x.Id == id).GroupBy(x => x.Id)
                 .Select(x => x.Take(1).Select(p => new
                 {
                     p.Id,
@@ -106,7 +115,7 @@ namespace Shop_Diploma.Controllers
             {
                 products = products.Where(x => x.Size == size).ToList();
             }
-           
+
             if (Decimal.TryParse(minprice, out result) && Decimal.TryParse(maxprice, out result1))
             {
                 products = products.Where(x => x.Price >= result && x.Price <= result1).ToList();
@@ -156,7 +165,7 @@ namespace Shop_Diploma.Controllers
             return Ok(newProduct);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<IEnumerable<Product>>> DeleteProduct([FromRoute]int id)
         {
@@ -165,7 +174,7 @@ namespace Shop_Diploma.Controllers
             var reviews = await _ctx.Reviews.Where(x => x.ProductId == id).ToListAsync();
             for (int i = 0; i < imagesFromProduct.Count; i++)
             {
-                 _ctx.ProductImages.Remove(imagesFromProduct[i]);
+                _ctx.ProductImages.Remove(imagesFromProduct[i]);
             }
             for (int i = 0; i < reviews.Count; i++)
             {
@@ -177,6 +186,77 @@ namespace Shop_Diploma.Controllers
 
         }
 
+        //[Authorize(Roles = "Admin")]
+        [HttpPut("{id}")]
+        public async Task<ActionResult<IEnumerable<Product>>> EditProduct([FromRoute]int id, [FromBody] Product product)
+        {
+            if (id != product.Id)
+            {
+                return BadRequest("ERROR");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                try
+                {
+                    _ctx.Update(product);
+                    await _ctx.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddFile(IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                string path = _configuration.GetValue<string>("ImagePath") + uploadedFile.FileName;
+                using (var fileStream = new FileStream(_env.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                    var file = new ProductImage {Path = path + uploadedFile.FileName };
+                    _ctx.ProductImages.Add(file);
+                    _ctx.SaveChanges();
+                }
+            }
+            return Ok("SUCCES");
+            //    string imageName = Guid.NewGuid().ToString() + ".jpg";
+            //string base64 = model.Path;
+            //if (base64.Contains(","))
+            //{
+            //    base64 = base64.Split(',')[1];
+            //}
+            //var bmp = base64.FromBase64StringToImage();
+            //string fileDestDir = _env.ContentRootPath;
+            //fileDestDir = Path.Combine(fileDestDir, _configuration.GetValue<string>("ImagePath"));
+
+            //string fileSave = Path.Combine(fileDestDir, imageName);
+            //bmp.Save(fileSave);
+
+            //return Ok("добавленно");
+        }
+
+        private bool ProductExists(int id)
+        {
+            var product = _ctx.Products.Where(x => x.Id == id).SingleOrDefault();
+            bool res = product!=null?true:false;
+            return res;
+        }
     }
 
 }
