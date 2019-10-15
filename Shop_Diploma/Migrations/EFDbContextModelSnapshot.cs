@@ -413,7 +413,7 @@ namespace Shop_Diploma.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Shop_Diploma.DAL.Entities.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 

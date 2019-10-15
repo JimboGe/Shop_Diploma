@@ -11,6 +11,5 @@ namespace Shop_Diploma.DAL.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<InCategory> InCategories { get; set; }
     }
 }
