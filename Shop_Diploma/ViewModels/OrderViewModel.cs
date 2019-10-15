@@ -15,7 +15,9 @@ namespace Shop_Diploma.ViewModels
         public DateTime Date { get; set; }
         [Required(ErrorMessage = "Поле є обов'язковим")]
         public string UserId { get; set; }
-        
+        [Required(ErrorMessage = "Поле є обов'язковим")]
+        public Product Product { get; set; }
+
     }
    
 }

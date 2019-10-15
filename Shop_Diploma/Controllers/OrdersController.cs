@@ -53,9 +53,10 @@ namespace Shop_Diploma.Controllers
                 Date = DateTime.Now,
                 FullPrice = order.FullPrice
             };
+            newOrder.OrdersProducts.Add(new OrdersProducts { OrderId = newOrder.Id, ProductId = order.Product.Id});
             await _ctx.Orders.AddAsync(newOrder);
             await _ctx.SaveChangesAsync();
-            return Ok("Ваш заказ успішно прийнятий!");
+            return Ok("Ваш заказ успішно прийнято!");
         }
 
         // PUT: api/Orders/5
