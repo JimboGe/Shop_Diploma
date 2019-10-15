@@ -60,8 +60,8 @@ class ProductPage extends Component {
         var product = this.props.products;
         var sizes = "";
         if (typeof sizes === 'string') {
-            sizes = product.length > 0 ? product[0].size : '';
-            sizes = sizes.split(',');
+            sizes = product.length > 0? product[0].size : '';
+            sizes = sizes?sizes.split(','):'';
         }
 
         var reviews = product.length > 0 ? product[0].reviews : '';
@@ -143,7 +143,9 @@ class ProductPage extends Component {
                                 </div>
                             </div>
                             <div className='size'>
-                                <span>Розмір:</span><br />
+                                {sizes!=''?
+                                <span>Розмір:</span>:''}
+                                 <br />
                                 {typeof sizes === 'object' &&
                                     sizes.map((value) => <input type='radio' value={value} name='size' id={`size-${value}`} />)}
                             </div>
