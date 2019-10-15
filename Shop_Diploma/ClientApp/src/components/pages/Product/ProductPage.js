@@ -207,11 +207,6 @@ class ProductPage extends Component {
                         </div>
                     </Col>
                 </Row>
-                <Row>
-                    <h4 style={{ marginLeft: '75px', marginTop: '70px' }}>РЕКОМЕНДОВАННІ ТОВАРИ</h4>
-                    <div style={{ margin: '0px 80px 0px 80px' }} >
-                    </div>
-                </Row>
             </div>
         );
     }

@@ -291,13 +291,7 @@ class ListProducts extends Component {
                                 <h4>Бренд</h4>
                                 <ul className='list-inline-item'>
                                     <li>
-                                        <a className='brand' href='#'><span>Nike</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='brand' href='#'><span>Puma</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='brand' href='#'><span>Adidas</span></a>
+                                        <a className='brand' href='#'><span>Gard</span></a>
                                     </li>
                                 </ul>
                             </div>

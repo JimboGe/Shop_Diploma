@@ -38,8 +38,8 @@ class Home extends Component {
           </div>
           <div className='item item3'>
             <div>
-              <Link to='/catalog/search?category=accessories'><img src='/img/home/accessories.jpg' alt='accessories'/>
-              <div className='tt-description'><span>АКСЕСУАРИ</span></div></Link>
+              <Link to='/catalog/search?category=baseball-caps'><img src='/img/home/accessories.jpg' alt='accessories'/>
+              <div className='tt-description'><span>КЕПКИ</span></div></Link>
             </div>
           </div>
           <div className='item item4'>
@@ -50,7 +50,7 @@ class Home extends Component {
           </div>
           <div className='item item5'>
             <div>
-              <Link to='/catalog/search?category=trousers'><img src='/img/home/trousers.jpg' alt='trousers'/>
+              <Link to='/catalog/search?category=sport-trousers'><img src='/img/home/trousers.jpg' alt='trousers'/>
               <div className='tt-description'><span>ШТАНИ</span></div></Link>
             </div>
           </div>
