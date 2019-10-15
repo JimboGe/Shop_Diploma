@@ -27,6 +27,7 @@ class SignUpForm extends Component {
         };
     }
     createOptions(name,data){
+        try{
         data.map((value)=>{
             var options = document.createElement('option');
             var select = document.getElementById(name);
@@ -34,6 +35,8 @@ class SignUpForm extends Component {
             select.appendChild(options);
             console.log(value);
         })
+    }
+    catch(ex){console.log(ex)}
     }
     getRegions(){
         var settings = {
