@@ -1,12 +1,19 @@
 import React from 'react';
-import { Container } from 'reactstrap';
-import NavMenu from './NavMenu';
-
+import { Grid, Row } from 'react-bootstrap';
+import  NavMenu  from './Navbar/NavMenu';
+import  Footer  from './Footer/Footer';
+import  ScrollUp  from './ScrollUp';
 export default props => (
-  <div>
-    <NavMenu />
-    <Container>
+  <Grid fluid>
+    <Row>
+      <NavMenu />
+    </Row>
+    <Row>
       {props.children}
-    </Container>
-  </div>
-);
+      <ScrollUp/>
+    </Row>
+    <Row>
+      <Footer/>
+    </Row>
+  </Grid>
+);  

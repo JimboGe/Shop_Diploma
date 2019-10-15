@@ -1,0 +1,132 @@
+.list-products {
+    margin: 40px;
+    margin-right:25px;
+    margin-left:25px;
+    width:99%;
+}
+.list-products .products {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.list-products .filter{
+    border-radius: 4px;
+    padding: 0;
+}   
+.list-products .filter-categories{
+    border:1px solid #dddddd;
+}
+.list-products .filter div.title{
+    text-align: center;
+    background:#f3f3f3;
+    height: 42px;
+    border-bottom: 1px solid #dddddd;
+    padding:12px 15px;
+}
+.list-products .filter div.title h4{
+    margin:0;
+    color:black;
+}
+.list-products ul {
+    list-style:none;
+}
+.list-products .filter-container{
+    padding:20px 24px;
+}
+.list-products .filter-container a{
+    color:#919191;
+    text-decoration: none;
+    font-size:15px;
+}
+.list-products .filter-container li{
+    margin-bottom:3px;
+}
+.list-products .filter-container li.checked a{
+    color:black;
+}
+.list-products .filter-container li .fa{
+    color:#919191;
+    margin: 0 .25em 0 0;
+}
+.list-products .filter-container li.checked a::before{
+    content:'\f00c';
+    font-family: 'fontawesome';
+    color:black;
+    line-height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    margin: 0 .25em 0 0;
+    position: absolute;
+    font-size:13px;
+    margin-left: 1px;
+}
+.list-products .filter li.has-submenu ul{
+    margin:5px 0px 0px -5px;
+}
+.list-products .filter li.has-submenu ul a{
+    font-size:13.5px;
+}
+.list-products .filters{
+    margin-top:25px;
+    border:1px solid #dddddd;
+}
+.list-products .filters .filter-container h4{
+    font-size:15px;
+    margin-bottom: 20px;
+}
+.list-products .filters .filter-container a{
+    border:1.8px solid #919191;
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+    font-size:16px;
+    display: inline-block;
+    vertical-align: middle;
+    transition-duration: 400ms;
+    -moz-transition-duration: 400ms;
+    -o-transition-duration: 400ms;
+}
+.list-products .filters .filter-container .color{
+    opacity: 0.6;
+}
+.list-products .filters .filter-container .color:hover{
+    opacity: 1;
+}
+.list-products .filters .filter-container .color span{
+    display:none;
+}
+.list-products .list-inline-item{
+    margin:0;
+    padding: 0;
+    text-align: center;
+}
+.list-products .list-inline-item li{
+    display: inline-block;
+    margin:0 10px 10px;
+}
+.list-products .filters .filter-container .size
+{
+    padding-top:6px;
+    height: 2.5em;
+    width: 2.5em;
+}
+.list-products .filters .filter-container .brand
+{
+    padding-top:10px;
+    height: 3em;
+    width: 3em;
+}
+.list-products .filters .filter-container .size span
+{
+    font-size:13.5px;
+}
+.list-products .filters .filter-container .brand span{
+    font-size:14px;
+}
+.list-products .filters .filter-container .size:hover,
+.list-products .filters .filter-container .brand:hover{
+    color:#2b2b2b;
+    border-color:#2b2b2b;
+}

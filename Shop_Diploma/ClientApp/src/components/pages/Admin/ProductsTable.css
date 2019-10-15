@@ -1,0 +1,12 @@
+.products-table{
+    font-size: 16px;
+    margin-top:25px;
+   
+}
+.products-table .hr span, .products-table .tr span{
+    margin-right: 50px;
+}
+.products-table .hr, .products-table .tr:not(:last-child) {
+    border-bottom:1px solid black;
+    
+}

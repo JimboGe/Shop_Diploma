@@ -12,6 +12,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="System.Drawing.Common" Version="4.6.0" />
+    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +22,19 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\components\pages\Cart\" />
+    <Folder Include="ClientApp\src\components\pages\Catalog\" />
+    <Folder Include="ClientApp\src\components\pages\Home\" />
+    <Folder Include="ClientApp\src\components\pages\Product\" />
+    <Folder Include="ClientApp\src\components\pages\Service\" />
+    <Folder Include="ClientApp\src\components\pages\SignIn\" />
+    <Folder Include="ClientApp\src\components\pages\SignUp\" />
+    <Folder Include="ClientApp\src\components\pages\Navbar\" />
+    <Folder Include="ClientApp\src\components\pages\Footer\" />
+    <Folder Include="Content\Products\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

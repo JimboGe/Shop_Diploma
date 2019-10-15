@@ -1,0 +1,86 @@
+.carousel {
+    text-align: center;
+}
+
+.item img{
+    width:100%;
+    padding:0px;
+    transition-duration: 400ms;
+}
+
+.item{
+    padding:10px;
+    text-align: center;
+    position: relative;
+    align-items: center;
+    vertical-align: middle;
+}
+.grid {
+    display: grid;
+    grid-template-areas: 
+        "a a a a a a a a"
+        "b b c c d d g g"
+        "e e c c h h h h";
+    margin-bottom:35px;
+  }
+.item1 {
+    grid-area: a;
+    margin-bottom:20px;
+}
+.item2 {
+    grid-area: b;
+    
+}
+.item3 {
+    grid-area: e;
+}
+.item4 {
+    grid-area: c;
+}
+.item5 {
+    grid-area: d;
+}
+.item6 {
+    grid-area: g;
+}
+.item7 {
+    grid-area: h;
+}
+.item .tt-description{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height: 100%;
+    padding:20px;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items:center;
+}
+.item .tt-description span{
+    color:white;
+    border-radius: 5px;
+    font-size: 19px;
+    letter-spacing: 0.03em;
+    text-shadow: 2px 2px 2px #000;
+    background: rgba(150, 147, 147, 0.66);
+    padding:2px 7px;
+}
+.item .tt-description span::after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width .5s;
+    margin-top:-4px;
+}
+.item a:hover .tt-description span::after{
+    width:100%;
+    
+}

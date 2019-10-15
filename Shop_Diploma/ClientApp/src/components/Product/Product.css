@@ -1,0 +1,79 @@
+.product{
+    margin:20px 0;
+}
+.product .description{
+    padding-top:15px;
+    background: white;
+    position: relative;
+    z-index: 2;
+    height: 95px;
+    overflow: hidden;
+    transition-duration: 400ms;
+}
+.product .image-box img{
+    width:100%;
+    z-index: 3;
+    transition-duration: 500ms;
+}
+.product .description div a{
+    text-decoration: none;
+    color:black;
+    transition-duration: 500ms;
+    font-size:16px;
+}
+.product .description div a:hover{
+    color:rgb(119, 119, 119);
+}
+.product .description div a.btn{
+    color:white;
+    background: #4b4848;
+}
+.product .description div a.btn:hover{
+    color:white;
+    background: #0a0a0a;
+}
+.product .description .price{
+    font-size:18px;
+}
+.product .description .size{
+    font-size:12px;
+}
+.product .description div{
+    margin-top:5px;
+}
+.product .description .size span{
+    padding-left:5px;
+    color:rgb(128, 126, 126);
+}
+.product button.btn.btn-dark {
+    color:black;
+    border:2px solid black;
+    border-radius: 6px;
+    background:white;
+    transition-duration: 400ms;
+
+}
+.product button.btn.btn-dark:hover{
+    background: black;
+    color:white;
+}
+ .product .image-box .second-image{
+    position: relative;
+    top:0px;
+    left:0px;
+    padding-right:15px;
+    padding-left:15px;
+    width:100%;
+}
+.product .image-box .second-image{
+    position: absolute;
+    opacity:0; 
+    z-index: 1;
+}
+.product:hover .second-image{
+    opacity:1;
+}
+.product:hover .description{
+    height: 135px;
+    margin-top:-44px;
+}
