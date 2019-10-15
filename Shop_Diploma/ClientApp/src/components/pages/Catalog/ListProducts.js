@@ -42,26 +42,6 @@ class ListProducts extends Component {
             te.setAttribute('class', 'hidden');
         }
     }
-    changePrice() {
-        const min = document.getElementById('min').value;
-        const max = document.getElementById('max').value;
-        this.setState(prevState => {
-            let slidervalue = Object.assign({}, prevState.slidervalue);
-            if (isNaN(min)) {
-                slidervalue.min = 0;
-            }
-            else {
-                slidervalue.min = parseInt(min, 10);
-            }
-            if (isNaN(max)) {
-                slidervalue.max = 0;
-            }
-            else {
-                slidervalue.max = parseInt(max, 10);
-            }
-            return { slidervalue };
-        })
-    }
     addHrefsForLinks(linkName) {
         var elements = document.getElementsByClassName(linkName);
         var innerHTML = '';
@@ -108,7 +88,6 @@ class ListProducts extends Component {
                 )
         }
     }
-
     componentDidMount = () => {
         this.addHrefsForLinks('brand');
         this.addHrefsForLinks('size');
@@ -189,28 +168,28 @@ class ListProducts extends Component {
                                 <h4>Колір</h4>
                                 <ul className='list-inline-item'>
                                     <li>
-                                        <a className='color' title='Black' style={{ background: 'black' }} href='#'><span>Black</span></a>
+                                        <a className='color' title='Black' style={{ background: 'black' }} href='#'><span>black</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Red' style={{ background: 'red' }} href='#'><span>Red</span></a>
+                                        <a className='color' title='Red' style={{ background: 'red' }} href='#'><span>red</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Yellow' style={{ background: 'yellow' }} href='#'><span>Yellow</span></a>
+                                        <a className='color' title='Yellow' style={{ background: 'yellow' }} href='#'><span>yellow</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='White' style={{ background: 'white' }} href='#'><span>White</span></a>
+                                        <a className='color' title='White' style={{ background: 'white' }} href='#'><span>white</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Orange' style={{ background: 'orange' }} href='#'><span>Orange</span></a>
+                                        <a className='color' title='Orange' style={{ background: 'orange' }} href='#'><span>orange</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Gray' style={{ background: 'gray' }} href='#'><span>Gray</span></a>
+                                        <a className='color' title='Gray' style={{ background: 'gray' }} href='#'><span>gray</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Blue' style={{ background: 'blue' }} href='#'><span>Blue</span></a>
+                                        <a className='color' title='Blue' style={{ background: 'blue' }} href='#'><span>blue</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Green' style={{ background: 'green' }} href='#'><span>Green</span></a>
+                                        <a className='color' title='Green' style={{ background: 'green' }} href='#'><span>green</span></a>
                                     </li>
                                 </ul>
                                 <h4>Розмір</h4>
