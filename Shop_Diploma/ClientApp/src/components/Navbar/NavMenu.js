@@ -113,6 +113,21 @@ class NavMenu extends Component {
                   Бейсболки
                 </li>
               </Link>
+              <Link to='/catalog/search?category=wallets&gender=man' name='wallets'>
+                <li>
+                  Гаманці
+                </li>
+              </Link>
+              <Link to='/catalog/search?category=belts&gender=man' name='belts'>
+                <li>
+                 Ремні
+                </li>
+              </Link>
+              <Link to='/catalog/search?category=hats&gender=man' name='hats'>
+                <li>
+                 Шапки
+                </li>
+              </Link>
               <Link to='/catalog/search?category=socks&gender=man' name='socks'>
                 <li>
                   Шкарпетки

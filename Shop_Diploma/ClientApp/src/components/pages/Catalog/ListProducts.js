@@ -140,10 +140,10 @@ class ListProducts extends Component {
                                         <li><a href='/catalog/search?category=sport-sweatshirt'><i className='fa fa-square-o'></i>Спортивні кофти</a></li>
                                         <li><a href='/catalog/search?category=sport-trousers'><i className='fa fa-square-o'></i>Спортивні штани</a></li>
                                         <li><a href='/catalog/search?category=sport-t-shirts'><i className='fa fa-square-o'></i>Спортивні футболки</a></li>
-                                        <li><a href='/catalog/search?category=sport-shorts'><i className='fa fa-square-o'></i>Спортивні шорти</a></li>
-                                        <li><a href='/catalog/search?category=sport-costumes'><i className='fa fa-square-o'></i>Спортивні костюми</a></li>
                                         <li><a href='/catalog/search?category=shorts'><i className='fa fa-square-o'></i>Шорти</a></li>
                                         <li><a href='/catalog/search?category=t-shirts'><i className='fa fa-square-o'></i>Футболки</a></li>
+                                        <li><a href='/catalog/search?category=skirts&gender=woman'><i className='fa fa-square-o'></i>Юбки</a></li>
+                                        <li><a href='/catalog/search?category=dresses&gender=woman'><i className='fa fa-square-o'></i>Сукні</a></li>
                                     </ul>
                                 </li>
                                 <li >
@@ -155,27 +155,28 @@ class ListProducts extends Component {
                                         <li><a href='/catalog/search?category=sneakers'><i className='fa fa-square-o'></i>Кросівки</a></li>
                                         <li><a href='/catalog/search?category=winter-sneakers'><i className='fa fa-square-o'></i>Зимові Кроссівки</a></li>
                                         <li><a href='/catalog/search?category=tufli'><i className='fa fa-square-o'></i>Туфлі</a></li>
+                                        <li><a href='/catalog/search?category=kedi'><i className='fa fa-square-o'></i>Кеди</a></li>
                                         <li><a href='/catalog/search?category=chereviki'><i className='fa fa-square-o'></i>Черевики</a></li>
+                                        <li><a href='/catalog/search?category=mokasins'><i className='fa fa-square-o'></i>Мокасіни</a></li>
                                     </ul>
                                 </li>
                                 <li className='has-submenu'>
                                     <a href='/catalog/clothes'><i className='fa fa-square-o'></i>СУМКИ</a>
                                     <ul>
-                                        <li><a href='/catalog/clothes'><i className='fa fa-square-o'></i>Рюкзаки</a></li>
-                                        <li><a href='/catalog/clothes'><i className='fa fa-square-o'></i>Спортивні</a></li>
-                                        <li><a href='/catalog/clothes'><i className='fa fa-square-o'></i>Сумки на пояс</a></li>
-                                        <li><a href='/catalog/clothes'><i className='fa fa-square-o'></i>Через плече</a></li>
+                                        <li><a href='/catalog/search?category=backpacks'><i className='fa fa-square-o'></i>Рюкзаки</a></li>
+                                        <li><a href='/catalog/search?category=sport-bags'><i className='fa fa-square-o'></i>Спортивні сумки</a></li>
+                                        <li><a href='/catalog/search?category=bags-on-the-shoulder'><i className='fa fa-square-o'></i>Сумки на плече</a></li>
+                                        <li><a href='/catalog/search?category=bananki'><i className='fa fa-square-o'></i>Бананки</a></li>
                                     </ul>
                                 </li>
                                 <li className='has-submenu'>
                                     <a href='/catalog/clothes'><i className='fa fa-square-o'></i>АКСЕСУАРИ</a>
                                     <ul>
-                                        <li><a href='/catalog/clothes'><i className='fa fa-square-o'></i>Гаманці</a></li>
-                                        <li><a href='/catalog/clothes'><i className='fa fa-square-o'></i>Рукавиці</a></li>
-                                        <li><a href='/catalog/clothes'><i className='fa fa-square-o'></i>Ремні</a></li>
-                                        <li><a href='/catalog/clothes'><i className='fa fa-square-o'></i>Шапки</a></li>
-                                        <li><a href='/catalog/clothes'><i className='fa fa-square-o'></i>Кепки</a></li>
-                                        <li><a href='/catalog/clothes'><i className='fa fa-square-o'></i>Баффи</a></li>
+                                        <li><a href='/catalog/search?category=wallets'><i className='fa fa-square-o'></i>Гаманці</a></li>
+                                        <li><a href='/catalog/search?category=belts'><i className='fa fa-square-o'></i>Ремні</a></li>
+                                        <li><a href='/catalog/search?category=hats'><i className='fa fa-square-o'></i>Шапки</a></li>
+                                        <li><a href='/catalog/search?category=baseball-caps'><i className='fa fa-square-o'></i>Бейсболки</a></li>
+                                        <li><a href='/catalog/search?category=socks'><i className='fa fa-square-o'></i>Шкарпетки</a></li>
                                     </ul>
                                 </li>
                             </ul>
