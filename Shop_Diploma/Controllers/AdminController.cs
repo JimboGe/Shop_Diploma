@@ -43,7 +43,6 @@ namespace Shop_Diploma.Controllers
             return BadRequest("Не найдено користувачів");
         }
 
-
         // POST: api/Admin
         [HttpPost]
         public void Post([FromBody] string value)
