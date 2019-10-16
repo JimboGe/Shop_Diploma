@@ -37,22 +37,6 @@ namespace Shop_Diploma.Controllers
             }
             return BadRequest("Категорій не знайдено");
         }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategoriesByGender(string gender)
-        {
-            var categories = await _ctx.Categories.GroupBy(x => x.Id)
-                .Select(x => x.Take(1).Select(p => new
-                {
-                    p.Id,
-                    p.Name,
-                    p.UAName,
-                    p.Subcategories
-                })).ToListAsync();
-            if (categories != null)
-            {
-                return Ok(categories);
-            }
-            return BadRequest("Категорій не знайдено");
-        }
+ 
     }
 }
