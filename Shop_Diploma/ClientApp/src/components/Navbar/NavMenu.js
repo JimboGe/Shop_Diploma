@@ -20,9 +20,9 @@ class NavMenu extends Component {
         <div className="row">
           <div className="col-sm">
             <ul className='droplist'>
-              <a href='/catalog/search?category=clothes&gender=man' name='clothes'>
+              <div>
                 ОДЕЖА
-              </a>
+              </div>
               <a href='/catalog/search?category=jeens&gender=man' name='jeens'>
                 <li style={{ paddingTop: '10px' }}>
                   Джинси
@@ -82,9 +82,9 @@ class NavMenu extends Component {
           </div>
           <div className="col-sm">
             <ul className='droplist'>
-              <a href='/catalog/search?category=backpacks-bags&gender=man' name='backpacks-bags'>
+              <div>
                 РЮКЗАКИ, СУМКИ
-              </a>
+              </div>
               <a href='/catalog/search?category=bananki&gender=man' name='bananki'>
                 <li style={{ paddingTop: '10px' }}>
                   Бананки
@@ -105,9 +105,9 @@ class NavMenu extends Component {
                   Спорт. сумки
                 </li>
               </a>
-              <a href='/catalog/search?category=accessories&gender=man' name='accessories'>
+              <div>
                 <p style={{ marginTop: '15px' }}>АКСЕСУАРИ</p>
-              </a>
+              </div>
               <a href='/catalog/search?category=baseball-caps&gender=man' name='baseball-caps'>
                 <li>
                   Бейсболки
@@ -137,9 +137,9 @@ class NavMenu extends Component {
           </div>
           <div className="col-sm">
             <ul className='droplist'>
-              <a href='/catalog/search?category=shoes&gender=man' name='shoes'>
+              <div>
                 ВЗУТТЯ
-              </a>
+              </div>
               <a href='/catalog/search?category=kedi&gender=man' name='kedi'>
                 <li style={{ paddingTop: '10px' }}>
                   Кеди
@@ -177,9 +177,9 @@ class NavMenu extends Component {
         <div className="row">
           <div className="col-sm">
             <ul className='droplist'>
-              <a href='/catalog/search?category=clothes&gender=woman' name='clothes'>
+              <div>
                 ОДЕЖА
-              </a>
+              </div>
               <a href='/catalog/search?category=jeens&gender=woman' name='jeens'>
                 <li style={{ paddingTop: '10px' }}>
                   Джинси
@@ -239,9 +239,9 @@ class NavMenu extends Component {
           </div>
           <div className="col-sm">
             <ul className='droplist'>
-              <a href='/catalog/search?category=backpacks-bags&gender=woman' name='backpacks-bags'>
+              <div>
                 РЮКЗАКИ, СУМКИ
-              </a>
+              </div>
               <a href='/catalog/search?category=bananki&gender=woman' name='bananki'>
                 <li style={{ paddingTop: '10px' }}>
                   Бананки
@@ -262,9 +262,9 @@ class NavMenu extends Component {
                   Спорт. сумки
                 </li>
               </a>
-              <a href='/catalog/search?category=accessories&gender=woman' name='accessories'>
+              <div >
                 <p style={{ marginTop: '15px' }}>АКСЕСУАРИ</p>
-              </a>
+              </div>
               <a href='/catalog/search?category=baseball-caps&gender=woman' name='baseball-caps'>
                 <li>
                   Бейсболки
@@ -279,9 +279,9 @@ class NavMenu extends Component {
           </div>
           <div className="col-sm">
             <ul className='droplist'>
-              <a href='/catalog/search?category=shoes&gender=woman' name='shoes'>
+              <div>
                 ВЗУТТЯ
-              </a>
+              </div>
               <a href='/catalog/search?category=kedi&gender=woman' name='kedi'>
                 <li style={{ paddingTop: '10px' }}>
                   Кеди
@@ -327,8 +327,7 @@ class NavMenu extends Component {
   render() {
     
     const { isAuthenticated, user } = this.props.auth;
-   
-    console.log("USER-----", this.props.auth.user);
+    
     return (
       <div style={{ width: '100%' }}>
         <div style={{ borderRadius: '0' }} className='navbar top'>
@@ -431,7 +430,7 @@ NavMenu.propTypes =
   }
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
   };
 }
 export default withRouter(connect(mapStateToProps, { logout })(NavMenu));

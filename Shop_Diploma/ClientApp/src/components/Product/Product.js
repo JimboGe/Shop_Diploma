@@ -10,12 +10,12 @@ class Product extends Component {
     }
     render() {
         const { product } = this.props;
-        console.log();
+        console.log(product[0].gender);
         return (
             <Col sm={12} md={3}   className='product' >
                 <div style={{ textAlign: 'center' }}>
                     <div className='image-box'>
-                        <a href={`/catalog/${product[0].gender}/${product[0].category.name}/${product[0].brand.name}/p${product[0].id}`}>
+                        <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`}>
                             {product[0].images.length > 0 && <img src={product[0].images[0].path}
                                 className='first-image'
                                 alt='product-img-first' />}
@@ -26,7 +26,7 @@ class Product extends Component {
                     </div>
                     <div className='description'>
                         <div>
-                            <a href={`/catalog/${product[0].gender}/${product[0].category.name}/${product[0].brand.name}/p${product[0].id}`}>
+                            <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`}>
                                 {product[0].name}
                             </a>
                         </div>
@@ -35,7 +35,7 @@ class Product extends Component {
                             <span>{product[0].size}</span>
                         </div>
                         <div>
-                            <a href={`/catalog/${product[0].gender}/${product[0].category.name}/${product[0].brand.name}/p${product[0].id}`} className='btn btn-dark'>Замовити</a>
+                            <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`} className='btn btn-dark'>Замовити</a>
                         </div>
                     </div>
                 </div>

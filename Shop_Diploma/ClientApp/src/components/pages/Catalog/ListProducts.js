@@ -6,6 +6,7 @@ import './ListProducts.css';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import { getProducts, getProductsByParams } from '../../../actions/products';
+import {getCategories} from '../../../actions/categories';
 import { connect } from "react-redux";
 
 class ListProducts extends Component {
@@ -88,78 +89,50 @@ class ListProducts extends Component {
                 )
         }
     }
+    getCategories(){
+        this.props.getCategories()
+                .then(
+                    () => { },
+                    (err) => { console.log("Error get data ", err); }
+                )
+    }
     componentDidMount = () => {
+        this.getCategories();
         this.addHrefsForLinks('brand');
         this.addHrefsForLinks('size');
         this.addHrefsForLinks('color');
         this.getProductsByParams();
     }
     render() {
-        var { products } = this.props;
+        var { products, categories} = this.props;
+        var categoriesElem;
+        if(categories.length>0){
+            categoriesElem = (<div className='filter-categories'>
+            <div className='title'>
+                <h4>КАТЕГОРІЇ</h4>
+            </div>
+            <ul className='filter-container'>
+                <li className='checked'>
+                    <a href='/catalog/search?'><i className='fa fa-square-o'></i>ВСІ</a>
+                </li>
+                <li className='has-submenu'>
+                {categories.map(value=>
+                <li className='has-submenu'>
+                        <div style={{color:'#919191',fontSize:'15px'}}>{value[0].uaName}</div>
+                        <ul>
+                            {value[0].subcategories.map(subvalue=>
+                            <li><a href={`/catalog/search?category=${subvalue.name}`}><i className='fa fa-square-o'></i>{subvalue.uaName}</a></li>)}
+                    </ul>
+                    </li>)}
+                </li>
+                </ul>
+        </div>)
+        }
         return (
             <div className='list-products'>
                 <Row >
                     <Col xs={7} lg={2} className='filter'>
-                        <div className='filter-categories'>
-                            <div className='title'>
-                                <h4>КАТЕГОРІЇ</h4>
-                            </div>
-                            <ul className='filter-container'>
-                                <li className='checked'>
-                                    <a href='/catalog/search?'><i className='fa fa-square-o'></i>ВСІ</a>
-                                </li>
-                                <li className='has-submenu'>
-                                    <a href='/catalog/search?category=clothes'><i className='fa fa-square-o'></i>ОДЕЖА</a>
-                                    <ul>
-                                        <li><a href='/catalog/search?category=trousers'><i className='fa fa-square-o'></i>Брюки</a></li>
-                                        <li><a href='/catalog/search?category=outerwear'><i className='fa fa-square-o'></i>Верхній одяг</a></li>
-                                        <li><a href='/catalog/search?category=jeans'><i className='fa fa-square-o'></i>Джинси</a></li>
-                                        <li><a href='/catalog/search?category=sweatshirt'><i className='fa fa-square-o'></i>Толстовки</a></li>
-                                        <li><a href='/catalog/search?category=shirts'><i className='fa fa-square-o'></i>Сорочки</a></li>
-                                        <li><a href='/catalog/search?category=sport-sweatshirt'><i className='fa fa-square-o'></i>Спортивні кофти</a></li>
-                                        <li><a href='/catalog/search?category=sport-trousers'><i className='fa fa-square-o'></i>Спортивні штани</a></li>
-                                        <li><a href='/catalog/search?category=sport-t-shirts'><i className='fa fa-square-o'></i>Спортивні футболки</a></li>
-                                        <li><a href='/catalog/search?category=shorts'><i className='fa fa-square-o'></i>Шорти</a></li>
-                                        <li><a href='/catalog/search?category=t-shirts'><i className='fa fa-square-o'></i>Футболки</a></li>
-                                        <li><a href='/catalog/search?category=skirts&gender=woman'><i className='fa fa-square-o'></i>Юбки</a></li>
-                                        <li><a href='/catalog/search?category=dresses&gender=woman'><i className='fa fa-square-o'></i>Сукні</a></li>
-                                    </ul>
-                                </li>
-                                <li >
-                                    <a href='/catalog/search?category=socks'><i className='fa fa-square-o'></i>НОСКИ</a>
-                                </li>
-                                <li className='has-submenu'>
-                                    <a href='/catalog/search?category=shoes'><i className='fa fa-square-o'></i>ВЗУТТЯ</a>
-                                    <ul>
-                                        <li><a href='/catalog/search?category=sneakers'><i className='fa fa-square-o'></i>Кросівки</a></li>
-                                        <li><a href='/catalog/search?category=winter-sneakers'><i className='fa fa-square-o'></i>Зимові Кроссівки</a></li>
-                                        <li><a href='/catalog/search?category=tufli'><i className='fa fa-square-o'></i>Туфлі</a></li>
-                                        <li><a href='/catalog/search?category=kedi'><i className='fa fa-square-o'></i>Кеди</a></li>
-                                        <li><a href='/catalog/search?category=chereviki'><i className='fa fa-square-o'></i>Черевики</a></li>
-                                        <li><a href='/catalog/search?category=mokasins'><i className='fa fa-square-o'></i>Мокасіни</a></li>
-                                    </ul>
-                                </li>
-                                <li className='has-submenu'>
-                                    <a href='/catalog/clothes'><i className='fa fa-square-o'></i>СУМКИ</a>
-                                    <ul>
-                                        <li><a href='/catalog/search?category=backpacks'><i className='fa fa-square-o'></i>Рюкзаки</a></li>
-                                        <li><a href='/catalog/search?category=sport-bags'><i className='fa fa-square-o'></i>Спортивні сумки</a></li>
-                                        <li><a href='/catalog/search?category=bags-on-the-shoulder'><i className='fa fa-square-o'></i>Сумки на плече</a></li>
-                                        <li><a href='/catalog/search?category=bananki'><i className='fa fa-square-o'></i>Бананки</a></li>
-                                    </ul>
-                                </li>
-                                <li className='has-submenu'>
-                                    <a href='/catalog/clothes'><i className='fa fa-square-o'></i>АКСЕСУАРИ</a>
-                                    <ul>
-                                        <li><a href='/catalog/search?category=wallets'><i className='fa fa-square-o'></i>Гаманці</a></li>
-                                        <li><a href='/catalog/search?category=belts'><i className='fa fa-square-o'></i>Ремні</a></li>
-                                        <li><a href='/catalog/search?category=hats'><i className='fa fa-square-o'></i>Шапки</a></li>
-                                        <li><a href='/catalog/search?category=baseball-caps'><i className='fa fa-square-o'></i>Бейсболки</a></li>
-                                        <li><a href='/catalog/search?category=socks'><i className='fa fa-square-o'></i>Шкарпетки</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                        {categoriesElem}
                         <div className='filters'>
                             <div className='title'>
                                 <h4>ФІЛЬТРИ</h4>
@@ -300,8 +273,8 @@ class ListProducts extends Component {
                     <Col xs={8} lg={10} className='container-products'>
                         <div className='products'>
                             <Row>
-                                {products.map((value, index, array) =>
-                                    <Product product={value} key={index} />)}
+                                {products.length > 0?products.map((value, index, array) =>
+                                    <Product product={value} key={index} />):<div style={{marginLeft:'25px', fontSize:'25px'}}>Продуктів не найденно</div>}
                             </Row>
                         </div>
                     </Col>
@@ -312,7 +285,8 @@ class ListProducts extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        products: state.products.products
+        products: state.products.products,
+        categories:state.categories.categories
     };
 }
-export default connect(mapStateToProps, { getProducts, getProductsByParams })(ListProducts);
+export default connect(mapStateToProps, { getProducts, getProductsByParams, getCategories })(ListProducts);

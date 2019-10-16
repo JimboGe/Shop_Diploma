@@ -17,6 +17,10 @@ namespace Shop_Diploma.ViewModels
         public string UserId { get; set; }
         [Required(ErrorMessage = "Поле є обов'язковим")]
         public Product Product { get; set; }
+        [Required(ErrorMessage = "Поле є обов'язковим")]
+        public string ProductSize { get; set; }
+        [Required(ErrorMessage = "Поле є обов'язковим")]
+        public int ProductCount { get; set; }
 
     }
    

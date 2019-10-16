@@ -47,7 +47,7 @@ namespace Shop_Diploma.Controllers
                     p.Size,
                     p.Price,
                     p.Brand,
-                    p.Category,
+                    p.Subcategory,
                     p.Images,
                     p.SizeImage,
                     p.Reviews
@@ -74,7 +74,7 @@ namespace Shop_Diploma.Controllers
                     p.Size,
                     p.Price,
                     p.Brand,
-                    p.Category,
+                    p.Subcategory,
                     p.Images,
                     p.SizeImage,
                     p.Reviews
@@ -102,17 +102,16 @@ namespace Shop_Diploma.Controllers
                 x.Size,
                 x.Price,
                 x.Brand,
-                x.Category,
+                x.Subcategory,
                 x.Images,
                 x.SizeImage,
                 x.Reviews
             }).ToListAsync();
             if (!String.IsNullOrEmpty(gender)) products = products.Where(x => x.Gender == gender).ToList();
             if (!String.IsNullOrEmpty(brand)) products = products.Where(x => x.Brand.Name == brand).ToList();
-            if (!String.IsNullOrEmpty(category)) products = products.Where(x => x.Category.Name == category).ToList();
+            if (!String.IsNullOrEmpty(category))products = products.Where(x => x.Subcategory.Name == category).ToList();
             if (!String.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
             if (!String.IsNullOrEmpty(size)){ products = products.Where(x => x.Size == size).ToList();}
-
             if (Decimal.TryParse(minprice, out result) && Decimal.TryParse(maxprice, out result1))
             {
                 products = products.Where(x => x.Price >= result && x.Price <= result1).ToList();
@@ -147,7 +146,7 @@ namespace Shop_Diploma.Controllers
             {
                 Name = product.Name,
                 BrandId = product.BrandId,
-                CategoryId = product.CategoryId,
+                SubcategoryId = product.SubcategoryId,
                 Color = product.Color,
                 Count = product.Count,
                 Description = product.Description,

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop_Diploma.DAL;
 using Shop_Diploma.DAL.Entities;
+using Shop_Diploma.Helpers;
 using Shop_Diploma.ViewModels;
 
 namespace Shop_Diploma.Controllers
@@ -37,13 +38,6 @@ namespace Shop_Diploma.Controllers
             return BadRequest("Не найдено заказів");
         }
 
-        // GET: api/Orders/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST: api/Orders
         [HttpPost]
         public async Task<IActionResult> NewOrder([FromBody] OrderViewModel order)
@@ -51,24 +45,14 @@ namespace Shop_Diploma.Controllers
             var newOrder = new Order
             {
                 Date = DateTime.Now,
-                FullPrice = order.FullPrice
+                FullPrice = order.FullPrice,
+                Count = order.ProductCount,
+                Size = order.ProductSize
             };
             newOrder.OrdersProducts.Add(new OrdersProducts { OrderId = newOrder.Id, ProductId = order.Product.Id});
             await _ctx.Orders.AddAsync(newOrder);
             await _ctx.SaveChangesAsync();
             return Ok("Ваш заказ успішно прийнято!");
-        }
-
-        // PUT: api/Orders/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

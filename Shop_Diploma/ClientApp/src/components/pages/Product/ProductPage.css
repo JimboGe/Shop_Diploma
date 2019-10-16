@@ -225,7 +225,16 @@ button.button-move.next:after{
     text-shadow: none;
     outline: none;
 }
-
+.counter button.order-btn a{
+    text-decoration: none;
+    color:black;
+    transition-duration: 400ms;
+}
+.counter button.order-btn a:hover,
+.counter button.order-btn:hover a
+{
+    color:white;
+}
 .product-page .description p{
     margin-top:-7px;
     color:#999999;

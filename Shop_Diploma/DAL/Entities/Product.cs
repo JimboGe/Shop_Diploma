@@ -21,8 +21,8 @@ namespace Shop_Diploma.DAL.Entities
         public string Color { get; set; }
         public string Gender { get; set; }
         public Decimal Price { get; set; }
-        [ForeignKey("Category")]
-        public int CategoryId { get; set; }
+        [ForeignKey("Subcategory")]
+        public int SubcategoryId { get; set; }
         [ForeignKey("Brand")]
         public int BrandId { get; set; }
         [ForeignKey("SizeImage")]
@@ -31,7 +31,7 @@ namespace Shop_Diploma.DAL.Entities
         public ICollection<OrdersProducts> OrdersProducts { get; set; }
         public virtual SizeImage SizeImage { get; set; }
         //джинси, футбл, взуття
-        public virtual Category Category { get; set; }
+        public virtual Subcategory Subcategory { get; set; }
         public virtual Brand Brand { get; set; }
         public virtual ICollection<ProductImage> Images { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }

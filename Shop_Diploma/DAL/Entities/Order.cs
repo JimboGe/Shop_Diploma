@@ -15,6 +15,8 @@ namespace Shop_Diploma.DAL.Entities
         [Key]
         public int Id { get; set; }
         public decimal FullPrice { get; set; }
+        public string Size { get; set; }
+        public int Count { get; set; }
         public DateTime Date { get; set; }
         [ForeignKey ("User")]
         public string UserId { get; set; }

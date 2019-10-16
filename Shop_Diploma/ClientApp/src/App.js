@@ -9,6 +9,7 @@ import Cart from './components/pages/Cart/Cart'
 import ListProducts from './components/pages/Catalog/ListProducts'
 import ProductPage from './components/pages/Product/ProductPage'
 import AdminPage from './components/pages/Admin/Admin'
+import Order from './components/pages/Order/Order'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -25,6 +26,7 @@ export default () => (
       <Route exact path='/catalog/:gender/:category/:brand/p:id' component={ ProductPage }/>
       <Route exact path='/tet' component={ Tet }/>
       <Route exact path='/admin' component={ AdminPage }/>
+      <Route exact path='/order' component={ Order }/>
   </Layout>
 );
 

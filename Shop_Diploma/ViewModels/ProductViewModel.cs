@@ -25,7 +25,7 @@ namespace Shop_Diploma.ViewModels
         [Required(ErrorMessage = "Поле є обов'язковим")]
         public decimal Price { get; set; }
         [Required(ErrorMessage = "Поле є обов'язковим")]
-        public int CategoryId { get; set; }
+        public int SubcategoryId { get; set; }
         [Required(ErrorMessage = "Поле є обов'язковим")]
         public int BrandId { get; set; }
         [Required(ErrorMessage = "Поле є обов'язковим")]

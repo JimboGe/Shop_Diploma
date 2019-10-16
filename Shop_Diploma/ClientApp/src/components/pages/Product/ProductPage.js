@@ -159,7 +159,7 @@ class ProductPage extends Component {
                                         </div>
                                     </Col>
                                     <Col lg={8}>
-                                        <Button className='order-btn'>Замовити</Button>
+                                        <Button className='order-btn'><a href="/order">Замовити</a></Button>
                                     </Col>
                                 </Row>
                             </div>
