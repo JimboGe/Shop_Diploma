@@ -130,3 +130,7 @@
     color:#2b2b2b;
     border-color:#2b2b2b;
 }
+.list-products ul.filter-container li:hover>a,
+.list-products ul.filter-container li:hover>a i{
+    color:rgb(39, 39, 39);
+}

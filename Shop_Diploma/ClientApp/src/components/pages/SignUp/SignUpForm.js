@@ -33,7 +33,6 @@ class SignUpForm extends Component {
             var select = document.getElementById(name);
             options.appendChild(document.createTextNode(value.Description));
             select.appendChild(options);
-            console.log(value);
         })
     }
     catch(ex){console.log(ex)}
@@ -114,10 +113,9 @@ class SignUpForm extends Component {
         else {
             this.setState({ errors });
         }
-        console.log(this.state);
     }
     render() {
-        const { errors, isLoading, regions } = this.state;
+        const { errors, isLoading } = this.state;
         var form = (
             <div className='container sign'>
                 <Row>

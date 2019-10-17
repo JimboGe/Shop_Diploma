@@ -6,7 +6,7 @@ import './ListProducts.css';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import { getProducts, getProductsByParams } from '../../../actions/products';
-import {getCategories} from '../../../actions/categories';
+import { getCategories } from '../../../actions/categories';
 import { connect } from "react-redux";
 
 class ListProducts extends Component {
@@ -89,12 +89,25 @@ class ListProducts extends Component {
                 )
         }
     }
-    getCategories(){
+    getCategories() {
         this.props.getCategories()
-                .then(
-                    () => { },
-                    (err) => { console.log("Error get data ", err); }
-                )
+            .then(
+                () => { },
+                (err) => { console.log("Error get data ", err); }
+            )
+    }
+    checkedLink() {
+        const locationHref = (window.location.href);
+        let links = document.getElementsByClassName('filter-container')[0].getElementsByTagName('a');
+        let parent;
+        //довго
+        Array.from(links).forEach(element => {
+            if (element.href === locationHref) {
+                parent = element.parentElement;
+                parent.setAttribute('class', 'checked');
+            }
+        });
+
     }
     componentDidMount = () => {
         this.getCategories();
@@ -103,30 +116,34 @@ class ListProducts extends Component {
         this.addHrefsForLinks('color');
         this.getProductsByParams();
     }
+    componentDidUpdate() {
+        this.checkedLink();
+    }
     render() {
-        var { products, categories} = this.props;
+        var { products, categories } = this.props;
         var categoriesElem;
-        if(categories.length>0){
+        if (categories.length > 0) {
             categoriesElem = (<div className='filter-categories'>
-            <div className='title'>
-                <h4>КАТЕГОРІЇ</h4>
-            </div>
-            <ul className='filter-container'>
-                <li className='checked'>
-                    <a href='/catalog/search?'><i className='fa fa-square-o'></i>ВСІ</a>
-                </li>
-                <li className='has-submenu'>
-                {categories.map(value=>
-                <li className='has-submenu'>
-                        <div style={{color:'#919191',fontSize:'15px'}}>{value[0].uaName}</div>
-                        <ul>
-                            {value[0].subcategories.map(subvalue=>
-                            <li><a href={`/catalog/search?category=${subvalue.name}`}><i className='fa fa-square-o'></i>{subvalue.uaName}</a></li>)}
-                    </ul>
-                    </li>)}
-                </li>
+                <div className='title'>
+                    <h4>КАТЕГОРІЇ</h4>
+                </div>
+                <ul className='filter-container'>
+                    <li>
+                        <a href='/catalog/search?'><i className='fa fa-square-o'></i>ВСІ</a>
+                    </li>
+                    <li className='has-submenu'>
+                        {categories.map(value =>
+                            <li className='has-submenu'>
+                                <div style={{ color: '#919191', fontSize: '15px' }}>{value[0].uaName}</div>
+                                <ul>
+                                    {value[0].subcategories.map(subvalue =>
+                                        <li><a href={`/catalog/search?category=${subvalue.name}`}><i className='fa fa-square-o'></i>{subvalue.uaName}</a></li>)}
+                                </ul>
+                            </li>)}
+                    </li>
                 </ul>
-        </div>)
+            </div>);
+
         }
         return (
             <div className='list-products'>
@@ -273,8 +290,8 @@ class ListProducts extends Component {
                     <Col xs={8} lg={10} className='container-products'>
                         <div className='products'>
                             <Row>
-                                {products.length > 0?products.map((value, index, array) =>
-                                    <Product product={value} key={index} />):<div style={{marginLeft:'25px', fontSize:'25px'}}>Продуктів не найденно</div>}
+                                {products.length > 0 ? products.map((value, index, array) =>
+                                    <Product product={value} key={index} />) : <div style={{ marginLeft: '25px', fontSize: '25px' }}>Продуктів не найденно</div>}
                             </Row>
                         </div>
                     </Col>
@@ -286,7 +303,7 @@ class ListProducts extends Component {
 const mapStateToProps = (state) => {
     return {
         products: state.products.products,
-        categories:state.categories.categories
+        categories: state.categories.categories
     };
 }
 export default connect(mapStateToProps, { getProducts, getProductsByParams, getCategories })(ListProducts);

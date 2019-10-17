@@ -382,10 +382,10 @@ class NavMenu extends Component {
                       <i className="fa fa-user"></i>
                       <span>УВІЙТИ</span>
                     </Link>
-                    <Link to='/account/signup'>
+                    <a href='/account/signup'>
                       <i className="fa fa-user-plus"></i>
                       <span>ЗАРЕЄСТРУВАТИСЯ</span>
-                    </Link>
+                    </a>
                   </div>
                 </Col>
               </Row>
