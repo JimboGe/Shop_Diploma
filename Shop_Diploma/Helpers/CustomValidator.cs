@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,6 +23,17 @@ namespace Shop_Diploma.Helpers
                 key = char.ToLower(key[0]).ToString() + key.Substring(1);
                 errors.Add(key, item.Value);
             }
+            return errors;
+        }
+        public static IDictionary<string, string> GetErrorsByIdentityResult(
+    IdentityResult result)
+        {
+            var errors = result.Errors
+                .ToDictionary(
+                    kvp => "invalid",
+                    kvp => kvp.Description
+                );
+
             return errors;
         }
     }

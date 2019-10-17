@@ -59,7 +59,6 @@ class SignInForm extends Component {
     }
     render() {
         const { errors } = this.state;
-        console.log(this.state);
         const form = <form onSubmit={this.onSubmitForm}>
             <div className='signin box'>
                 <h4>УВІЙТИ</h4>

@@ -323,13 +323,14 @@ class NavMenu extends Component {
     );
   }
   logout = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     this.props.logout();
   }
   render() {
 
     const { isAuthenticated, user } = this.props.auth;
-    const guestElem = (<div>
+    console.log("USER----",user);
+    var guestElem = (<div>
       <Link to='/cart'>
         <i className="fa fa-shopping-cart"></i>
         <span>КОРЗИНА</span>
@@ -343,7 +344,7 @@ class NavMenu extends Component {
         <span>ЗАРЕЄСТРУВАТИСЯ</span>
       </Link>
     </div>);
-    const userElem = (<div>
+    var userElem = (<div>
       <Link to='/cart'>
         <i className="fa fa-shopping-cart"></i>
         <span>КОРЗИНА</span>
@@ -352,11 +353,11 @@ class NavMenu extends Component {
         <span>ЗАМОВЛЕННЯ</span>
       </Link>
       <Link to='/profile'>
-        <span>{user.name.toUpperCase()}</span>
+        <span>{isAuthenticated?user.name.toUpperCase():''}</span>
       </Link>
-      <Link to='#'onClick={this.logout}>
+      <a href='/'onClick={this.logout}>
         <span>ВИЙТИ</span>
-      </Link>
+      </a>
     </div>)
     return (
       <div style={{ width: '100%' }}>
@@ -449,7 +450,7 @@ NavMenu.propTypes =
   }
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth,
+    auth: state.auth
   };
 }
 export default connect(mapStateToProps, { logout })(NavMenu);
