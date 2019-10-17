@@ -218,9 +218,10 @@ input.form-control:active, input.form-control:focus, input.form-control:hover{
   transition-duration: 400ms;
 }
 .navbar.middle .right{
-  font-size:12px;
+  font-size:11px;
   float:right;
   margin-top:15px;
+  margin-left:-15px;
 }
 
 .navbar.middle .right a {
@@ -229,7 +230,7 @@ input.form-control:active, input.form-control:focus, input.form-control:hover{
 }
 .navbar.middle .right a span{
   color:rgb(128, 128, 128);
-  margin-left:2px;
+  margin-left:1px;
   transition-duration: 400ms;
 }
 .navbar.middle .right a::after{

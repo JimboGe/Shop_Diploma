@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, FormControl, Row, Col, Navbar,  NavItem } from "react-bootstrap";
+import { Form, FormControl, Row, Col, Navbar, NavItem } from "react-bootstrap";
 import './NavMenu.css';
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
@@ -12,8 +12,6 @@ class NavMenu extends Component {
     super(props);
     this.state = {};
   }
-
-
   dropItemMan() {
     return (
       <div className='container dropdown' style={{ marginTop: '0px', marginLeft: '-27px' }}>
@@ -28,7 +26,7 @@ class NavMenu extends Component {
                   Джинси
                 </li>
               </a>
-              <a href='/catalog/search?category=jeens-shorts&gender=man'  name='jeens-shorts'>
+              <a href='/catalog/search?category=jeens-shorts&gender=man' name='jeens-shorts'>
                 <li>
                   Джинсові шорти
                 </li>
@@ -38,12 +36,12 @@ class NavMenu extends Component {
                   Футболки
                 </li>
               </a>
-              <a href='/catalog/search?category=shorts&gender=man'  name='shorts'>
+              <a href='/catalog/search?category=shorts&gender=man' name='shorts'>
                 <li>
                   Шорти
                 </li>
               </a>
-              <a href='/catalog/search?category=sport-trousers&gender=man'  name='sport-trousers'>
+              <a href='/catalog/search?category=sport-trousers&gender=man' name='sport-trousers'>
                 <li>
                   Спорт. штани
                 </li>
@@ -53,12 +51,12 @@ class NavMenu extends Component {
                   Спорт. кофти
                 </li>
               </a>
-              <a href='/catalog/search?category=sport-costumes&gender=man'  name='sport-costumes'>
+              <a href='/catalog/search?category=sport-costumes&gender=man' name='sport-costumes'>
                 <li>
                   Спорт. костюми
                 </li>
               </a>
-              <a href='/catalog/search?category=outerwear&gender=man'  name='outerwear'>
+              <a href='/catalog/search?category=outerwear&gender=man' name='outerwear'>
                 <li>
                   Куртки
                 </li>
@@ -120,12 +118,12 @@ class NavMenu extends Component {
               </a>
               <a href='/catalog/search?category=belts&gender=man' name='belts'>
                 <li>
-                 Ремні
+                  Ремні
                 </li>
               </a>
               <a href='/catalog/search?category=hats&gender=man' name='hats'>
                 <li>
-                 Шапки
+                  Шапки
                 </li>
               </a>
               <a href='/catalog/search?category=socks&gender=man' name='socks'>
@@ -185,7 +183,7 @@ class NavMenu extends Component {
                   Джинси
                 </li>
               </a>
-              <a href='/catalog/search?category=jeens-shorts&gender=woman'  name='jeens-shorts'>
+              <a href='/catalog/search?category=jeens-shorts&gender=woman' name='jeens-shorts'>
                 <li>
                   Джинсові шорти
                 </li>
@@ -195,12 +193,12 @@ class NavMenu extends Component {
                   Футболки
                 </li>
               </a>
-              <a href='/catalog/search?category=shorts&gender=woman'  name='shorts'>
+              <a href='/catalog/search?category=shorts&gender=woman' name='shorts'>
                 <li>
                   Шорти
                 </li>
               </a>
-              <a href='/catalog/search?category=sport-trousers&gender=woman'  name='sport-trousers'>
+              <a href='/catalog/search?category=sport-trousers&gender=woman' name='sport-trousers'>
                 <li>
                   Спорт. штани
                 </li>
@@ -210,12 +208,12 @@ class NavMenu extends Component {
                   Спорт. кофти
                 </li>
               </a>
-              <a href='/catalog/search?category=sport-costumes&gender=woman'  name='sport-costumes'>
+              <a href='/catalog/search?category=sport-costumes&gender=woman' name='sport-costumes'>
                 <li>
                   Спорт. костюми
                 </li>
               </a>
-              <a href='/catalog/search?category=jackets&gender=woman'  name='jackets'>
+              <a href='/catalog/search?category=jackets&gender=woman' name='jackets'>
                 <li>
                   Куртки
                 </li>
@@ -324,10 +322,42 @@ class NavMenu extends Component {
       </div>
     );
   }
+  logout = (e) => {
+    e.preventDefault();
+    this.props.logout();
+  }
   render() {
-    
+
     const { isAuthenticated, user } = this.props.auth;
-    
+    const guestElem = (<div>
+      <Link to='/cart'>
+        <i className="fa fa-shopping-cart"></i>
+        <span>КОРЗИНА</span>
+      </Link>
+      <Link to='/account/signin'>
+        <i className="fa fa-user"></i>
+        <span>УВІЙТИ</span>
+      </Link>
+      <Link to='/account/signup'>
+        <i className="fa fa-user-plus"></i>
+        <span>ЗАРЕЄСТРУВАТИСЯ</span>
+      </Link>
+    </div>);
+    const userElem = (<div>
+      <Link to='/cart'>
+        <i className="fa fa-shopping-cart"></i>
+        <span>КОРЗИНА</span>
+      </Link>
+      <Link to='/profile/order'>
+        <span>ЗАМОВЛЕННЯ</span>
+      </Link>
+      <Link to='/profile'>
+        <span>{user.name.toUpperCase()}</span>
+      </Link>
+      <Link to='#'onClick={this.logout}>
+        <span>ВИЙТИ</span>
+      </Link>
+    </div>)
     return (
       <div style={{ width: '100%' }}>
         <div style={{ borderRadius: '0' }} className='navbar top'>
@@ -372,20 +402,9 @@ class NavMenu extends Component {
                     </Link>
                   </div>
                 </Col>
-                <Col md={4}>
+                <Col lg={4} >
                   <div className='right'>
-                    <Link to='/cart'>
-                      <i className="fa fa-shopping-cart"></i>
-                      <span>КОРЗИНА</span>
-                    </Link>
-                    <Link to='/account/signin'>
-                      <i className="fa fa-user"></i>
-                      <span>УВІЙТИ</span>
-                    </Link>
-                    <a href='/account/signup'>
-                      <i className="fa fa-user-plus"></i>
-                      <span>ЗАРЕЄСТРУВАТИСЯ</span>
-                    </a>
+                    {isAuthenticated ? userElem:guestElem}
                   </div>
                 </Col>
               </Row>
@@ -433,4 +452,4 @@ const mapStateToProps = (state) => {
     auth: state.auth,
   };
 }
-export default withRouter(connect(mapStateToProps, { logout })(NavMenu));
+export default connect(mapStateToProps, { logout })(NavMenu);
