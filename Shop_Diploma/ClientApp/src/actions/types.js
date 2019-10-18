@@ -15,3 +15,4 @@ export const NEW_ORDER = 'NEW_ORDER';
 export const GET_PROFILE = 'GET_PROFILE';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
 export const CHANGE_USER_NAME = 'CHANGE_USER_NAME';
+export const CHANGE_ADDRESS = 'CHANGE_ADDRESS';

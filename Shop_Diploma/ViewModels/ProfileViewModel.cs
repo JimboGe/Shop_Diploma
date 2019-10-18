@@ -28,4 +28,15 @@ namespace Shop_Diploma.ViewModels
         [Required(ErrorMessage = "Поле є обов'язковим")]
         public string NewPassword { get; set; }
     }
+    public class ProfileChangeAddress
+    {
+        [Required(ErrorMessage = "Поле є обов'язковим")]
+        public string ClientId { get; set; }
+        [Required(ErrorMessage = "Поле є обов'язковим")]
+        public string Region { get; set; }
+        [Required(ErrorMessage = "Поле є обов'язковим")]
+        public string City { get; set; }
+        [Required(ErrorMessage = "Поле є обов'язковим")]
+        public int NumberDelivery { get; set; }
+    }
 }

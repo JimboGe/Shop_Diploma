@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import { register } from "../../../actions/auth";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import {getCities,getRegions} from '../../../helpers/getDataForAddress';
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -26,44 +26,9 @@ class SignUpForm extends Component {
             }
         };
     }
-    createOptions(name,data){
-        try{
-        data.map((value)=>{
-            var options = document.createElement('option');
-            var select = document.getElementById(name);
-            options.appendChild(document.createTextNode(value.Description));
-            select.appendChild(options);
-        })
-    }
-    catch(ex){console.log(ex)}
-    }
-    getRegions(){
-        var settings = {
-            "url": "https://api.novaposhta.ua/v2.0/json/",
-            data : {
-                modelName: 'Address',
-                calledMethod: 'getAreas'
-            }
-        }
-        axios.post(settings.url,settings.data).then(res=>{
-               this.createOptions('region',res.data.data);
-        });
-    }
-    getCities(){
-        var settings = {
-            "url": "https://api.novaposhta.ua/v2.0/json/",
-            data : {
-                modelName: 'Address',
-                calledMethod: 'getCities'
-            }
-        }
-        axios.post(settings.url,settings.data).then(res=>{
-               this.createOptions('city',res.data.data);
-        });
-    }
     componentDidMount() {
-        this.getRegions();
-        this.getCities();
+        getRegions();
+        getCities();
     }
 
     setStateByErrors = (name, value) => {
@@ -115,6 +80,7 @@ class SignUpForm extends Component {
         }
     }
     render() {
+        console.log('----WINDOW---',this.state);
         const { errors, isLoading } = this.state;
         var form = (
             <div className='container sign'>
@@ -211,4 +177,4 @@ SignUpForm.propTypes =
         register: PropTypes.func.isRequired
     }
 
-export default connect(null, { register })(SignUpForm);
+export default connect(null, { register, getCities })(SignUpForm);

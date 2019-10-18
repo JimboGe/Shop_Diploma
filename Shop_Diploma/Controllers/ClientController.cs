@@ -78,7 +78,34 @@ namespace Shop_Diploma.Controllers
             }
             return Ok();
         }
-
+        [HttpPost("{id}")]
+        public async Task<ActionResult> ProfileChangeAddress([FromRoute] string id, [FromBody] ProfileChangeAddress model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errrors = CustomValidator.GetErrorsByModel(ModelState);
+                return BadRequest(errrors);
+            }
+            var user = await _userManager.FindByIdAsync(model.ClientId);
+            if (user == null)
+            {
+                return BadRequest(new { invalid = "User is not found" });
+            }
+            if (user.Region != model.Region)
+                user.Region = model.Region;
+            if (user.City != model.City)
+                user.City = model.City;
+            if (user.NumberDelivery != model.NumberDelivery)
+                user.NumberDelivery = model.NumberDelivery;
+           
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                var errrors = CustomValidator.GetErrorsByIdentityResult(result);
+                return BadRequest(errrors);
+            }
+            return Ok();
+        }
         [HttpPost]
         public async Task<ActionResult> ChangePassword([FromBody] ProfileChangePassword model)
         {

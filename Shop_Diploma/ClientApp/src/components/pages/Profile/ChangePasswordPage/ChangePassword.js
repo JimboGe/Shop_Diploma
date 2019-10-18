@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './ChangePassword.css';
 import { Row } from 'react-bootstrap';
 import classnames from 'classnames';
 import {changePassword} from '../../../../actions/profile';

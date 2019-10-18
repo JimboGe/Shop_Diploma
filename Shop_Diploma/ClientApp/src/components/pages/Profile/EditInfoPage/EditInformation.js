@@ -46,9 +46,6 @@ class EditInformation extends Component {
         if(state.phoneNumber === '')
         this.setState({phoneNumber: profile.phoneNumber});
     }
-    componentDidUpdate=()=>{
-        this.setStateProfile();
-    }
     setStateByErrors = (name, value) => {
         if (!!this.state.errors[name]) {
             let errors = Object.assign({}, this.state.errors);

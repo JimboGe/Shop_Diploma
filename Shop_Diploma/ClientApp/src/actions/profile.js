@@ -29,6 +29,14 @@ export function setProfile(data) {
         })
     }
   }
+  export function changeAddress(id,profile) {
+    return dispatch => {
+      return axios.post('api/client/ProfileChangeAddress/'+ id, profile)
+        .then(res => {
+          dispatch(putProfile(res.data));
+        })
+    }
+  }
   export function changePassword(data) {
     return dispatch => {
     return axios.post('api/client/ChangePassword', data);

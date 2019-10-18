@@ -13,6 +13,7 @@ import Order from './components/pages/Order/Order';
 import Profile from './components/pages/Profile/Profile';
 import EditInfo from './components/pages/Profile/EditInfoPage/EditInformation';
 import ChangePassword from './components/pages/Profile/ChangePasswordPage/ChangePassword';
+import ChangeAddress from './components/pages/Profile/ChangeAddressPage/ChangeAddress';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -34,7 +35,7 @@ export default () => (
       <Route exact path='/profile' component={ Profile }/>
       <Route exact path='/profile/edit' component={ EditInfo }/>
       <Route exact path='/profile/changepassword' component={ ChangePassword }/>
-
+      <Route exact path='/profile/ChangeAddress' component={ ChangeAddress }/>
   </Layout>
 );
 
