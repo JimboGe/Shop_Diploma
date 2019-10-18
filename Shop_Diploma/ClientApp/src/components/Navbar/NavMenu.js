@@ -10,7 +10,9 @@ import PropTypes from 'prop-types';
 class NavMenu extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      searchKey : ''
+    };
   }
   dropItemMan() {
     return (
@@ -311,23 +313,18 @@ class NavMenu extends Component {
       </div>
     );
   }
-  dropItemCart() {
-    return (
-      <div className='cart'>
-        <p>2 товара (Дивитися)</p>
-        <div className='price'>
-          <p>Сума <span>100 грн.</span></p>
-        </div>
-        <button className='btn btn-dark'>Оформить заказ</button>
-      </div>
-    );
-  }
   logout = (e) => {
-    //e.preventDefault();
     this.props.logout();
   }
+  searchProduct=(e)=>{
+    e.preventDefault();
+    let {searchKey} = this.state;
+    this.getElementsBySearch(searchKey);
+  }
+  handleChange = (e) => {
+    this.setState({searchKey : e.target.value});
+}
   render() {
-
     const { isAuthenticated, user } = this.props.auth;
     console.log("USER----",user);
     var guestElem = (<div>
@@ -373,16 +370,12 @@ class NavMenu extends Component {
               <div style={{ float: 'left', marginLeft: '1%', paddingTop: '1px', marginTop: '3.5px' }}>
                 <Link to='/services' className='services'> Доставка, оплата, повернення</Link>
               </div>
+              
               <div style={{ float: 'right' }}>
-                <Link to='/cart' id='cart' >
-                  <i className="fa fa-shopping-cart" style={{ fontSize: '18px' }}></i>
-                  {this.dropItemCart()}
-                </Link>
-              </div>
-              <div style={{ float: 'right' }}>
-                <Form inline>
-                  <FormControl type="text" placeholder="Пошук..." />
-                </Form>
+                  <form onSubmit={this.searchProduct} >
+                      <input type="text" className="form-control" value={this.state.search} 
+                             onChange={this.handleChange} placeholder="Пошук..."/>
+                  </form>
               </div>
             </div>
           </nav>
