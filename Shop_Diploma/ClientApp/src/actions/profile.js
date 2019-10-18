@@ -13,7 +13,6 @@ export function setProfile(data) {
       profile: data
     };
   }
-
   export function getProfile(id) {
     return dispatch => {
       return axios.get('api/client/GetUserInfoById/'+ id)
@@ -34,4 +33,4 @@ export function setProfile(data) {
     return dispatch => {
     return axios.post('api/client/ChangePassword', data);
     }
-};
+  }

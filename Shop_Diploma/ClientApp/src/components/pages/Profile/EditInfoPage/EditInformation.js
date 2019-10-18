@@ -3,6 +3,7 @@ import './EditInformation.css';
 import { Row } from 'react-bootstrap';
 import classnames from 'classnames';
 import {getProfile, editProfile} from '../../../../actions/profile';
+import{changeUserName} from '../../../../actions/auth';
 import { connect } from "react-redux";
 
 class EditInformation extends Component {
@@ -83,6 +84,7 @@ class EditInformation extends Component {
                     () => { this.setState({ done: true }) },
                     (err) => this.setState({ errors: err.response.data, isLoading: false })
                 );
+            this.props.changeUserName(email);
         }
         else {
             this.setState({ errors });
@@ -154,4 +156,4 @@ const mapStateToProps = (state) => {
         auth: state.auth
     };
 }
-export default connect(mapStateToProps, { getProfile, editProfile })(EditInformation);
+export default connect(mapStateToProps, { getProfile, editProfile, changeUserName })(EditInformation);
