@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace Shop_Diploma.Controllers
         }
         // GET: api/Orders
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Order>>> All()
         {
             var orders = await _ctx.Orders.Include(c => c.OrdersProducts).ThenInclude(sc => sc.Product).ToListAsync();

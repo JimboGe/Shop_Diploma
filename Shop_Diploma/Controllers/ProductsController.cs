@@ -18,6 +18,7 @@ using Shop_Diploma.ViewModels;
 
 namespace Shop_Diploma.Controllers
 {
+    [Produces("application/json")]
     [Route("/api/[controller]/[action]")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -32,6 +33,7 @@ namespace Shop_Diploma.Controllers
             this._configuration = _configuration;
             this._env = _env;
         }
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> All()
         {
@@ -85,7 +87,6 @@ namespace Shop_Diploma.Controllers
             }
             return BadRequest("Не найдено продуктів");
         }
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> ByParams(string gender, string category, string brand, string color, string size, string minprice, string maxprice)
         {
@@ -132,8 +133,9 @@ namespace Shop_Diploma.Controllers
             return Ok(review);
         }
 
-        //[Authorize(Roles = "Admin")]
+        
         [HttpPost]
+        [Authorize (Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Product>>> NewProduct([FromBody] ProductViewModel product)
         {
             var newImages = new List<ProductImage>();
@@ -161,8 +163,8 @@ namespace Shop_Diploma.Controllers
             return Ok(newProduct);
         }
 
-        //[Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Product>>> DeleteProduct([FromRoute]int id)
         {
             var product = await _ctx.Products.FindAsync(id);
@@ -184,6 +186,7 @@ namespace Shop_Diploma.Controllers
 
         //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Product>>> EditProduct([FromRoute]int id, [FromBody] Product product)
         {
             if (id != product.Id)
@@ -217,6 +220,7 @@ namespace Shop_Diploma.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddFile(IFormFile uploadedFile)
         {
             if (uploadedFile != null)

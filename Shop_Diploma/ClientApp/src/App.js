@@ -14,6 +14,7 @@ import Profile from './components/pages/Profile/Profile';
 import EditInfo from './components/pages/Profile/EditInfoPage/EditInformation';
 import ChangePassword from './components/pages/Profile/ChangePasswordPage/ChangePassword';
 import ChangeAddress from './components/pages/Profile/ChangeAddressPage/ChangeAddress';
+import requireAuth from "./utils/requireAuth";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -32,10 +33,10 @@ export default () => (
       <Route exact path='/tet' component={ Tet }/>
       <Route exact path='/admin' component={ AdminPage }/>
       <Route exact path='/order' component={ Order }/>
-      <Route exact path='/profile' component={ Profile }/>
-      <Route exact path='/profile/edit' component={ EditInfo }/>
-      <Route exact path='/profile/changepassword' component={ ChangePassword }/>
-      <Route exact path='/profile/ChangeAddress' component={ ChangeAddress }/>
+      <Route exact path='/profile' component={requireAuth( Profile) }/>
+      <Route exact path='/profile/edit' component={requireAuth( EditInfo) }/>
+      <Route exact path='/profile/changepassword' component={requireAuth( ChangePassword )}/>
+      <Route exact path='/profile/ChangeAddress' component={requireAuth(ChangeAddress)}/>
   </Layout>
 );
 

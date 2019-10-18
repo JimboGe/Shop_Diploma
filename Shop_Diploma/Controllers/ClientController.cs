@@ -15,8 +15,10 @@ using Shop_Diploma.ViewModels;
 
 namespace Shop_Diploma.Controllers
 {
+    [Produces("application/json")]
     [Route("/api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class ClientController : ControllerBase
     {
         readonly UserManager<DbUser> _userManager;
@@ -27,7 +29,6 @@ namespace Shop_Diploma.Controllers
             _ctx = ctx;
         }
         // GET: api/Client
-
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUserInfoById(string id)
         {
