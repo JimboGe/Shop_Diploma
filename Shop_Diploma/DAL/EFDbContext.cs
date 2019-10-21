@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Shop_Diploma.DAL.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Shop_Diploma.DAL
@@ -26,7 +27,6 @@ namespace Shop_Diploma.DAL
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<OrdersProducts>()
              .HasKey(t => new { t.OrderId, t.ProductId });
-
             modelBuilder.Entity<OrdersProducts>()
                 .HasOne(sc => sc.Order)
                 .WithMany(s => s.OrdersProducts)
@@ -36,8 +36,13 @@ namespace Shop_Diploma.DAL
                 .HasOne(sc => sc.Product)
                 .WithMany(c => c.OrdersProducts)
                 .HasForeignKey(sc => sc.ProductId);
+            modelBuilder.Entity<Product>()
+            .Property(e => e.Sizes)
+            .HasConversion(
+                v => string.Join(',', v),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
         }
-        
+
     }
    
 }

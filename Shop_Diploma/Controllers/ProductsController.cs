@@ -46,7 +46,7 @@ namespace Shop_Diploma.Controllers
                     p.Gender,
                     p.Color,
                     p.Count,
-                    p.Size,
+                    p.Sizes,
                     p.Price,
                     p.Brand,
                     p.Subcategory,
@@ -73,7 +73,7 @@ namespace Shop_Diploma.Controllers
                     p.Gender,
                     p.Color,
                     p.Count,
-                    p.Size,
+                    p.Sizes,
                     p.Price,
                     p.Brand,
                     p.Subcategory,
@@ -88,7 +88,7 @@ namespace Shop_Diploma.Controllers
             return BadRequest("Не найдено продуктів");
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> ByParams(string gender, string category, string brand, string color, string size, string minprice, string maxprice)
+        public async Task<ActionResult<IEnumerable<Product>>> ByParams(string gender, string category, string brand, string color,string size, string minprice, string maxprice)
         {
             decimal result;
             decimal result1;
@@ -100,7 +100,7 @@ namespace Shop_Diploma.Controllers
                 x.Gender,
                 x.Color,
                 x.Count,
-                x.Size,
+                x.Sizes,
                 x.Price,
                 x.Brand,
                 x.Subcategory,
@@ -110,9 +110,12 @@ namespace Shop_Diploma.Controllers
             }).ToListAsync();
             if (!String.IsNullOrEmpty(gender)) products = products.Where(x => x.Gender == gender).ToList();
             if (!String.IsNullOrEmpty(brand)) products = products.Where(x => x.Brand.Name == brand).ToList();
-            if (!String.IsNullOrEmpty(category))products = products.Where(x => x.Subcategory.Name == category).ToList();
+            if (!String.IsNullOrEmpty(category))
+            {
+                products = products.Where(x => x.Subcategory.Name == category).ToList();
+            }
             if (!String.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
-            if (!String.IsNullOrEmpty(size)){ products = products.Where(x => x.Size == size).ToList();}
+            if (!String.IsNullOrEmpty(size)) products = products.Where(x=>x.Sizes.Select(r=>r).Where(c=>c == size).Any() == true).ToList();
             if (Decimal.TryParse(minprice, out result) && Decimal.TryParse(maxprice, out result1))
             {
                 products = products.Where(x => x.Price >= result && x.Price <= result1).ToList();
@@ -153,7 +156,7 @@ namespace Shop_Diploma.Controllers
                 Count = product.Count,
                 Description = product.Description,
                 Gender = product.Gender,
-                Size = product.Size,
+               // Size = product.Size,
                 Price = product.Price,
                 SizeImageId = product.SizeImageId,
                 Images = newImages

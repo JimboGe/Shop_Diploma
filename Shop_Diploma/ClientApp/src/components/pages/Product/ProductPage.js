@@ -60,15 +60,15 @@ class ProductPage extends Component {
         var product = this.props.products;
         var sizes = "";
         if (typeof sizes === 'string') {
-            sizes = product.length > 0? product[0].size : '';
-            sizes = sizes?sizes.split(','):'';
+            sizes = product.length > 0? product[0].sizes : '';
+            
         }
 
         var reviews = product.length > 0 ? product[0].reviews : '';
         var rating = 0;
         if (reviews.length > 0) reviews.map((value) => rating = rating + value.rating);
         rating = rating / reviews.length;
-
+        console.log("RERER_------------------------------",product[0]);
         return (
             <div className='product-page container'>
                 <Row>

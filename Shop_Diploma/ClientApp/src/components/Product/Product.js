@@ -9,8 +9,14 @@ class Product extends Component {
         this.state = {};
     }
     render() {
+        
         const { product } = this.props;
-        console.log(product[0].gender);
+        let sizes='';
+        product[0].sizes.map((value, index)=>{
+            sizes+=value;
+            if(index < product[0].sizes.length - 1)sizes+=',';
+        });
+        console.log("PRODUCTSSSS-------------------------",sizes);
         return (
             <Col sm={12} md={3}   className='product' >
                 <div style={{ textAlign: 'center' }}>
@@ -32,7 +38,7 @@ class Product extends Component {
                         </div>
                         <div className='price'>{product[0].price} грн</div>
                         <div className='size'>
-                            <span>{product[0].size}</span>
+                            <span>{sizes}</span>
                         </div>
                         <div>
                             <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`} className='btn btn-dark'>Замовити</a>

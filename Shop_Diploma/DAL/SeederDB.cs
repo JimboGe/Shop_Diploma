@@ -354,7 +354,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 20,
-                    Size = null,
+                    Sizes = new []{""},
                     SubcategoryId = subCategories.Where(x=>x.Name == "backpacks").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product
@@ -367,7 +367,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "yellow",
                     Count = 12,
-                    Size = null,
+                    Sizes= new []{""},
                     SubcategoryId = subCategories.Where(x=>x.Name == "backpacks").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product
@@ -380,7 +380,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "blue",
                     Count = 3,
-                    Size = null,
+                    Sizes= new []{""},
                     SubcategoryId = subCategories.Where(x=>x.Name == "backpacks").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product
@@ -393,7 +393,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "blue",
                     Count = 3,
-                    Size = null,
+                    Sizes= new []{""},
                     SubcategoryId = subCategories.Where(x=>x.Name == "backpacks").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product
@@ -406,7 +406,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 12,
-                    Size = null,
+                    Sizes= new []{""},
                     SubcategoryId = subCategories.Where(x=>x.Name == "bags-on-the-shoulder").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product
@@ -419,7 +419,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 13,
-                    Size = null,
+                    Sizes= new []{""},
                     SubcategoryId = subCategories.Where(x=>x.Name == "bags-on-the-shoulder").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product
@@ -432,7 +432,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 13,
-                    Size = null,
+                    Sizes= new []{""},
                     SubcategoryId = subCategories.Where(x=>x.Name == "bananki").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product
@@ -445,7 +445,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 13,
-                    Size = null,
+                    Sizes= new []{""},
                     SubcategoryId = subCategories.Where(x=>x.Name == "bananki").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product
@@ -458,7 +458,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "orange",
                     Count = 1,
-                    Size = null,
+                    Sizes = new []{""},
                     SubcategoryId = subCategories.Where(x=>x.Name == "bananki").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product
@@ -470,7 +470,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "blue",
                     Count = 2,
-                    Size = "S",
+                    Sizes =new []{"S","M","XL" },
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "none").Select(x=>x.Id).SingleOrDefault(),
                     SubcategoryId = subCategories.Where(x=>x.Name == "outerwear").Select(x=>x.Id).SingleOrDefault()
                 },
@@ -483,7 +483,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 5,
-                    Size = "XL",
+                    Sizes = new []{"XL" },
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "none").Select(x=>x.Id).SingleOrDefault(),
                     SubcategoryId = subCategories.Where(x=>x.Name == "outerwear").Select(x=>x.Id).SingleOrDefault()
                 },
@@ -496,7 +496,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "orange",
                     Count = 5,
-                    Size = "41",
+                    Sizes = new []{"42" },
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "shoes").Select(x=>x.Id).SingleOrDefault(),
                     SubcategoryId = subCategories.Where(x=>x.Name == "chereviki").Select(x=>x.Id).SingleOrDefault()
                 },
@@ -509,7 +509,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 5,
-                    Size = "44",
+                    Sizes = new []{"41" },
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "shoes").Select(x=>x.Id).SingleOrDefault(),
                     SubcategoryId = subCategories.Where(x=>x.Name == "sneakers").Select(x=>x.Id).SingleOrDefault()
                 },
@@ -522,7 +522,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 5,
-                    Size = "44",
+                    Sizes = new []{"44" },
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "shoes").Select(x=>x.Id).SingleOrDefault(),
                     SubcategoryId = subCategories.Where(x=>x.Name == "kedi").Select(x=>x.Id).SingleOrDefault()
                 },
@@ -535,7 +535,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "green",
                     Count = 5,
-                    Size = "",
+                    Sizes = new []{""},
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "none").Select(x=>x.Id).SingleOrDefault(),
                     SubcategoryId = subCategories.Where(x=>x.Name == "belts").Select(x=>x.Id).SingleOrDefault()
                 },
@@ -548,7 +548,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "white",
                     Count = 5,
-                    Size = "L",
+                    Sizes = new []{"S"},
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "trousers").Select(x=>x.Id).SingleOrDefault(),
                     SubcategoryId = subCategories.Where(x=>x.Name == "sport-trousers").Select(x=>x.Id).SingleOrDefault()
                 },
@@ -561,7 +561,7 @@ namespace Shop_Diploma.DAL
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "grey",
                     Count = 5,
-                    Size = "",
+                    Sizes = new []{""},
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "none").Select(x=>x.Id).SingleOrDefault(),
                     SubcategoryId = subCategories.Where(x=>x.Name == "hats").Select(x=>x.Id).SingleOrDefault()
                 }
