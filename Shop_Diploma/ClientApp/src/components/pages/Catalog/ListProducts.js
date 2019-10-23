@@ -16,7 +16,8 @@ class ListProducts extends Component {
             sizeTable: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '36', '36.5', '37', '37.5', '38',
                 '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5',
                 '43', '43.5', '44', '44.5', '45', '45.5', '46', '46.5', '47'],
-            slidervalue: { min: 125, max: 3700 }
+            slidervalue: { min: 125, max: 3700 },
+            error : ''
         };
     }
     createSizeTable(value, index) {
@@ -78,7 +79,7 @@ class ListProducts extends Component {
         this.props.getProductsByParams(gender, category, brand, color, size, minprice, maxprice)
             .then(
                 () => { },
-                (err) => { console.log("Error get data ", err); }
+                (err) => this.setState({error:err.response.data})
             )
 
         if (gender == null && brand == null && category == null && color == null && size == null && minprice == null && maxprice == null) {
@@ -122,6 +123,7 @@ class ListProducts extends Component {
     render() {
         var { products, categories } = this.props;
         var categoriesElem;
+        const {error} = this.state;
         if (categories.length > 0) {
             categoriesElem = (<div className='filter-categories'>
                 <div className='title'>
@@ -134,7 +136,7 @@ class ListProducts extends Component {
                     <li className='has-submenu'>
                         {categories.map(value =>
                             <li className='has-submenu'>
-                                <div style={{ color: '#919191', fontSize: '15px' }}>{value[0].uaName}</div>
+                                <li><a href={`/catalog/search?category=${value[0].name}`}><i className='fa fa-square-o'></i>{value[0].uaName}</a></li>
                                 <ul>
                                     {value[0].subcategories.map(subvalue =>
                                         <li><a href={`/catalog/search?category=${subvalue.name}`}><i className='fa fa-square-o'></i>{subvalue.uaName}</a></li>)}
@@ -146,6 +148,7 @@ class ListProducts extends Component {
 
         }
         return (
+
             <div className='list-products'>
                 <Row >
                     <Col xs={7} lg={2} className='filter'>
@@ -290,8 +293,9 @@ class ListProducts extends Component {
                     <Col xs={8} lg={10} className='container-products'>
                         <div className='products'>
                             <Row>
-                                {products.length > 0 ? products.map((value, index, array) =>
-                                    <Product product={value} key={index} />) : <div style={{ marginLeft: '25px', fontSize: '25px' }}>Продуктів не найденно</div>}
+                                {!!error?<h1 style={{marginLeft:'25px'}}>{error}</h1>:''}
+                                {products.map((value, index) =>
+                                    <Product product={value} key={index} />)}
                             </Row>
                         </div>
                     </Col>

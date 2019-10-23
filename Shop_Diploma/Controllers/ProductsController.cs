@@ -90,8 +90,8 @@ namespace Shop_Diploma.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> ByParams(string gender, string category, string brand, string color,string size, string minprice, string maxprice)
         {
-            decimal result;
-            decimal result1;
+            decimal min;
+            decimal max;
             var products = await _ctx.Products.Select(x => new
             {
                 x.Id,
@@ -112,15 +112,34 @@ namespace Shop_Diploma.Controllers
             if (!String.IsNullOrEmpty(brand)) products = products.Where(x => x.Brand.Name == brand).ToList();
             if (!String.IsNullOrEmpty(category))
             {
-                products = products.Where(x => x.Subcategory.Name == category).ToList();
+                var searchCategories = await _ctx.Products.Where(x => x.Subcategory.Category.Name == category).Select(x => new {
+                    x.Id,
+                    x.Name,
+                    x.Description,
+                    x.Gender,
+                    x.Color,
+                    x.Count,
+                    x.Sizes,
+                    x.Price,
+                    x.Brand,
+                    x.Subcategory,
+                    x.Images,
+                    x.SizeImage,
+                    x.Reviews
+                }).ToListAsync();
+
+                if (searchCategories.Count > 0)
+                    products = searchCategories;
+                else
+                    products = products.Where(x => x.Subcategory.Name == category).ToList();
             }
             if (!String.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
             if (!String.IsNullOrEmpty(size)) products = products.Where(x=>x.Sizes.Select(r=>r).Where(c=>c == size).Any() == true).ToList();
-            if (Decimal.TryParse(minprice, out result) && Decimal.TryParse(maxprice, out result1))
+            if (Decimal.TryParse(minprice, out min) && Decimal.TryParse(maxprice, out max))
             {
-                products = products.Where(x => x.Price >= result && x.Price <= result1).ToList();
+               products = products.Where(x => x.Price >= min && x.Price <= max).ToList();
             }
-            if (products != null)
+            if (products.Count > 0)
             {
                 return Ok(products.GroupBy(x => x.Id));
             }

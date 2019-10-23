@@ -326,7 +326,6 @@ class NavMenu extends Component {
 }
   render() {
     const { isAuthenticated, user } = this.props.auth;
-    console.log("USER----",user);
     var guestElem = (<div>
       <Link to='/cart'>
         <i className="fa fa-shopping-cart"></i>
@@ -386,14 +385,14 @@ class NavMenu extends Component {
               <Row>
                 <Col md={8}>
                   <div className='logo'>
-                    <Link to='/'>
+                    <a href='/'>
                       <img src='/img/logo.png' height='70px' alt='logo' />
                       <div>
                         <span>
                           The clothest, that live your life.
                         </span>
                       </div>
-                    </Link>
+                    </a>
                   </div>
                 </Col>
                 <Col lg={4} >
