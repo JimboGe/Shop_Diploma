@@ -31,5 +31,5 @@ export const getRegions=()=> {
             calledMethod: 'getAreas'
         }
     }
-    axios.post(settings.url, settings.data).then(res => {createOptions('region', res.data.data);});
+   return axios.post(settings.url, settings.data).then(res => {createOptions('region', res.data.data);});
 }

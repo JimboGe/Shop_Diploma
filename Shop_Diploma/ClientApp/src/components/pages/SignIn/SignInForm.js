@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { Redirect } from "react-router";
 
-
 class SignInForm extends Component {
     constructor(props) {
         super(props);
