@@ -20,17 +20,6 @@ class ListProducts extends Component {
             error : ''
         };
     }
-    createSizeTable(value, index) {
-        return (
-            <Col lg={4} key={index}>
-                <Link to={`size=${value}`}>
-                    <li className='secondary'>
-                        <span >{value}</span>
-                    </li>
-                </Link>
-            </Col>
-        );
-    }
     clickAnimation = (e) => {
         const element = e.target;
         const te = document.getElementById(e.target.id + '-menu');
@@ -45,13 +34,13 @@ class ListProducts extends Component {
         }
     }
     addHrefsForLinks(linkName) {
-        var elements = document.getElementsByClassName(linkName);
-        var innerHTML = '';
-        var location = document.location.search;
-        var path = 'catalog/search';
-        var haveLinkName = location.search(linkName);
-        var resultHref = '';
-        for (var i = 0; i < elements.length; i++) {
+        let elements = document.getElementsByClassName(linkName);
+        let innerHTML = '';
+        let location = document.location.search;
+        let path = 'catalog/search';
+        let haveLinkName = location.search(linkName);
+        let resultHref = '';
+        for (let i = 0; i < elements.length; i++) {
             innerHTML = elements[i].getElementsByTagName('span')[0].innerHTML;
             if (haveLinkName < 0)
                 resultHref = (location === '') ? path + '?' + linkName + '=' + innerHTML : path + location + '&' + linkName + '=' + innerHTML;
@@ -120,10 +109,18 @@ class ListProducts extends Component {
     componentDidUpdate() {
         this.checkedLink();
     }
+    createSizeTable(value) {
+        return (
+            <li>
+                <a className='size' href='#'><span>{value}</span></a>
+            </li>
+        );
+    }
     render() {
         var { products, categories } = this.props;
         var categoriesElem;
-        const {error} = this.state;
+        const {error, sizeTable} = this.state;
+        
         if (categories.length > 0) {
             categoriesElem = (<div className='filter-categories'>
                 <div className='title'>
@@ -148,7 +145,6 @@ class ListProducts extends Component {
 
         }
         return (
-
             <div className='list-products'>
                 <Row >
                     <Col xs={7} lg={2} className='filter'>
@@ -187,99 +183,7 @@ class ListProducts extends Component {
                                 </ul>
                                 <h4>Розмір</h4>
                                 <ul className='list-inline-item'>
-                                    <li>
-                                        <a className='size' href='#'><span>XS</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>S</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>L</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>M</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>XL</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>XXL</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>34</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>34.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>35</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>35.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>36</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>36.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>37</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>37.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>38</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>38.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>39</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>39.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>40</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>40.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>41</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>41.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>42</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>42.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>43</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>43.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>44</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>44.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>45</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>45.5</span></a>
-                                    </li>
-                                    <li>
-                                        <a className='size' href='#'><span>46</span></a>
-                                    </li>
+                                   {sizeTable.map(value=>this.createSizeTable(value))}
                                 </ul>
                                 <h4>Бренд</h4>
                                 <ul className='list-inline-item'>
