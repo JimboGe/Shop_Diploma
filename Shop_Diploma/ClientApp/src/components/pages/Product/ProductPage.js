@@ -14,11 +14,12 @@ class ProductPage extends Component {
         super(props);
         this.state = {
             counter: 1,
-            idProduct:0
+            idProduct: 0,
+            testimg: {}
         };
     }
     componentDidMount = () => {
-        this.setState({idProduct:this.props.match.params.id});
+        this.setState({ idProduct: this.props.match.params.id });
         const id = this.props.match.params.id;
         this.props.getProductById(id)
             .then(
@@ -26,10 +27,13 @@ class ProductPage extends Component {
                 (err) => { console.log("Error get data ", err); }
             )
     }
-    
-    imageZoom(type) {
-        var modal = document.getElementById('modal');
+
+    imageZoom(type, e) {
+        let modal = document.getElementById('modal');
         if (type === 'show') {
+            let index = e.target.parentElement.getAttribute('index');
+            let elem = document.getElementsByClassName('sliderTray___-vHFQ sliderAnimation___300FY carousel__slider-tray')[1];
+            elem.style.transform = `translateX(-${index * 25}%) translateX(0px)`;
             modal.setAttribute('class', 'modal');
             modal.style.display = 'block';
         }
@@ -51,24 +55,24 @@ class ProductPage extends Component {
                 e.target.setAttribute('active', '');
         }
     }
-    scrollTop=(e)=>{
+    scrollTop(e) {
         e.preventDefault();
         var pos = $('#add-review-form').offset().top - 200;
-        $('html,body').animate({scrollTop: pos},1200, 'swing');
+        $('html,body').animate({ scrollTop: pos }, 1200, 'swing');
     }
+
     render() {
         var product = this.props.products;
+
         var sizes = "";
         if (typeof sizes === 'string') {
-            sizes = product.length > 0? product[0].sizes : '';
-            
+            sizes = product.length > 0 ? product[0].sizes : '';
         }
-
+        console.log("TETETET---------------", this.state.testimg);
         var reviews = product.length > 0 ? product[0].reviews : '';
         var rating = 0;
         if (reviews.length > 0) reviews.map((value) => rating = rating + value.rating);
         rating = rating / reviews.length;
-        console.log("RERER_------------------------------",product[0]);
         return (
             <div className='product-page container'>
                 <Row>
@@ -78,15 +82,15 @@ class ProductPage extends Component {
                                 naturalSlideWidth={70}
                                 naturalSlideHeight={95}
                                 totalSlides={product.length > 0 && product[0].images.length}>
-                                <Slider>
+                                <Slider onMasterSpinner={this.test}>
                                     {product.length > 0 && product[0].images.map((value, index, array) =>
-                                        <Slide key={index} index={index}><ImageWithZoom src={value.path} onClick={() => this.imageZoom("show")} /></Slide>)}
+                                        <Slide key={index} index={index}><ImageWithZoom index={index} src={value.path} onClick={(e) => this.imageZoom('show', e)} /></Slide>)}
                                 </Slider>
                                 <ButtonBack className='button-move back' />
                                 <ButtonNext className='button-move next' />
                                 <button onClick={() => this.imageZoom('hide', null)} className='close-modal'><i class="fa fa-times"></i></button>
                                 <DotGroup className='dot-group' />
-                                <div className='dot-group-image'>
+                                <div className='dot-group-image' >
                                     {product.length > 0 && product[0].images.map((value, index, array) =>
                                         <Dot slide={index} className='dot-image'>
                                             <Image
@@ -99,24 +103,15 @@ class ProductPage extends Component {
                         <div id='modal'>
                             <CarouselProvider
                                 naturalSlideWidth={70}
-                                naturalSlideHeight={95}
+                                naturalSlideHeight={93}
                                 totalSlides={product.length > 0 && product[0].images.length}>
                                 <Slider>
                                     {product.length > 0 && product[0].images.map((value, index, array) =>
-                                        <Slide key={index} index={index}><ImageWithZoom src={value.path} onClick={() => this.imageZoom("show")} /></Slide>)}
+                                        <Slide key={value} index={index + 1}><ImageWithZoom src={value.path} /></Slide>)}
                                 </Slider>
                                 <ButtonBack className='button-move back' />
                                 <ButtonNext className='button-move next' />
                                 <button onClick={() => this.imageZoom('hide', null)} className='close-modal'><i class="fa fa-times"></i></button>
-                                <DotGroup className='dot-group' />
-                                <div className='dot-group-image'>
-                                    {product.length > 0 && product[0].images.map((value, index, array) =>
-                                        <Dot slide={index} className='dot-image'>
-                                            <Image
-                                                src={value.path}>
-                                            </Image>
-                                        </Dot>)}
-                                </div>
                             </CarouselProvider>
                         </div>
                     </Col>
@@ -143,9 +138,9 @@ class ProductPage extends Component {
                                 </div>
                             </div>
                             <div className='size'>
-                                {sizes!=''?
-                                <span>Розмір:</span>:''}
-                                 <br />
+                                {sizes != '' ?
+                                    <span>Розмір:</span> : ''}
+                                <br />
                                 {typeof sizes === 'object' &&
                                     sizes.map((value) => <input type='radio' value={value} name='size' id={`size-${value}`} />)}
                             </div>
@@ -171,37 +166,37 @@ class ProductPage extends Component {
                                 <div className='hidden' id='new-review'>
                                     <div className='reviews'>
                                         <span>ВІДГУКИ КЛІЄНТІВ</span>
-                                        <span style={{float:'right',cursor:'pointer'}} onClick={this.scrollTop}>Написати відгук</span>
-                                        {reviews.length>0&&reviews.map((value)=>
-                                                    <Row>
-                                                    <Col lg={2}>
-                                                        <div className='fa fa-user' />
-                                                    </Col>
-                                                    <Col lg={7}>
-                                                        <div>
+                                        <span style={{ float: 'right', cursor: 'pointer' }} onClick={this.scrollTop}>Написати відгук</span>
+                                        {reviews.length > 0 && reviews.map((value) =>
+                                            <Row>
+                                                <Col lg={2}>
+                                                    <div className='fa fa-user' />
+                                                </Col>
+                                                <Col lg={7}>
+                                                    <div>
                                                         {value.rating >= 1 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> :
-                                                         <div class="fa fa-star" style={{color:'rgb(207, 207, 207)'}}/>}
-                                                        {value.rating >= 2 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> : 
-                                                        <div class="fa fa-star" style={{color:'rgb(207, 207, 207)'}}/>}
-                                                        {value.rating >= 3 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> : 
-                                                        <div class="fa fa-star" style={{color:'rgb(207, 207, 207)'}}/>}
-                                                        {value.rating >= 4 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> : 
-                                                        <div class="fa fa-star" style={{color:'rgb(207, 207, 207)'}}/>}
-                                                        {value.rating >= 5 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> : 
-                                                        <div class="fa fa-star" style={{color:'rgb(207, 207, 207)'}} />}
-                                                        </div>
-                                                        <div className='name'>
-                                                            {value.name} {value.date}
-                                                        </div>
-                                                        <div className='text'>
-                                                            {value.text}
-                                                        </div>
-                                                    </Col>
-                                                </Row>)}
-                                        <AddReview idProduct={this.state.idProduct}/>
+                                                            <div class="fa fa-star" style={{ color: 'rgb(207, 207, 207)' }} />}
+                                                        {value.rating >= 2 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> :
+                                                            <div class="fa fa-star" style={{ color: 'rgb(207, 207, 207)' }} />}
+                                                        {value.rating >= 3 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> :
+                                                            <div class="fa fa-star" style={{ color: 'rgb(207, 207, 207)' }} />}
+                                                        {value.rating >= 4 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> :
+                                                            <div class="fa fa-star" style={{ color: 'rgb(207, 207, 207)' }} />}
+                                                        {value.rating >= 5 ? <div style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star" /> :
+                                                            <div class="fa fa-star" style={{ color: 'rgb(207, 207, 207)' }} />}
+                                                    </div>
+                                                    <div className='name'>
+                                                        {value.name} {value.date}
+                                                    </div>
+                                                    <div className='text'>
+                                                        {value.text}
+                                                    </div>
+                                                </Col>
+                                            </Row>)}
+                                        <AddReview idProduct={this.state.idProduct} />
                                     </div>
 
-                                    
+
                                 </div>
                             </div>
                         </div>
