@@ -78,9 +78,7 @@ class ProductPage extends Component {
                 <Row>
                     <Col lg={6}>
                         <div>
-                            <CarouselProvider
-                                naturalSlideWidth={70}
-                                naturalSlideHeight={95}
+                            <CarouselProvider naturalSlideWidth={70} naturalSlideHeight={95}
                                 totalSlides={product.length > 0 && product[0].images.length}>
                                 <Slider onMasterSpinner={this.test}>
                                     {product.length > 0 && product[0].images.map((value, index, array) =>
@@ -101,9 +99,7 @@ class ProductPage extends Component {
                             </CarouselProvider>
                         </div>
                         <div id='modal'>
-                            <CarouselProvider
-                                naturalSlideWidth={70}
-                                naturalSlideHeight={93}
+                            <CarouselProvider naturalSlideWidth={70} naturalSlideHeight={93}
                                 totalSlides={product.length > 0 && product[0].images.length}>
                                 <Slider>
                                     {product.length > 0 && product[0].images.map((value, index, array) =>

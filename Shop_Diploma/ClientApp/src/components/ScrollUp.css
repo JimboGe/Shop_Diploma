@@ -6,7 +6,7 @@
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     transition: all 0.5s;
- 
+    z-index: 3;
 }
 .ScrollUp button.btn.btn-default
 {
@@ -19,6 +19,7 @@
     border:none;
     box-shadow: none;
     opacity: 0.9;
+    
 }
 .ScrollUp button:hover{
     background: rgb(59, 59, 59);
@@ -33,7 +34,7 @@
     position: absolute;
     transition-duration: 200ms;
 }
-.ScrollUp.tet{
+.ScrollUp.hide-animation{
     
    bottom:-100px;
   
