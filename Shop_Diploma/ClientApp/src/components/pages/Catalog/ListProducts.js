@@ -21,18 +21,32 @@ class ListProducts extends Component {
             currentGender: ''
         };
     }
-    addHrefsForLinks=(linkName)=> {
+    componentDidUpdate() {
+        this.addHrefsForLinks('brand');
+        this.addHrefsForLinks('size');
+        this.addHrefsForLinks('color');
+        this.addHrefsForLinks('category');
+        this.setActiveFilter();
+    }
+
+    componentDidMount = () => {
+        this.getCurrentGender();
+        this.getCategories();
+        this.getProductsByParams();
+    }
+
+    addHrefsForLinks = (linkName) => {
         let elements = document.getElementsByClassName(linkName);
         let innerHTML = '';
         let location = document.location.search;
         let path = 'catalog/search';
         let haveLinkName = location.search(linkName);
         let resultHref = '';
-        let {currentGender} = this.state;
+        let { currentGender } = this.state;
 
         for (let i = 0; i < elements.length; i++) {
             if (linkName == 'category')
-                innerHTML = elements[i].getElementsByTagName('span')[0].getAttribute('value');
+                innerHTML = elements[i].getElementsByTagName('span')[0].getAttribute('checked-value');
             else
                 innerHTML = elements[i].getElementsByTagName('span')[0].innerHTML;
             if (haveLinkName < 0)
@@ -44,6 +58,7 @@ class ListProducts extends Component {
         }
 
     }
+
     getProductsByParams() {
         let gender = (new URLSearchParams(this.props.location.search)
             .get("gender")) != null ? (new URLSearchParams(this.props.location.search).get("gender")) : "";
@@ -73,6 +88,7 @@ class ListProducts extends Component {
                 )
         }
     }
+
     getCategories() {
         this.props.getCategories()
             .then(
@@ -80,43 +96,29 @@ class ListProducts extends Component {
                 (err) => { console.log("Error get data ", err); }
             )
     }
-    checkedLink() {
-        //  let links = document.getElementsByClassName('filter-container')[0].getElementsByTagName('a');
-        //  let location = document.location.search;
-        // let value = '';
-        // Array.from(links).forEach(element => {
-        //     value = element.getElementsByTagName('span')[0].getAttribute('value');
-        //     if (location.match(value)!=null) {
-        //         element.parentElement.setAttribute('class', 'checked');
-        //     }
-        // });
-        const locationHref = (window.location.href);
-        let links = document.getElementsByClassName('filter-container')[0].getElementsByTagName('a');
-        let parent;
-        //довго
-        Array.from(links).forEach(element => {
-            if (element.href === locationHref) {
-                parent = element.parentElement;
-                parent.setAttribute('class', 'checked');
+
+    setActiveFilter() {
+        const location = document.location.search;
+        let value, i;
+        let links = [];
+        let filters = document.getElementsByClassName('filter-container');
+
+        
+            for (i = 0; i < filters.length; i++) {
+                Array.from(filters[i].getElementsByTagName('a')).forEach(element => {
+                    links.push(element);
+                });
             }
-        });
-    }
-    componentDidMount = () => {
-        this.getCurrentGender();
-        this.getCategories();
-        this.getProductsByParams();
         
 
+        //need fix where S === XS
+        links.forEach(element => {
+            value = element.getElementsByTagName('span')[0].getAttribute('checked-value');
+            location.indexOf(value) != -1 ? element.parentElement.setAttribute('class', 'checked') : '';
+        });
     }
 
-    componentDidUpdate() {
-        this.addHrefsForLinks('brand');
-        this.addHrefsForLinks('size');
-        this.addHrefsForLinks('color');
-        this.addHrefsForLinks('category');
-        this.checkedLink();
-    }
-    getCurrentGender=()=>{
+    getCurrentGender = () => {
         let location = document.location.search;
         let search = location.match('gender');
         let gender = location.match('gender=woman');
@@ -124,59 +126,62 @@ class ListProducts extends Component {
             currentGender: search != null ? gender != null ? 'woman' : 'man' : ''
         });
     }
+
     createSizeTable(value) {
         return (
             <li>
-                <a className='size' href='#'><span>{value}</span></a>
+                <a className='size' href='#'><span checked-value={value}>{value}</span></a>
             </li>
         );
     }
-    createCategories(currentGender,categories){
+
+    createCategories(currentGender, categories) {
         return (<div className='filter-categories'>
-        <div className='title'>
-            <h4>КАТЕГОРІЇ</h4>
-        </div>
-        <ul className='filter-container'>
-            <li>
-                <a href={`/catalog/search?gender=${currentGender}`}><i className='fa fa-square-o'></i><span>ВСЕ</span></a>
-            </li>
-            <li className='has-submenu'>
-                {categories.map(value =>
-                    <li className='has-submenu'>
-                        <li>
-                            <a className='category' href={`/catalog/search?category=${value[0].name}`} >
-                                <i className='fa fa-square-o'></i>
-                                <span value={value[0].name}>{value[0].uaName}</span>
-                            </a>
-                        </li>
-                        <ul>
-                            {value[0].subcategories.map(subvalue =>
-                                subvalue.gender === 'all' &&
-                                <li >
-                                    <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
-                                        <i className='fa fa-square-o'></i>
-                                        <span value={subvalue.name}>{subvalue.uaName}</span>
-                                    </a>
-                                </li>)}
-                            {value[0].subcategories.map(subvalue =>
-                                subvalue.gender === currentGender && subvalue.gender != 'all' &&
-                                <li>
-                                    <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
-                                        <i className='fa fa-square-o'></i>
-                                        <span value={subvalue.name}>{subvalue.uaName}</span>
-                                    </a>
-                                </li>)}
-                        </ul>
-                    </li>)}
-            </li>
-        </ul>
-    </div>);
+            <div className='title'>
+                <h4>КАТЕГОРІЇ</h4>
+            </div>
+            <ul className='filter-container'>
+                <li>
+                    <a href={`/catalog/search?gender=${currentGender}`}><i className='fa fa-square-o'></i><span>ВСЕ</span></a>
+                </li>
+                <li className='has-submenu'>
+                    {categories.map(value =>
+                        <li className='has-submenu'>
+                            <li>
+                                <a className='category' href={`/catalog/search?category=${value[0].name}`} >
+                                    <i className='fa fa-square-o'></i>
+                                    <span checked-value={value[0].name}>{value[0].uaName}</span>
+                                </a>
+                            </li>
+                            <ul>
+                                {value[0].subcategories.map(subvalue =>
+                                    subvalue.gender === 'all' &&
+                                    <li >
+                                        <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
+                                            <i className='fa fa-square-o'></i>
+                                            <span checked-value={subvalue.name}>{subvalue.uaName}</span>
+                                        </a>
+                                    </li>)}
+                                {value[0].subcategories.map(subvalue =>
+                                    subvalue.gender === currentGender && subvalue.gender != 'all' &&
+                                    <li>
+                                        <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
+                                            <i className='fa fa-square-o'></i>
+                                            <span checked-value={subvalue.name}>{subvalue.uaName}</span>
+                                        </a>
+                                    </li>)}
+                            </ul>
+                        </li>)}
+                </li>
+            </ul>
+        </div>);
     }
+
     render() {
-        
+
         let { products, categories } = this.props;
         const { error, sizeTable, currentGender } = this.state;
-        let categoriesElem = this.createCategories(currentGender,categories);
+        let categoriesElem = this.createCategories(currentGender, categories);
 
         return (
             <div className='list-products'>
@@ -191,28 +196,28 @@ class ListProducts extends Component {
                                 <h4>Колір</h4>
                                 <ul className='list-inline-item'>
                                     <li>
-                                        <a className='color' title='Black' style={{ background: 'black' }} href='#'><span>black</span></a>
+                                        <a className='color' title='Black' style={{ background: 'black' }} href='#'><span checked-value='black'>black</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Red' style={{ background: 'red' }} href='#'><span>red</span></a>
+                                        <a className='color' title='Red' style={{ background: 'red' }} href='#'><span checked-value='red'>red</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Yellow' style={{ background: 'yellow' }} href='#'><span>yellow</span></a>
+                                        <a className='color' title='Yellow' style={{ background: 'yellow' }} href='#'><span checked-value='yellow'>yellow</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='White' style={{ background: 'white' }} href='#'><span>white</span></a>
+                                        <a className='color' title='White' style={{ background: 'white' }} href='#'><span checked-value='white'>white</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Orange' style={{ background: 'orange' }} href='#'><span>orange</span></a>
+                                        <a className='color' title='Orange' style={{ background: 'orange' }} href='#'><span checked-value='orange'>orange</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Gray' style={{ background: 'gray' }} href='#'><span>gray</span></a>
+                                        <a className='color' title='Gray' style={{ background: 'gray' }} href='#'><span checked-value='gray'>gray</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Blue' style={{ background: 'blue' }} href='#'><span>blue</span></a>
+                                        <a className='color' title='Blue' style={{ background: 'blue' }} href='#'><span checked-value='blue'>blue</span></a>
                                     </li>
                                     <li>
-                                        <a className='color' title='Green' style={{ background: 'green' }} href='#'><span>green</span></a>
+                                        <a className='color' title='Green' style={{ background: 'green' }} href='#'><span checked-value='green'>green</span></a>
                                     </li>
                                 </ul>
                                 <h4>Розмір</h4>
