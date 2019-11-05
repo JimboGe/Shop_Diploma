@@ -17,38 +17,32 @@ class ListProducts extends Component {
                 '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5',
                 '43', '43.5', '44', '44.5', '45', '45.5', '46', '46.5', '47'],
             slidervalue: { min: 125, max: 3700 },
-            error : ''
+            error: '',
+            currentGender: ''
         };
     }
-    clickAnimation = (e) => {
-        const element = e.target;
-        const te = document.getElementById(e.target.id + '-menu');
-        if (element.getAttribute('class') === 'hide-filter') {
-            element.setAttribute('class', 'show-filter');
-
-            te.setAttribute('class', 'visible');
-        }
-        else {
-            element.setAttribute('class', 'hide-filter');
-            te.setAttribute('class', 'hidden');
-        }
-    }
-    addHrefsForLinks(linkName) {
+    addHrefsForLinks=(linkName)=> {
         let elements = document.getElementsByClassName(linkName);
         let innerHTML = '';
         let location = document.location.search;
         let path = 'catalog/search';
         let haveLinkName = location.search(linkName);
         let resultHref = '';
+        let {currentGender} = this.state;
+
         for (let i = 0; i < elements.length; i++) {
-            innerHTML = elements[i].getElementsByTagName('span')[0].innerHTML;
+            if (linkName == 'category')
+                innerHTML = elements[i].getElementsByTagName('span')[0].getAttribute('value');
+            else
+                innerHTML = elements[i].getElementsByTagName('span')[0].innerHTML;
             if (haveLinkName < 0)
                 resultHref = (location === '') ? path + '?' + linkName + '=' + innerHTML : path + location + '&' + linkName + '=' + innerHTML;
             else {
-                resultHref = path + '?' + linkName + '=' + innerHTML;
+                resultHref = path + '?gender=' + currentGender + '&' + linkName + '=' + innerHTML;
             }
             elements[i].href = resultHref;
         }
+
     }
     getProductsByParams() {
         let gender = (new URLSearchParams(this.props.location.search)
@@ -68,7 +62,7 @@ class ListProducts extends Component {
         this.props.getProductsByParams(gender, category, brand, color, size, minprice, maxprice)
             .then(
                 () => { },
-                (err) => this.setState({error:err.response.data})
+                (err) => this.setState({ error: err.response.data })
             )
 
         if (gender == null && brand == null && category == null && color == null && size == null && minprice == null && maxprice == null) {
@@ -87,6 +81,15 @@ class ListProducts extends Component {
             )
     }
     checkedLink() {
+        //  let links = document.getElementsByClassName('filter-container')[0].getElementsByTagName('a');
+        //  let location = document.location.search;
+        // let value = '';
+        // Array.from(links).forEach(element => {
+        //     value = element.getElementsByTagName('span')[0].getAttribute('value');
+        //     if (location.match(value)!=null) {
+        //         element.parentElement.setAttribute('class', 'checked');
+        //     }
+        // });
         const locationHref = (window.location.href);
         let links = document.getElementsByClassName('filter-container')[0].getElementsByTagName('a');
         let parent;
@@ -97,17 +100,29 @@ class ListProducts extends Component {
                 parent.setAttribute('class', 'checked');
             }
         });
-
     }
     componentDidMount = () => {
+        this.getCurrentGender();
         this.getCategories();
+        this.getProductsByParams();
+        
+
+    }
+
+    componentDidUpdate() {
         this.addHrefsForLinks('brand');
         this.addHrefsForLinks('size');
         this.addHrefsForLinks('color');
-        this.getProductsByParams();
-    }
-    componentDidUpdate() {
+        this.addHrefsForLinks('category');
         this.checkedLink();
+    }
+    getCurrentGender=()=>{
+        let location = document.location.search;
+        let search = location.match('gender');
+        let gender = location.match('gender=woman');
+        this.setState({
+            currentGender: search != null ? gender != null ? 'woman' : 'man' : ''
+        });
     }
     createSizeTable(value) {
         return (
@@ -116,34 +131,53 @@ class ListProducts extends Component {
             </li>
         );
     }
-    render() {
-        var { products, categories } = this.props;
-        var categoriesElem;
-        const {error, sizeTable} = this.state;
-        
-        if (categories.length > 0) {
-            categoriesElem = (<div className='filter-categories'>
-                <div className='title'>
-                    <h4>КАТЕГОРІЇ</h4>
-                </div>
-                <ul className='filter-container'>
-                    <li>
-                        <a href='/catalog/search?'><i className='fa fa-square-o'></i>ВСІ</a>
-                    </li>
+    createCategories(currentGender,categories){
+        return (<div className='filter-categories'>
+        <div className='title'>
+            <h4>КАТЕГОРІЇ</h4>
+        </div>
+        <ul className='filter-container'>
+            <li>
+                <a href={`/catalog/search?gender=${currentGender}`}><i className='fa fa-square-o'></i><span>ВСЕ</span></a>
+            </li>
+            <li className='has-submenu'>
+                {categories.map(value =>
                     <li className='has-submenu'>
-                        {categories.map(value =>
-                            <li className='has-submenu'>
-                                <li><a href={`/catalog/search?category=${value[0].name}`}><i className='fa fa-square-o'></i>{value[0].uaName}</a></li>
-                                <ul>
-                                    {value[0].subcategories.map(subvalue =>
-                                        <li><a href={`/catalog/search?category=${subvalue.name}`}><i className='fa fa-square-o'></i>{subvalue.uaName}</a></li>)}
-                                </ul>
-                            </li>)}
-                    </li>
-                </ul>
-            </div>);
+                        <li>
+                            <a className='category' href={`/catalog/search?category=${value[0].name}`} >
+                                <i className='fa fa-square-o'></i>
+                                <span value={value[0].name}>{value[0].uaName}</span>
+                            </a>
+                        </li>
+                        <ul>
+                            {value[0].subcategories.map(subvalue =>
+                                subvalue.gender === 'all' &&
+                                <li >
+                                    <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
+                                        <i className='fa fa-square-o'></i>
+                                        <span value={subvalue.name}>{subvalue.uaName}</span>
+                                    </a>
+                                </li>)}
+                            {value[0].subcategories.map(subvalue =>
+                                subvalue.gender === currentGender && subvalue.gender != 'all' &&
+                                <li>
+                                    <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
+                                        <i className='fa fa-square-o'></i>
+                                        <span value={subvalue.name}>{subvalue.uaName}</span>
+                                    </a>
+                                </li>)}
+                        </ul>
+                    </li>)}
+            </li>
+        </ul>
+    </div>);
+    }
+    render() {
+        
+        let { products, categories } = this.props;
+        const { error, sizeTable, currentGender } = this.state;
+        let categoriesElem = this.createCategories(currentGender,categories);
 
-        }
         return (
             <div className='list-products'>
                 <Row >
@@ -183,7 +217,7 @@ class ListProducts extends Component {
                                 </ul>
                                 <h4>Розмір</h4>
                                 <ul className='list-inline-item'>
-                                   {sizeTable.map(value=>this.createSizeTable(value))}
+                                    {sizeTable.map(value => this.createSizeTable(value))}
                                 </ul>
                                 <h4>Бренд</h4>
                                 <ul className='list-inline-item'>
@@ -197,7 +231,7 @@ class ListProducts extends Component {
                     <Col xs={8} lg={10} className='container-products'>
                         <div className='products'>
                             <Row>
-                                {!!error?<h1 style={{marginLeft:'25px'}}>{error}</h1>:''}
+                                {!!error ? <h1 style={{ marginLeft: '25px' }}>{error}</h1> : ''}
                                 {products.map((value, index) =>
                                     <Product product={value} key={index} />)}
                             </Row>

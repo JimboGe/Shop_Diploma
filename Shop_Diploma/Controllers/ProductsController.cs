@@ -129,7 +129,7 @@ namespace Shop_Diploma.Controllers
                 }).ToListAsync();
 
                 if (searchCategories.Count > 0)
-                    products = searchCategories;
+                    products = searchCategories.Where(x=>x.Gender == gender).ToList();
                 else
                     products = products.Where(x => x.Subcategory.Name == category).ToList();
             }

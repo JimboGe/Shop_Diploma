@@ -203,8 +203,8 @@ namespace Shop_Diploma.DAL
                  new Subcategory
                 {
                     Name="baseball-caps",
-                    CategoryId = categories.Where(x=>x.Name == "bags-backpacks").Select(x=>x.Id).SingleOrDefault(),
-                     Gender = "all",
+                    CategoryId = categories.Where(x=>x.Name == "accessories").Select(x=>x.Id).SingleOrDefault(),
+                    Gender = "all",
                     UAName="Бейсболки"
                 },
                  new Subcategory
@@ -218,7 +218,7 @@ namespace Shop_Diploma.DAL
                 {
                     Name="belts",
                     CategoryId = categories.Where(x=>x.Name == "accessories").Select(x=>x.Id).SingleOrDefault(),
-                    Gender ="all",
+                    Gender ="man",
                     UAName="Ремні"
                 },
                  new Subcategory
