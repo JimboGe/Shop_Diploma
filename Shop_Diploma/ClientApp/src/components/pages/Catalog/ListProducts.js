@@ -99,23 +99,30 @@ class ListProducts extends Component {
 
     setActiveFilter() {
         const location = document.location.search;
-        let value, i;
-        let links = [];
-        let filters = document.getElementsByClassName('filter-container');
+        const category = new URLSearchParams(location).get('category');
+        const size = new URLSearchParams(this.props.location.search).get('size');
+        const color = new URLSearchParams(this.props.location.search).get('color');
+        const brand = new URLSearchParams(this.props.location.search).get('brand');
 
-        
-            for (i = 0; i < filters.length; i++) {
-                Array.from(filters[i].getElementsByTagName('a')).forEach(element => {
-                    links.push(element);
-                });
-            }
-        
+        let value;
+        let filters = Array.from(document.getElementsByClassName('filter-container'));
 
-        //need fix where S === XS
-        links.forEach(element => {
-            value = element.getElementsByTagName('span')[0].getAttribute('checked-value');
-            location.indexOf(value) != -1 ? element.parentElement.setAttribute('class', 'checked') : '';
-        });
+        filters.forEach(item =>
+            Array.from(item.getElementsByTagName('a')).forEach(child =>{
+                value = child.getElementsByTagName('span')[0].getAttribute('checked-value');
+                console.log(value);
+                if(category!=null)
+                    value === category ? child.parentElement.setAttribute('class', 'checked') : '';
+                if(size!=null)
+                    value === size ? child.parentElement.setAttribute('class', 'checked') : '';
+                if(color!=null)
+                    value === color ? child.parentElement.setAttribute('class', 'checked') : '';
+                if(brand!=null)
+                    value === brand ? child.parentElement.setAttribute('class', 'checked') : '';
+                if(brand==null&&category==null&&size==null&&color==null)
+                    value === 'all' ? child.parentElement.setAttribute('class', 'checked') : '';
+            })
+        );
     }
 
     getCurrentGender = () => {
@@ -136,13 +143,17 @@ class ListProducts extends Component {
     }
 
     createCategories(currentGender, categories) {
+        
         return (<div className='filter-categories'>
             <div className='title'>
                 <h4>КАТЕГОРІЇ</h4>
             </div>
             <ul className='filter-container'>
-                <li>
-                    <a href={`/catalog/search?gender=${currentGender}`}><i className='fa fa-square-o'></i><span>ВСЕ</span></a>
+                <li >
+                    <a className='category' href={`/catalog/search?gender=${currentGender}`}>
+                        <i className='fa fa-square-o'></i>
+                        <span checked-value='all'>ВСЕ</span>
+                    </a>
                 </li>
                 <li className='has-submenu'>
                     {categories.map(value =>
@@ -156,10 +167,10 @@ class ListProducts extends Component {
                             <ul>
                                 {value[0].subcategories.map(subvalue =>
                                     subvalue.gender === 'all' &&
-                                    <li >
+                                    <li>
                                         <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
                                             <i className='fa fa-square-o'></i>
-                                            <span checked-value={subvalue.name}>{subvalue.uaName}</span>
+                                            <span  checked-value={subvalue.name}>{subvalue.uaName}</span>
                                         </a>
                                     </li>)}
                                 {value[0].subcategories.map(subvalue =>
@@ -178,7 +189,7 @@ class ListProducts extends Component {
     }
 
     render() {
-
+        
         let { products, categories } = this.props;
         const { error, sizeTable, currentGender } = this.state;
         let categoriesElem = this.createCategories(currentGender, categories);
@@ -227,7 +238,7 @@ class ListProducts extends Component {
                                 <h4>Бренд</h4>
                                 <ul className='list-inline-item'>
                                     <li>
-                                        <a className='brand' href='#'><span>Gard</span></a>
+                                        <a className='brand' href='#'><span checked-value='Gard'>Gard</span></a>
                                     </li>
                                 </ul>
                             </div>
