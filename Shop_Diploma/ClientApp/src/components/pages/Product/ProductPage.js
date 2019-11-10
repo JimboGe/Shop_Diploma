@@ -9,6 +9,7 @@ import { getProductById } from '../../../actions/products';
 import { connect } from "react-redux";
 import $ from 'jquery';
 
+
 class ProductPage extends Component {
     constructor(props) {
         super(props);
@@ -76,6 +77,7 @@ class ProductPage extends Component {
         return (
             <div className='product-page container'>
                 <Row>
+                   
                     <Col lg={6}>
                         <div>
                             <CarouselProvider naturalSlideWidth={70} naturalSlideHeight={95}

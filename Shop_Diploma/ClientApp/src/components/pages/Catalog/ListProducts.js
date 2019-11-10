@@ -9,6 +9,7 @@ import { getProducts, getProductsByParams } from '../../../actions/products';
 import { getCategories } from '../../../actions/categories';
 import { connect } from "react-redux";
 
+
 class ListProducts extends Component {
     constructor(props) {
         super(props);
@@ -22,10 +23,7 @@ class ListProducts extends Component {
         };
     }
     componentDidUpdate() {
-        this.addHrefsForLinks('brand');
-        this.addHrefsForLinks('size');
-        this.addHrefsForLinks('color');
-        this.addHrefsForLinks('category');
+        this.addHrefsForLinks();
         this.setActiveFilter();
     }
 
@@ -35,28 +33,44 @@ class ListProducts extends Component {
         this.getProductsByParams();
     }
 
-    addHrefsForLinks = (linkName) => {
-        let elements = document.getElementsByClassName(linkName);
-        let innerHTML = '';
-        let location = document.location.search;
-        let path = 'catalog/search';
-        let haveLinkName = location.search(linkName);
-        let resultHref = '';
-        let { currentGender } = this.state;
 
-        for (let i = 0; i < elements.length; i++) {
-            if (linkName == 'category')
-                innerHTML = elements[i].getElementsByTagName('span')[0].getAttribute('checked-value');
-            else
-                innerHTML = elements[i].getElementsByTagName('span')[0].innerHTML;
-            if (haveLinkName < 0)
-                resultHref = (location === '') ? path + '?' + linkName + '=' + innerHTML : path + location + '&' + linkName + '=' + innerHTML;
-            else {
-                resultHref = path + '?gender=' + currentGender + '&' + linkName + '=' + innerHTML;
+    addHrefsForLinks() {
+        const container = document.getElementsByClassName('filter')[0];
+        let links = Array.from(container.getElementsByTagName('a'));
+        let location, value, classType, localHref, word;
+
+        links.forEach(link => {
+            //value = categoryName, color, size, brandName(shirts,black,S..)
+            value = link.getElementsByTagName('span')[0].getAttribute('checked-value');
+
+            //classType = category,color,brand...
+            classType = link.getAttribute('class');
+
+            //?brand=man&category=...
+            location = document.location.search;
+
+            //classType = category, word = shirts --- ?category=shirts/
+            word = new URLSearchParams(location).get(classType);
+
+            localHref = `/catalog/search${location}`;
+            //If selected Filter Category - ALL, we dont show in the Url
+            if (value != 'all') {
+                //if the word(category) is not found - we write category and value in the url
+                if (location.indexOf(classType) === -1) {
+                    link.href = `${localHref}&${classType}=${value}`;
+                }
+                else {
+                    location = location.replace(word, value);
+                    localHref = `/catalog/search${location}`;
+                    link.href = localHref;
+                    if (link.parentElement.getAttribute('class') === 'checked') {
+                        location = location.replace(`&${classType}=${word}`, '');
+                        localHref = `/catalog/search${location}`;
+                        link.href = localHref;
+                    }
+                }
             }
-            elements[i].href = resultHref;
-        }
-
+        });
     }
 
     getProductsByParams() {
@@ -99,27 +113,17 @@ class ListProducts extends Component {
 
     setActiveFilter() {
         const location = document.location.search;
-        const category = new URLSearchParams(location).get('category');
-        const size = new URLSearchParams(this.props.location.search).get('size');
-        const color = new URLSearchParams(this.props.location.search).get('color');
-        const brand = new URLSearchParams(this.props.location.search).get('brand');
-
-        let value;
+        let value, classType, typeUrlSearch;
         let filters = Array.from(document.getElementsByClassName('filter-container'));
 
         filters.forEach(item =>
-            Array.from(item.getElementsByTagName('a')).forEach(child =>{
+            Array.from(item.getElementsByTagName('a')).forEach(child => {
                 value = child.getElementsByTagName('span')[0].getAttribute('checked-value');
-                console.log(value);
-                if(category!=null)
-                    value === category ? child.parentElement.setAttribute('class', 'checked') : '';
-                if(size!=null)
-                    value === size ? child.parentElement.setAttribute('class', 'checked') : '';
-                if(color!=null)
-                    value === color ? child.parentElement.setAttribute('class', 'checked') : '';
-                if(brand!=null)
-                    value === brand ? child.parentElement.setAttribute('class', 'checked') : '';
-                if(brand==null&&category==null&&size==null&&color==null)
+                classType = child.getAttribute('class');
+                typeUrlSearch = new URLSearchParams(location).get(classType);
+                if (typeUrlSearch != null)
+                    value === typeUrlSearch ? child.parentElement.setAttribute('class', 'checked') : '';
+                else
                     value === 'all' ? child.parentElement.setAttribute('class', 'checked') : '';
             })
         );
@@ -143,7 +147,7 @@ class ListProducts extends Component {
     }
 
     createCategories(currentGender, categories) {
-        
+
         return (<div className='filter-categories'>
             <div className='title'>
                 <h4>КАТЕГОРІЇ</h4>
@@ -170,7 +174,7 @@ class ListProducts extends Component {
                                     <li>
                                         <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
                                             <i className='fa fa-square-o'></i>
-                                            <span  checked-value={subvalue.name}>{subvalue.uaName}</span>
+                                            <span checked-value={subvalue.name}>{subvalue.uaName}</span>
                                         </a>
                                     </li>)}
                                 {value[0].subcategories.map(subvalue =>
@@ -189,7 +193,7 @@ class ListProducts extends Component {
     }
 
     render() {
-        
+
         let { products, categories } = this.props;
         const { error, sizeTable, currentGender } = this.state;
         let categoriesElem = this.createCategories(currentGender, categories);

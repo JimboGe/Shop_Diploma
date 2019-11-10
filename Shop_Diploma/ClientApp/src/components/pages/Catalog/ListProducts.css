@@ -43,7 +43,8 @@
 .list-products .filter-container li{
     margin-bottom:3px;
 }
-.list-products .filter-container li.checked a{
+.list-products .filter-container li.checked a,
+.list-products .filter-container li.checked i{
     color:black;
 }
 .list-products .filter-container li .fa{

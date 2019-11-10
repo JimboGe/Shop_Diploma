@@ -15,6 +15,7 @@ import EditInfo from './components/pages/Profile/EditInfoPage/EditInformation';
 import ChangePassword from './components/pages/Profile/ChangePasswordPage/ChangePassword';
 import ChangeAddress from './components/pages/Profile/ChangeAddressPage/ChangeAddress';
 import requireAuth from "./utils/requireAuth";
+import TestingPage from './components/TestingPage/TestingPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -37,6 +38,7 @@ export default () => (
       <Route exact path='/profile/edit' component={requireAuth( EditInfo) }/>
       <Route exact path='/profile/changepassword' component={requireAuth( ChangePassword )}/>
       <Route exact path='/profile/ChangeAddress' component={requireAuth(ChangeAddress)}/>
+      <Route exact path='/testingPage' component={TestingPage}/>
   </Layout>
 );
 
