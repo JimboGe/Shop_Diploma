@@ -409,6 +409,9 @@ class NavMenu extends Component {
             <div className='container'>
               <ul className="nav">
                 <li className="nav-item dropdownmenu">
+                  <Link className="nav-link" to='/'>Головна</Link>
+                </li>
+                <li className="nav-item dropdownmenu">
                   <a className="nav-link" href='/catalog/search?gender=man'>Чоловіче</a>
                   {this.dropItemMan()}
                 </li>

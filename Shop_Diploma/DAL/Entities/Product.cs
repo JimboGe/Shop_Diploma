@@ -11,6 +11,7 @@ namespace Shop_Diploma.DAL.Entities
         public Product()
         {
             OrdersProducts = new List<OrdersProducts>();
+            Date = DateTime.Today;
         }
         [Key]
         public int Id { get; set; }
@@ -20,6 +21,7 @@ namespace Shop_Diploma.DAL.Entities
         public int Count { get; set; }
         public string Color { get; set; }
         public string Gender { get; set; }
+        public DateTime Date { get; set; }
         public Decimal Price { get; set; }
         [ForeignKey("Subcategory")]
         public int SubcategoryId { get; set; }

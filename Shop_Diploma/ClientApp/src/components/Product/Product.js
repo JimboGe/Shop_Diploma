@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Col } from "react-bootstrap";
 import './Product.css';
 import Fade from 'react-reveal/Fade';
@@ -9,20 +8,39 @@ class Product extends Component {
         super(props);
         this.state = {};
     }
-    render() {
+    getDayOfYear(day) {
+        let now = new Date();
+        let start = new Date(now.getFullYear(), 0, day);
+        let diff = now - start;
+        let oneDay = 1000 * 60 * 60 * 24;
+        return Math.floor(diff / oneDay);
+    }
 
+    render() {
+       
         const { product } = this.props;
+
+        const currentDayOfYear = this.getDayOfYear(new Date().getDate());
+        //if date from server format == d/m/y
+        const dateOfProduct = product[0].date.split('.');
+        const searchDayOfYear = this.getDayOfYear(dateOfProduct[0]);
+        let newElement = currentDayOfYear > searchDayOfYear  - 7?<div className='new-product'>NEW</div>:'';
         let sizes = '';
         product[0].sizes.map((value, index) => {
             sizes += value;
             if (index < product[0].sizes.length - 1) sizes += ',';
         });
+
+       
+
         return (
             <Col sm={12} md={3} className='product' >
-                <Fade >
+                <Fade>
+                {newElement}
                     <div style={{ textAlign: 'center' }}>
                         <div className='image-box'>
                             <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`}>
+                                
                                 {product[0].images.length > 0 && <img src={product[0].images[0].path}
                                     className='first-image'
                                     alt='product-img-first' />}
@@ -51,4 +69,5 @@ class Product extends Component {
         );
     }
 }
+
 export default Product
