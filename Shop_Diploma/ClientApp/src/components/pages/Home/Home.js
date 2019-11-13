@@ -32,7 +32,7 @@ class Home extends Component {
         <div className='grid' id='grid'>
           <div className='item1'>
             <div className='carousel big' >
-              <CarouselProvider naturalSlideWidth={70} naturalSlideHeight={20} totalSlides={4}>
+              <CarouselProvider hasMasterSpinner={true} isPlaying={true} interval={7500} naturalSlideWidth={70} naturalSlideHeight={20} totalSlides={4}>
                 <Slider>
                   {this.state.arrImages.map((value, index, arr) =>
                     <Slide index={index} key={index}><Image src={value} /></Slide>)};
@@ -43,7 +43,7 @@ class Home extends Component {
           </div>
           <div className='item item2'>
             <div>
-              <a href='/catalog/search?gender=man&category=backpacks' ><img src='/img/home/backpacks.jpg' alt='backpacks' />
+              <a href='/catalog/search?gender=man&category=bags-backpacks' ><img src='/img/home/backpacks.jpg' alt='backpacks' />
                 <div className='tt-description'><span>СУМКИ | РЮКЗАКИ</span></div></a>
             </div>
           </div>
@@ -90,8 +90,7 @@ class Home extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    products: state.products.products,
-    categories: state.categories.categories
+    products: state.products.products
   };
 }
 export default connect(mapStateToProps, { getProducts })(Home);

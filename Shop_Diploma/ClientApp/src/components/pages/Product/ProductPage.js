@@ -16,7 +16,8 @@ class ProductPage extends Component {
         this.state = {
             counter: 1,
             idProduct: 0,
-            testimg: {}
+            currentSlide: 0
+
         };
     }
     componentDidMount = () => {
@@ -30,11 +31,8 @@ class ProductPage extends Component {
     }
 
     imageZoom(type, e) {
-        let modal = document.getElementById('modal');
+        const modal = document.getElementById('modal');
         if (type === 'show') {
-            let index = e.target.parentElement.getAttribute('index');
-            let elem = document.getElementsByClassName('sliderTray___-vHFQ sliderAnimation___300FY carousel__slider-tray')[1];
-            elem.style.transform = `translateX(-${index * 25}%) translateX(0px)`;
             modal.setAttribute('class', 'modal');
             modal.style.display = 'block';
         }
@@ -43,6 +41,15 @@ class ProductPage extends Component {
             modal.setAttribute('class', ' ');
         }
     }
+
+    setCurrentSlide=()=> {
+        const carousel = document.getElementsByClassName('carousel');
+        const slideElements = Array.from(carousel[0].getElementsByClassName("slide___3-Nqo slideHorizontal___1NzNV carousel__slide"));
+        slideElements.forEach((element, index) => {
+            element.getAttribute('aria-selected') === 'true' ? this.setState({currentSlide: index}) : '';
+        });
+    }
+
     hide_show(e, id) {
         const elem = document.getElementById(id);
         if (elem.getAttribute('class') === 'hidden') {
@@ -56,6 +63,7 @@ class ProductPage extends Component {
                 e.target.setAttribute('active', '');
         }
     }
+
     scrollTop(e) {
         e.preventDefault();
         var pos = $('#add-review-form').offset().top - 200;
@@ -63,13 +71,12 @@ class ProductPage extends Component {
     }
 
     render() {
-        var product = this.props.products;
-
+        const product = this.props.products;
+        const {currentSlide} = this.state;
         var sizes = "";
         if (typeof sizes === 'string') {
             sizes = product.length > 0 ? product[0].sizes : '';
         }
-        console.log("TETETET---------------", this.state.testimg);
         var reviews = product.length > 0 ? product[0].reviews : '';
         var rating = 0;
         if (reviews.length > 0) reviews.map((value) => rating = rating + value.rating);
@@ -77,12 +84,11 @@ class ProductPage extends Component {
         return (
             <div className='product-page container'>
                 <Row>
-                   
                     <Col lg={6}>
                         <div>
-                            <CarouselProvider naturalSlideWidth={70} naturalSlideHeight={95}
+                            <CarouselProvider onClick={this.setCurrentSlide} hasMasterSpinner={true} isPlaying={true} interval={7500} naturalSlideWidth={70} naturalSlideHeight={95}
                                 totalSlides={product.length > 0 && product[0].images.length}>
-                                <Slider onMasterSpinner={this.test}>
+                                <Slider>
                                     {product.length > 0 && product[0].images.map((value, index, array) =>
                                         <Slide key={index} index={index}><ImageWithZoom index={index} src={value.path} onClick={(e) => this.imageZoom('show', e)} /></Slide>)}
                                 </Slider>
@@ -101,7 +107,7 @@ class ProductPage extends Component {
                             </CarouselProvider>
                         </div>
                         <div id='modal'>
-                            <CarouselProvider naturalSlideWidth={70} naturalSlideHeight={93}
+                            <CarouselProvider hasMasterSpinner={true} currentSlide={currentSlide} naturalSlideWidth={70} naturalSlideHeight={93}
                                 totalSlides={product.length > 0 && product[0].images.length}>
                                 <Slider>
                                     {product.length > 0 && product[0].images.map((value, index, array) =>
