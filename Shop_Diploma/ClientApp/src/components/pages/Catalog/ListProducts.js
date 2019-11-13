@@ -37,36 +37,41 @@ class ListProducts extends Component {
         const container = document.getElementsByClassName('filter')[0];
         let links = Array.from(container.getElementsByTagName('a'));
         let location, value, classType, localHref, word;
-        console.log('search----',document.location.search);
+        console.log('search----', document.location.search);
         links.forEach(link => {
             //value = categoryName, color, size, brandName(shirts,black,S..)
             value = link.getElementsByTagName('span')[0].getAttribute('checked-value');
 
             //classType = category,color,brand...
             classType = link.getAttribute('class');
-            
-            //?brand=man&category=...
+
+            //?brand=man&category=shirts...
             location = document.location.search;
 
             //classType = category, word = shirts --- ?category=shirts/
             word = new URLSearchParams(location).get(classType);
 
             localHref = `/catalog/search${location}`;
-
-            if (location.indexOf(classType) === -1) {
-                link.href = `${localHref}&${classType}=${value}`;
-            }
-            else {
-                location = location.replace(word, value);
-                localHref = `/catalog/search${location}`;
-                link.href = localHref;
-                if (link.parentElement.getAttribute('class') === 'checked') {
-                    location = location.replace(`&${classType}=${word}`, '');
+            //If selected Filter Category - ALL, we dont show in the Url	
+            if (value != 'all') {
+                //if the word(category) is not found - we write category and value in the url
+                if (location.indexOf(classType) === -1) {
+                    link.href = localHref.indexOf('?') !== -1 ? `${localHref}&${classType}=${value}` : `${localHref}?${classType}=${value}`;
+                }
+                else {
+                    location = location.replace(word, value);
                     localHref = `/catalog/search${location}`;
                     link.href = localHref;
+                    if (link.parentElement.getAttribute('class') === 'checked') {
+                        location = location.indexOf(`&${classType}=${word}`) > 0 ? location.replace(`&${classType}=${word}`, '') : location;
+                        location = location.indexOf(`${classType}=${word}&`) > 0 ? location.replace(`${classType}=${word}&`, '') : location;
+                        location = location.indexOf(`${classType}=${word}`) > 0 ? location.replace(`${classType}=${word}`, '') : location;
+                        localHref = `/catalog/search${location}`;
+                        link.href = localHref;
+                    }
                 }
             }
-            
+
         });
     }
 
@@ -144,14 +149,13 @@ class ListProducts extends Component {
     }
 
     createCategories(currentGender, categories) {
-
         return (<div className='filter-categories'>
             <div className='title'>
                 <h4>КАТЕГОРІЇ</h4>
             </div>
             <ul className='filter-container'>
                 <li >
-                    <a className='category' href={`/catalog/search?`}>
+                    <a className='category' href={`/catalog/search?${currentGender !== '' ? 'gender=' + currentGender : ''}`}>
                         <i className='fa fa-square-o'></i>
                         <span checked-value='all'>ВСЕ</span>
                     </a>
