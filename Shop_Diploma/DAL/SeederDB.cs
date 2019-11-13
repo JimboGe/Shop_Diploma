@@ -335,6 +335,11 @@ namespace Shop_Diploma.DAL
                    CategoryName = "none",
                    Path = ""
                 },
+                new SizeImage
+                {
+                    CategoryName="outerwear",
+                    Path="https://gard.com.ua/image/catalog/shop/STRU_739d3884-d32a-11e9-af8a-9e1680149fdf.jpg"
+                }
             };
             if (!_ctx.SizeImages.Any())
             {
@@ -350,7 +355,7 @@ namespace Shop_Diploma.DAL
                     Description = "Універсальний рюкзак, Який розміром трохи менше нашого рюкзака BACKPACK-2. Компактний, але в той же час місткий. Однаково стильно буде виглядати як на чоловічих, так і на жіночих плечах. Велике основне відділення з кишенею для ноутбука (діагональ до 14). Зовнішній кишеню на блискавки. Зовні розташовані два еластичних бічних кишені з сітки. Дно рюкзака ущільнено. М'які регульовані лямки і спинка Оснащені високоякісної вентильованого сіткою 3D Air Mesh.",
                     Price = 420,
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "backpacks").Select(x=>x.Id).SingleOrDefault(),
-                    Gender = "man",
+                    Gender = "all",
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 20,
@@ -363,7 +368,7 @@ namespace Shop_Diploma.DAL
                     Description = "Універсальний рюкзак, Який розміром трохи менше нашого рюкзака BACKPACK-2. Компактний, але в той же час місткий. Однаково стильно буде виглядати як на чоловічих, так і на жіночих плечах. Велике основне відділення з кишенею для ноутбука (діагональ до 14). Зовнішній кишеню на блискавки. Зовні розташовані два еластичних бічних кишені з сітки. Дно рюкзака ущільнено. М'які регульовані лямки і спинка Оснащені високоякісної вентильованого сіткою 3D Air Mesh.",
                     Price = 420,
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "backpacks").Select(x=>x.Id).SingleOrDefault(),
-                    Gender = "man",
+                    Gender = "all",
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "yellow",
                     Count = 12,
@@ -376,7 +381,7 @@ namespace Shop_Diploma.DAL
                     Description = "Унікальна модель рюкзака, який поєднує в собі неймовірну місткість і в той же час акуратність завдяки оптимальній кількості деталей. Виготовлений з дуже міцного поліестеру з водовідштовхувальними властивостями. Усередині основного відділення на замку знаходиться кишеню для ноутбука (діагоналлю до 15.6) на липучці. Ще один великий кишеню на блискавки зовні. З боків рюкзака розташовані два еластичних кишені з сітки. М'які регульовані лямки. Нашивка і пуллер з натуральної шкіри. Універсальний рюкзак ідеально підходить для повсякденного використання, а також, завдяки великому обсягу, для подорожей.",
                     Price = 440,
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "backpacks").Select(x=>x.Id).SingleOrDefault(),
-                    Gender = "man",
+                    Gender = "all",
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "blue",
                     Count = 3,
@@ -389,7 +394,7 @@ namespace Shop_Diploma.DAL
                     Description = "Зручна модель рюкзака типу роллтоп стане в нагоді і в місті, і за його межами. Унікальна застібка основного кишені затягується ззаду, завдяки цьому стропа щільно прилягає до рюкзака і не стукає при ходьбі і бігу!. Анатомічні, м'які ручки прошиті спеціальної 3D сіткою Air Mesh, що дозволить зручно носити рюкзак",
                     Price = 650,
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "backpacksROLLTOP").Select(x=>x.Id).SingleOrDefault(),
-                    Gender = "man",
+                    Gender = "all",
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "blue",
                     Count = 3,
@@ -402,7 +407,7 @@ namespace Shop_Diploma.DAL
                     Description = "Сумка виконана з якісної поліестерової тканини, яка не боїться вологи і перепадів температур. Основне відділення на блискавці має 3 внутрішніх кишені різних розмірів для дрібниць. Ще один кишеню на блискавки знаходиться на лицьовій стороні. Підкладка: 100% поліестер. Ремінь - якісна стропа шириною 3 см. Довжина ременя регулюється, максимальна - 140 см. На лицьовій стороні рефлективний логотип. Пуллер із пластику максимально зручні у використанні. Аксесуар, завдяки якому найнеобхідніші речі завжди будуть з Вами, просто незамінний в повсякденному житті. Сумка відмінно підійде для портмоне, планшета, телефону або блокнота формату А5, а також різної дрібниці.",
                     Price = 230,
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "bags-on-the-shoulder").Select(x=>x.Id).SingleOrDefault(),
-                    Gender = "man",
+                    Gender = "all",
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 12,
@@ -415,7 +420,7 @@ namespace Shop_Diploma.DAL
                     Description = "Сумка через плече COPYLEATHER зроблена спеціально під зошит стандартних розмірів! Мессенджер став незамінним в повсякденному застосуванні, ідеально підійде для студентів і просто будь-якого активній людині. Основна частина сумочки виконана з якісної поліестерової тканини, яка не боїться вологи і перепадів температур, низ вироби з еко-шкіри щільної і надміцної, також цей матеріал ми використовуємо для ущільнення дна рюкзаків. Основне відділення на блискавці має 2 внутрішніх кишені. На лицьовій стороні кишеню на блискавки. Підкладка: 100% поліестер. Ремінь - якісна стропа шириною 3 см. Довжина ременя регулюється, максимальна 140 см. Пуллер із пластику допоможуть зручно відкривати замки сумочки.",
                     Price = 240,
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "bags-on-the-shoulder").Select(x=>x.Id).SingleOrDefault(),
-                    Gender = "man",
+                    Gender = "all",
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 13,
@@ -428,7 +433,7 @@ namespace Shop_Diploma.DAL
                     Description = "Поясна сумка виконана з якісної поліестерової тканини, яка не боїться вологи і перепадів температур. Має 4 кишені на блискавці: три зовнішніх і один внутрішній. Підкладка: 100% поліестер. Ремінь - якісна стропа шириною 4 см, дозволяє зафіксувати сумку в потрібному положенні. Довжина ременя регулюється, максимальний обхват 120 см. Незамінний в повсякденному житті аксесуар підійде кожному і стане не тільки красивим, але і практичним доповненням до Вашого образу.",
                     Price = 220,
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "bananki").Select(x=>x.Id).SingleOrDefault(),
-                    Gender = "man",
+                    Gender = "all",
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 13,
@@ -441,7 +446,7 @@ namespace Shop_Diploma.DAL
                     Description = "Поясна сумка виконана з якісної поліестерової тканини, яка не боїться вологи і перепадів температур. Має 4 кишені на блискавці: три зовнішніх і один внутрішній. Підкладка: 100% поліестер. Ремінь - якісна стропа шириною 4 см, дозволяє зафіксувати сумку в потрібному положенні. Довжина ременя регулюється, максимальний обхват 120 см. Незамінний в повсякденному житті аксесуар підійде кожному і стане не тільки красивим, але і практичним доповненням до Вашого образу.",
                     Price = 225,
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "bananki").Select(x=>x.Id).SingleOrDefault(),
-                    Gender = "man",
+                    Gender = "all",
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "black",
                     Count = 13,
@@ -454,7 +459,7 @@ namespace Shop_Diploma.DAL
                     Description = "Поясна сумка STINGER ущільнена з обох сторін піноматеріалом, тому добре тримає форму, також вона виконана з якісної еко-шкіри, яка не боїться вологи і перепадів температур. Два відділення на блискавці, а також правильна форма дозволять відмінно розподілити всі необхідні речі всередині. Підкладка: 100% поліестер. Ремінь - широка, дуже міцна стропа, яка фіксується за допомогою якісного фастекса.",
                     Price = 255,
                     SizeImageId = sizeImages.Where(x=>x.CategoryName == "bananki").Select(x=>x.Id).SingleOrDefault(),
-                    Gender = "man",
+                    Gender = "all",
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "orange",
                     Count = 1,
@@ -464,14 +469,14 @@ namespace Shop_Diploma.DAL
                 new Product
                 {
                     Name = "Membrana PROTECT | 3/19",
-                    Description = "Поясна сумка STINGER ущільнена з обох сторін піноматеріалом, тому добре тримає форму, також вона виконана з якісної еко-шкіри, яка не боїться вологи і перепадів температур. Два відділення на блискавці, а також правильна форма дозволять відмінно розподілити всі необхідні речі всередині. Підкладка: 100% поліестер. Ремінь - широка, дуже міцна стропа, яка фіксується за допомогою якісного фастекса.",
+                    Description = "Куртка з маскою PROTECT JACKET вже стала однією з візитних карток нашого бренду, вона знайшла своє застосування у багатьох субкультур.Унікальний, глибокий капюшон-маска зігріє ваше обличчя в осінні вітру або просто сховає від очей сторонніх.Утеплювач - holosoft (це дихаючий утеплювач нового покоління, який за своєю структурою більш щільний, ніж всі інші утеплювачі, а все волокна його з'єднані між собою, що не дасть йому збиватися після прання.Зручний, практичний крій куртки і основна тканина мембрана з характеристиками 5000х5000 зроблять куртку справжнім щитом від вітру, дощу і снігу в місті і за його межами.Виріб розраховане на осінь або ранню зиму.",
                     Price = 1056,
                     Gender = "man",
                     BrandId = brands.Where(x=>x.Name == "Gard").Select(x=>x.Id).SingleOrDefault(),
                     Color = "blue",
                     Count = 2,
                     Sizes =new []{"S","M","XL" },
-                    SizeImageId = sizeImages.Where(x=>x.CategoryName == "none").Select(x=>x.Id).SingleOrDefault(),
+                    SizeImageId = sizeImages.Where(x=>x.CategoryName == "outerwear").Select(x=>x.Id).SingleOrDefault(),
                     SubcategoryId = subCategories.Where(x=>x.Name == "outerwear").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product
@@ -484,7 +489,7 @@ namespace Shop_Diploma.DAL
                     Color = "black",
                     Count = 5,
                     Sizes = new []{"XL" },
-                    SizeImageId = sizeImages.Where(x=>x.CategoryName == "none").Select(x=>x.Id).SingleOrDefault(),
+                    SizeImageId = sizeImages.Where(x=>x.CategoryName == "outerwear").Select(x=>x.Id).SingleOrDefault(),
                     SubcategoryId = subCategories.Where(x=>x.Name == "outerwear").Select(x=>x.Id).SingleOrDefault()
                 },
                 new Product

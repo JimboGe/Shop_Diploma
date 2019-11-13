@@ -43,37 +43,37 @@ class Home extends Component {
           </div>
           <div className='item item2'>
             <div>
-              <a href='/catalog/search?gender=man&category=bags-backpacks' ><img src='/img/home/backpacks.jpg' alt='backpacks' />
+              <a href='/catalog/search?category=bags-backpacks' ><img src='/img/home/backpacks.jpg' alt='backpacks' />
                 <div className='tt-description'><span>СУМКИ | РЮКЗАКИ</span></div></a>
             </div>
           </div>
           <div className='item item3'>
             <div>
-              <a href='/catalog/search?gender=man&category=baseball-caps'><img src='/img/home/accessories.jpg' alt='accessories' />
+              <a href='/catalog/search?category=baseball-caps'><img src='/img/home/accessories.jpg' alt='accessories' />
                 <div className='tt-description'><span>КЕПКИ</span></div></a>
             </div>
           </div>
           <div className='item item4'>
             <div>
-              <a href='/catalog/search?gender=man&category=outerwear'><img src='/img/home/outerwear.jpg' alt='outerwear' />
+              <a href='/catalog/search?category=outerwear'><img src='/img/home/outerwear.jpg' alt='outerwear' />
                 <div className='tt-description'><span>ВЕРХНІЙ ОДЯГ</span></div></a>
             </div>
           </div>
           <div className='item item5'>
             <div>
-              <a href='/catalog/search?gender=man&category=sport-trousers'><img src='/img/home/trousers.jpg' alt='trousers' />
+              <a href='/catalog/search?category=sport-trousers'><img src='/img/home/trousers.jpg' alt='trousers' />
                 <div className='tt-description'><span>ШТАНИ</span></div></a>
             </div>
           </div>
           <div className='item item6'>
             <div>
-              <a href='/catalog/search?gender=man&category=hudi'><img src='/img/home/hudi.jpg' alt='hudi' />
+              <a href='/catalog/search?category=hudi'><img src='/img/home/hudi.jpg' alt='hudi' />
                 <div className='tt-description'><span>ХУДІ | СВІТШОТИ</span></div></a>
             </div>
           </div>
           <div className='item item7'>
             <div>
-              <a href='/catalog/search?gender=man&category=shoes'><img src='/img/home/shoes.jpg' alt='shoes' />
+              <a href='/catalog/search?category=shoes'><img src='/img/home/shoes.jpg' alt='shoes' />
                 <div className='tt-description'><span>ВЗУТТЯ</span></div></a>
             </div>
           </div>

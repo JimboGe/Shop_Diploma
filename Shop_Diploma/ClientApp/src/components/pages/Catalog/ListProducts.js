@@ -33,19 +33,18 @@ class ListProducts extends Component {
         this.getProductsByParams();
     }
 
-
     addHrefsForLinks() {
         const container = document.getElementsByClassName('filter')[0];
         let links = Array.from(container.getElementsByTagName('a'));
         let location, value, classType, localHref, word;
-
+        console.log('search----',document.location.search);
         links.forEach(link => {
             //value = categoryName, color, size, brandName(shirts,black,S..)
             value = link.getElementsByTagName('span')[0].getAttribute('checked-value');
 
             //classType = category,color,brand...
             classType = link.getAttribute('class');
-
+            
             //?brand=man&category=...
             location = document.location.search;
 
@@ -53,23 +52,21 @@ class ListProducts extends Component {
             word = new URLSearchParams(location).get(classType);
 
             localHref = `/catalog/search${location}`;
-            //If selected Filter Category - ALL, we dont show in the Url
-            if (value != 'all') {
-                //if the word(category) is not found - we write category and value in the url
-                if (location.indexOf(classType) === -1) {
-                    link.href = `${localHref}&${classType}=${value}`;
-                }
-                else {
-                    location = location.replace(word, value);
+
+            if (location.indexOf(classType) === -1) {
+                link.href = `${localHref}&${classType}=${value}`;
+            }
+            else {
+                location = location.replace(word, value);
+                localHref = `/catalog/search${location}`;
+                link.href = localHref;
+                if (link.parentElement.getAttribute('class') === 'checked') {
+                    location = location.replace(`&${classType}=${word}`, '');
                     localHref = `/catalog/search${location}`;
                     link.href = localHref;
-                    if (link.parentElement.getAttribute('class') === 'checked') {
-                        location = location.replace(`&${classType}=${word}`, '');
-                        localHref = `/catalog/search${location}`;
-                        link.href = localHref;
-                    }
                 }
             }
+            
         });
     }
 
@@ -154,7 +151,7 @@ class ListProducts extends Component {
             </div>
             <ul className='filter-container'>
                 <li >
-                    <a className='category' href={`/catalog/search?gender=${currentGender}`}>
+                    <a className='category' href={`/catalog/search?`}>
                         <i className='fa fa-square-o'></i>
                         <span checked-value='all'>ВСЕ</span>
                     </a>

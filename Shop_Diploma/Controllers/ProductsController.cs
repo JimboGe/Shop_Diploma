@@ -112,7 +112,11 @@ namespace Shop_Diploma.Controllers
                 x.Reviews
             }).ToListAsync();
             if (!String.IsNullOrEmpty(gender)) products = products.Where(x => x.Gender == gender).ToList();
-            if (!String.IsNullOrEmpty(brand)) products = products.Where(x => x.Brand.Name == brand).ToList();
+            if (!String.IsNullOrEmpty(brand))
+            {
+
+                products = products.Where(x => x.Brand.Name == "all").ToList();
+            }
             if (!String.IsNullOrEmpty(category))
             {
                 var searchCategories = await _ctx.Products.Where(x => x.Subcategory.Category.Name == category).Select(x => new {
@@ -133,9 +137,20 @@ namespace Shop_Diploma.Controllers
                 }).ToListAsync();
 
                 if (searchCategories.Count > 0)
-                    products = searchCategories.Where(x => x.Gender == gender).ToList();
+                {
+                    if (String.IsNullOrEmpty(gender))
+                    {
+                        products = searchCategories.ToList();
+                    }
+                    else
+                    {
+                        products = searchCategories.Where(x => x.Gender == gender).ToList();
+                    }
+                }
                 else
+                {
                     products = products.Where(x => x.Subcategory.Name == category).ToList();
+                }
             }
             if (!String.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
             if (!String.IsNullOrEmpty(size)) products = products.Where(x=>x.Sizes.Select(r=>r).Where(c=>c == size).Any() == true).ToList();
