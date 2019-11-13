@@ -149,48 +149,58 @@ class ListProducts extends Component {
     }
 
     createCategories(currentGender, categories) {
-        return (<div className='filter-categories'>
-            <div className='title'>
-                <h4>КАТЕГОРІЇ</h4>
-            </div>
-            <ul className='filter-container'>
-                <li >
-                    <a className='category' href={`/catalog/search?${currentGender !== '' ? 'gender=' + currentGender : ''}`}>
-                        <i className='fa fa-square-o'></i>
-                        <span checked-value='all'>ВСЕ</span>
-                    </a>
-                </li>
-                <li className='has-submenu'>
-                    {categories.map(value =>
-                        <li className='has-submenu'>
-                            <li>
-                                <a className='category' href={`/catalog/search?category=${value[0].name}`} >
-                                    <i className='fa fa-square-o'></i>
-                                    <span checked-value={value[0].name}>{value[0].uaName}</span>
-                                </a>
-                            </li>
-                            <ul>
-                                {value[0].subcategories.map(subvalue =>
-                                    subvalue.gender === 'all' &&
-                                    <li>
-                                        <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
-                                            <i className='fa fa-square-o'></i>
-                                            <span checked-value={subvalue.name}>{subvalue.uaName}</span>
-                                        </a>
-                                    </li>)}
-                                {value[0].subcategories.map(subvalue =>
-                                    subvalue.gender === currentGender && subvalue.gender != 'all' &&
-                                    <li>
-                                        <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
-                                            <i className='fa fa-square-o'></i>
-                                            <span checked-value={subvalue.name}>{subvalue.uaName}</span>
-                                        </a>
-                                    </li>)}
-                            </ul>
-                        </li>)}
-                </li>
-            </ul>
-        </div>);
+        return (
+            <div className='filter-categories'>
+                <div className='title'>
+                    <h4>КАТЕГОРІЇ</h4>
+                </div>
+                <ul className='filter-container'>
+                    <li >
+                        <a className='category' href={`/catalog/search?${currentGender !== '' ? 'gender=' + currentGender : ''}`}>
+                            <i className='fa fa-square-o'></i>
+                            <span checked-value='all'>ВСЕ</span>
+                        </a>
+                    </li>
+                    <li className='has-submenu'>
+                        {categories.map(value =>
+                            <li className='has-submenu'>
+                                <li>
+                                    <a className='category' href={`/catalog/search?category=${value[0].name}`} >
+                                        <i className='fa fa-square-o'></i>
+                                        <span checked-value={value[0].name}>{value[0].uaName}</span>
+                                    </a>
+                                </li>
+                                <ul>
+                                    {value[0].subcategories.map(subvalue =>
+                                        subvalue.gender === 'all' &&
+                                        <li>
+                                            <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
+                                                <i className='fa fa-square-o'></i>
+                                                <span checked-value={subvalue.name}>{subvalue.uaName}</span>
+                                            </a>
+                                        </li>)}
+                                    {value[0].subcategories.map(subvalue =>
+                                        subvalue.gender === currentGender && subvalue.gender != 'all' &&
+                                        <li>
+                                            <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
+                                                <i className='fa fa-square-o'></i>
+                                                <span checked-value={subvalue.name}>{subvalue.uaName}</span>
+                                            </a>
+                                        </li>)}
+                                    {currentGender === '' &&
+                                        value[0].subcategories.map(subvalue =>
+                                            subvalue.gender != 'all' &&
+                                            <li>
+                                                <a className='category' href={`/catalog/search?category=${subvalue.name}`}>
+                                                    <i className='fa fa-square-o'></i>
+                                                    <span checked-value={subvalue.name}>{subvalue.uaName}</span>
+                                                </a>
+                                            </li>)}
+                                </ul>
+                            </li>)}
+                    </li>
+                </ul>
+            </div>);
     }
 
     render() {
