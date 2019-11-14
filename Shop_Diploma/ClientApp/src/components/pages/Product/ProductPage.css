@@ -166,7 +166,7 @@ button.button-move.next:after{
 }
 .product-page .size input[type='radio']:after{
     content: attr(value);
-    color:rgb(131, 131, 131);
+    color:#6d6d6d;
     font-size:16px;
     text-shadow: none;
 }
@@ -238,7 +238,7 @@ button.button-move.next:after{
 }
 .product-page .description p{
     margin-top:-7px;
-    color:#999999;
+    color:#6d6d6d;
     font-size:13.5px;
 }
 .product-page .add-review>button{
