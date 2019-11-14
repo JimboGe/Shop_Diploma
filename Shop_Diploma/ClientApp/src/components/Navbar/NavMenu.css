@@ -98,44 +98,7 @@ input.form-control:active, input.form-control:focus, input.form-control:hover{
    color:black;
    transition-duration: 400ms;
 }
-.container.dropdown {
-  font-size:16px;
-}
-.container.dropdown a{
-  color:black;
-  text-decoration: none;
-  transition-duration: 400ms;
-}
-.container.dropdown .row{
- padding-left:30px;
-}
-.container.dropdown a:hover, .container.dropdown .droplist li:hover{
-  color:black;
-} 
-.container.dropdown .droplist a li{
-  font-size:13px;
-  padding-top:3px;
-  margin-left:18px; 
-  color:rgb(97, 97, 97);
-  transition-duration: 400ms;
-}
-.container.dropdown{
-  background:white;
-  box-shadow: 0 3px 5px rgba(0,0,0,.2);
-  position: absolute;
-  margin-left:-135px;
-  margin-top:8px;
-  width:700px;
-  z-index: 5;
-  max-height: 0px;
-  overflow: hidden;
-}
-.dropdownmenu:hover .dropdown{
-  padding:25px;
-  max-height: 1000px;
-  transition-duration: 1s;
-  transition-delay: 400ms;
-}
+
 .navbar.top .cart{
   position: absolute;
   z-index:5;

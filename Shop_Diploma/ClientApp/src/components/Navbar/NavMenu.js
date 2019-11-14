@@ -110,13 +110,13 @@ class NavMenu extends Component {
           <nav>
             <div className='container'>
               <ul className="nav">
-                <li className="nav-item dropdownmenu">
+                <li className="nav-item">
                   <Link className="nav-link" to='/'>Головна</Link>
                 </li>
-                <li className="nav-item dropdownmenu">
+                <li className="nav-item">
                   <a className="nav-link" href='/catalog/search?gender=man'>Чоловіче</a>
                 </li>
-                <li className="nav-item dropdownmenu" >
+                <li className="nav-item" >
                   <a className="nav-link" href="/catalog/search?gender=woman">Жіноче</a>
                 </li>
                 <li className="nav-item">
