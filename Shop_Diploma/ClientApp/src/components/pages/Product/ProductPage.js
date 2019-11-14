@@ -20,7 +20,7 @@ class ProductPage extends Component {
 
         };
     }
-    componentDidMount = () => {
+    componentDidMount() {
         this.setState({ idProduct: this.props.match.params.id });
         const id = this.props.match.params.id;
         this.props.getProductById(id)
@@ -130,17 +130,20 @@ class ProductPage extends Component {
                                 {rating >= 4 ? <i style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star"></i> : <i class="fa fa-star"></i>}
                                 {rating >= 5 ? <i style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star"></i> : <i class="fa fa-star"></i>}
                                 <span>
-                                    {reviews.length <= 1 ? reviews.length + ' відгук' : ' '}
-                                    {reviews.length > 1 ? reviews.length + ' відгуків' : ' '}
+                                    {reviews.length + ' відгуків'}
+                                   
                                 </span>
                             </div>
-                            <div className='size-grid'>
-                                <button onClick={(e) => { this.hide_show(e, 'size-grid-div') }}>РОЗМІРНА СІТКА</button>
-                                <div id='size-grid-div' className='hidden'>
-                                    <img width='100%' alt='size-grid-img'
-                                        src={product.length > 0 && product[0].sizeImage.path} />
+                            
+                            {product.length > 0 && product[0].sizeImage.categoryName!='none'&&
+                                <div className='size-grid'>
+                                    <button onClick={(e) => { this.hide_show(e, 'size-grid-div') }}>РОЗМІРНА СІТКА</button>
+                                    <div id='size-grid-div' className='hidden'>
+                                        <img width='100%' alt='size-grid-img'
+                                            src={product.length > 0 && product[0].sizeImage.path} />
+                                    </div>
                                 </div>
-                            </div>
+                            }
                             <div className='size'>
                                 {sizes != '' ?
                                     <span>Розмір:</span> : ''}

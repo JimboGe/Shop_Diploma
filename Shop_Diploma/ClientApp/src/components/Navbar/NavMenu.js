@@ -123,7 +123,7 @@ class NavMenu extends Component {
                   <a className="nav-link" href="/catalog/search?category=backpacks">Рюкзаки</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/catalog/search?category=bananki">Сумки</a>
+                  <a className="nav-link" href="/catalog/search?category=bananki">Бананки</a>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/news">Новинки</Link>
