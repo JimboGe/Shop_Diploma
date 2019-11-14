@@ -111,13 +111,18 @@ namespace Shop_Diploma.Controllers
                 Date = x.Date.ToString("d"),
                 x.Reviews
             }).ToListAsync();
-            if (!String.IsNullOrEmpty(gender)) products = products.Where(x => x.Gender == gender).ToList();
-            if (!String.IsNullOrEmpty(brand))
+            if (!string.IsNullOrEmpty(gender))
+            {
+                var list_Gender = products.Where(x => x.Gender == gender).ToList();
+                var list_Gender_All = products.Where(x => x.Gender == "all").ToList();
+                products = list_Gender.Concat(list_Gender_All).ToList();
+            }
+            if (!string.IsNullOrEmpty(brand))
             {
 
-                products = products.Where(x => x.Brand.Name == "all").ToList();
+                products = products.Where(x => x.Brand.Name == brand).ToList();
             }
-            if (!String.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category))
             {
                 var searchCategories = await _ctx.Products.Where(x => x.Subcategory.Category.Name == category).Select(x => new {
                     x.Id,
@@ -138,26 +143,26 @@ namespace Shop_Diploma.Controllers
 
                 if (searchCategories.Count > 0)
                 {
-                    if (String.IsNullOrEmpty(gender))
+                    if (!string.IsNullOrEmpty(gender))
                     {
-                        products = searchCategories.ToList();
+                        var list_Gender = searchCategories.Where(x => x.Gender == gender).ToList();
+                        var list_Gender_All = searchCategories.Where(x => x.Gender == "all").ToList();
+                        searchCategories = list_Gender.Concat(list_Gender_All).ToList();
                     }
-                    else
-                    {
-                        products = searchCategories.Where(x => x.Gender == gender).ToList();
-                    }
+                    products = searchCategories.ToList();
                 }
                 else
                 {
                     products = products.Where(x => x.Subcategory.Name == category).ToList();
                 }
             }
-            if (!String.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
-            if (!String.IsNullOrEmpty(size)) products = products.Where(x=>x.Sizes.Select(r=>r).Where(c=>c == size).Any() == true).ToList();
-            if (Decimal.TryParse(minprice, out min) && Decimal.TryParse(maxprice, out max))
+            if (!string.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
+            if (!string.IsNullOrEmpty(size)) products = products.Where(x=>x.Sizes.Select(r=>r).Where(c=>c == size).Any() == true).ToList();
+            if (decimal.TryParse(minprice, out min) && decimal.TryParse(maxprice, out max))
             {
                products = products.Where(x => x.Price >= min && x.Price <= max).ToList();
             }
+
             if (products.Count > 0)
             {
                 return Ok(products.GroupBy(x => x.Id));
