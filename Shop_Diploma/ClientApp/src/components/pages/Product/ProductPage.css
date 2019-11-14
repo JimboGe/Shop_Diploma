@@ -202,12 +202,13 @@ button.button-move.next:after{
  }
 .product-page .counter .button-number input[type='text']{
     width:53px;
+    height: 39px;
     border: none;
     border-top:1px solid black;
     border-bottom:1px solid black;
     outline: none;
-    height: 39px;
     text-align: center;
+    padding-top:0px;
 }
 .product-page .counter .button-number button.btn.btn-default:hover{
     background: black;
