@@ -15,8 +15,10 @@
     border-radius: 4px;
     padding: 0;
 }   
-.list-products .filter-categories{
+.list-products .filter-categories,
+.list-products .filter-genders{
     border:1px solid #dddddd;
+    margin-bottom:25px;
 }
 .list-products .filter div.title{
     text-align: center;
@@ -51,7 +53,8 @@
     color:#919191;
     margin: 0 .25em 0 0;
 }
-.list-products .filter-container li.checked a.category::before{
+.list-products .filter-container li.checked a.category::before,
+.list-products .filter-container li.checked a.gender::before{
     content:'\f00c';
     font-family: 'fontawesome';
     color:black;
@@ -83,7 +86,6 @@
     font-size:13.5px;
 }
 .list-products .filters{
-    margin-top:25px;
     border:1px solid #dddddd;
 }
 .list-products .filters .filter-container h4{

@@ -150,7 +150,7 @@ class ListProducts extends Component {
 
     createCategories(currentGender, categories) {
         return (
-            <div className='filter-categories'>
+            <div>
                 <div className='title'>
                     <h4>КАТЕГОРІЇ</h4>
                 </div>
@@ -211,9 +211,30 @@ class ListProducts extends Component {
 
         return (
             <div className='list-products'>
-                <Row >
+                <Row>
                     <Col xs={7} lg={2} className='filter'>
-                        {categoriesElem}
+                        <div className='filter-genders'>
+                            <div className='title'>
+                                <h4>СТАТЬ</h4>
+                            </div>
+                                <ul className='filter-container'>
+                                    <li>
+                                        <a className='gender' href='#'>
+                                            <i className='fa fa-square-o'></i>
+                                            <span checked-value='man'>ЧОЛОВІЧА</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a className='gender' href='#'>
+                                            <i className='fa fa-square-o'></i>
+                                            <span checked-value='woman'>ЖІНОЧА</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                        </div>
+                        <div className='filter-categories'>
+                            {categoriesElem}
+                        </div>
                         <div className='filters'>
                             <div className='title'>
                                 <h4>ФІЛЬТРИ</h4>
