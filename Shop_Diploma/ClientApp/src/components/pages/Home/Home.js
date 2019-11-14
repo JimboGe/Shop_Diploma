@@ -32,7 +32,8 @@ class Home extends Component {
         <div className='grid' id='grid'>
           <div className='item1'>
             <div className='carousel big' >
-              <CarouselProvider hasMasterSpinner={true} isPlaying={true} interval={7500} naturalSlideWidth={70} naturalSlideHeight={20} totalSlides={4}>
+              <CarouselProvider hasMasterSpinner={true} isPlaying={true}  interval={7500} 
+                                naturalSlideWidth={40} naturalSlideHeight={12} totalSlides={4}>
                 <Slider>
                   {this.state.arrImages.map((value, index, arr) =>
                     <Slide index={index} key={index}><Image src={value} /></Slide>)};
