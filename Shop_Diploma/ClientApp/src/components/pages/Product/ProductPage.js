@@ -88,13 +88,16 @@ class ProductPage extends Component {
                         <div>
                             <CarouselProvider onClick={this.setCurrentSlide} hasMasterSpinner={true} isPlaying={true} interval={7500} naturalSlideWidth={70} naturalSlideHeight={95}
                                 totalSlides={product.length > 0 && product[0].images.length}>
+                                <div>
+                                    <i className='fa fa-search-plus' onClick={(e) => this.imageZoom('show', e)}></i>
+                                </div>
                                 <Slider>
                                     {product.length > 0 && product[0].images.map((value, index, array) =>
-                                        <Slide key={index} index={index}><ImageWithZoom index={index} src={value.path} onClick={(e) => this.imageZoom('show', e)} /></Slide>)}
+                                        <Slide key={index} index={index}><ImageWithZoom index={index} src={value.path}/></Slide>)}
                                 </Slider>
                                 <ButtonBack className='button-move back' />
                                 <ButtonNext className='button-move next' />
-                                <button onClick={() => this.imageZoom('hide', null)} className='close-modal'><i class="fa fa-times"></i></button>
+                                
                                 <DotGroup className='dot-group' />
                                 <div className='dot-group-image' >
                                     {product.length > 0 && product[0].images.map((value, index, array) =>
@@ -115,7 +118,7 @@ class ProductPage extends Component {
                                 </Slider>
                                 <ButtonBack className='button-move back' />
                                 <ButtonNext className='button-move next' />
-                                <button onClick={() => this.imageZoom('hide', null)} className='close-modal'><i class="fa fa-times"></i></button>
+                                <button onClick={() => this.imageZoom('hide', null)} className='close-modal'><i className="fa fa-times"></i></button>
                             </CarouselProvider>
                         </div>
                     </Col>

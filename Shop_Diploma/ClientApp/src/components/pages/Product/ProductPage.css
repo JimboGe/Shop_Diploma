@@ -408,3 +408,19 @@ span.help-block.danger {
 .help-block .fa{
     margin-right:5px;
 }
+.fa.fa-search-plus{
+    position: absolute;
+    z-index: 2;
+    top:15px;
+    right:15px;
+    font-size:20px;
+    background-color: white;
+    padding:6.5px;
+    border-radius: 50%;
+    transition-duration: 500ms;
+}
+.fa.fa-search-plus:hover{
+    background-color:black;
+    color:white;
+    cursor: pointer;
+}
