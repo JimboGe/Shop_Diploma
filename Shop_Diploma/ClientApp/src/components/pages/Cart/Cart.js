@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Cart.css';
 import { connect } from "react-redux";
 import { getCartProducts, deleteProductByCart } from '../../../actions/cart';
+import { newOrder } from '../../../actions/order';
 
 class Cart extends Component {
     constructor(props) {
@@ -80,10 +81,18 @@ class Cart extends Component {
 
     submit=()=>{
         const {isAuthenticated} = this.props.auth;
+        const productId = 1;
+        const fullPrice = 1000;
+        const productCount = 1;
+        const productSize= 'S';
+        const userId = '98f4b7c2-83e2-47cb-85b3-5b2432dc7713';
         if(isAuthenticated){
+            this.props.newOrder({userId,productId ,fullPrice,productCount,productSize}).then(
+                () => { }
+            );
             alert('Замовлення успішно додано');
-            window.location.href = '/profile/historyOrders';
-            
+            //window.location.href = '/profile/historyOrders';
+
         }
         else{
             window.location.href = '/account/signin';
@@ -148,4 +157,4 @@ const mapStateToProps = (state) => {
         auth: state.auth
     };
 }
-export default connect(mapStateToProps, { getCartProducts, deleteProductByCart })(Cart)
+export default connect(mapStateToProps, { getCartProducts, deleteProductByCart, newOrder })(Cart)

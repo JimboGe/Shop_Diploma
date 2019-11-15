@@ -40,6 +40,8 @@ namespace Shop_Diploma
             {
                 // Default Password settings.
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
                 options.Password.RequiredUniqueChars = 0;
             });
 
