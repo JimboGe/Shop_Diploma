@@ -205,10 +205,9 @@ class ListProducts extends Component {
 
     render() {
 
-        let { products, categories } = this.props;
+        let { products, categories} = this.props;
         const { error, sizeTable, currentGender } = this.state;
         let categoriesElem = this.createCategories(currentGender, categories);
-
         return (
             <div className='list-products'>
                 <Row>
@@ -300,4 +299,4 @@ const mapStateToProps = (state) => {
         categories: state.categories.categories
     };
 }
-export default connect(mapStateToProps, { getProducts, getProductsByParams, getCategories })(ListProducts);
+export default connect(mapStateToProps, { getProducts, getProductsByParams, getCategories})(ListProducts);

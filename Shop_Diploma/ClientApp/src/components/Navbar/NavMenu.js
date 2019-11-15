@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Form, FormControl, Row, Col, Navbar, NavItem } from "react-bootstrap";
 import './NavMenu.css';
 import { connect } from "react-redux";
-import { withRouter } from 'react-router-dom';
 import { logout } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
@@ -11,27 +10,32 @@ class NavMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchKey : ''
+      searchKey: ''
     };
   }
 
   logout = (e) => {
     this.props.logout();
   }
-  searchProduct=(e)=>{
+  searchProduct = (e) => {
     e.preventDefault();
-    let {searchKey} = this.state;
+    let { searchKey } = this.state;
     this.getElementsBySearch(searchKey);
   }
   handleChange = (e) => {
-    this.setState({searchKey : e.target.value});
-}
+    this.setState({ searchKey: e.target.value });
+  }
   render() {
+
+    const countItemCart =  this.props.cartProducts.length;
+    let {cartProducts} = this.props;
+
     const { isAuthenticated, user } = this.props.auth;
     var guestElem = (<div>
       <Link to='/cart'>
         <i className="fa fa-shopping-cart"></i>
         <span>КОРЗИНА</span>
+        <span className='cart-item-count'>{countItemCart}</span>
       </Link>
       <Link to='/account/signin'>
         <i className="fa fa-user"></i>
@@ -46,14 +50,12 @@ class NavMenu extends Component {
       <Link to='/cart'>
         <i className="fa fa-shopping-cart"></i>
         <span>КОРЗИНА</span>
-      </Link>
-      <Link to='/profile/order'>
-        <span>ЗАМОВЛЕННЯ</span>
+        <span className='cart-item-count'>{countItemCart}</span>
       </Link>
       <Link to='/profile'>
-        <span>{isAuthenticated?user.name.toUpperCase():''}</span>
+        <span>{isAuthenticated ? user.name.toUpperCase() : ''}</span>
       </Link>
-      <a href='/'onClick={this.logout}>
+      <a href='/' onClick={this.logout}>
         <span>ВИЙТИ</span>
       </a>
     </div>)
@@ -71,12 +73,12 @@ class NavMenu extends Component {
               <div style={{ float: 'left', marginLeft: '1%', paddingTop: '1px', marginTop: '3.5px' }}>
                 <Link to='/services' className='services'> Доставка, оплата, повернення</Link>
               </div>
-              
+
               <div style={{ float: 'right' }}>
-                  <form onSubmit={this.searchProduct} >
-                      <input type="text" className="form-control" value={this.state.search} 
-                             onChange={this.handleChange} placeholder="Пошук..."/>
-                  </form>
+                <form onSubmit={this.searchProduct} >
+                  <input type="text" className="form-control" value={this.state.search}
+                    onChange={this.handleChange} placeholder="Пошук..." />
+                </form>
               </div>
             </div>
           </nav>
@@ -99,7 +101,7 @@ class NavMenu extends Component {
                 </Col>
                 <Col lg={4} >
                   <div className='right'>
-                    {isAuthenticated ? userElem:guestElem}
+                    {isAuthenticated ? userElem : guestElem}
                   </div>
                 </Col>
               </Row>
@@ -145,7 +147,8 @@ NavMenu.propTypes =
   }
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    cartProducts: state.cartProducts.cartProducts
   };
 }
 export default connect(mapStateToProps, { logout })(NavMenu);

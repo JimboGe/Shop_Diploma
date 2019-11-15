@@ -190,3 +190,18 @@ input.form-control:active, input.form-control:focus, input.form-control:hover{
 .navbar.middle .right a:hover i, .navbar.middle .right a:hover span{
   color: black;
 }
+
+.navbar.middle .right span.cart-item-count:hover,
+.navbar.middle .right span.cart-item-count,
+.navbar.middle .right a:hover span.cart-item-count{
+  position: absolute;
+  top:5px;
+  background-color: black;
+  font-size: 13px;
+  color:white;
+  width:16px;
+  height: 16px;
+  text-align: center;
+  border-radius: 50%;
+  
+}

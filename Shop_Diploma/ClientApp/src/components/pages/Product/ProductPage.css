@@ -420,7 +420,7 @@ span.help-block.danger {
     border-radius: 50%;
     transition-duration: 500ms;
 }
-.fa.fa-search-plus:hover{
+.product-page .fa.fa-search-plus:hover{
     background-color:black;
     color:white;
     cursor: pointer;

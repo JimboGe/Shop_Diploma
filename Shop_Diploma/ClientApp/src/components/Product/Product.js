@@ -60,7 +60,7 @@ class Product extends Component {
                                 <span>{sizes}</span>
                             </div>
                             <div>
-                                <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`} className='btn btn-dark'>Замовити</a>
+                                <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`} className='btn btn-dark'>Детальніше</a>
                             </div>
                         </div>
                     </div>

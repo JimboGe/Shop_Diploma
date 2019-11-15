@@ -7,6 +7,7 @@ import users from "../reducers/users";
 import categories from "../reducers/categories";
 import order from "../reducers/order";
 import profile from "../reducers/profile";
+import cartProducts from "../reducers/cart";
 
 export default function configureStore(history, initialState) {
   const reducers = {
@@ -15,7 +16,8 @@ export default function configureStore(history, initialState) {
     users,
     categories,
     order,
-    profile
+    profile,
+    cartProducts
   };
 
   const middleware = [
