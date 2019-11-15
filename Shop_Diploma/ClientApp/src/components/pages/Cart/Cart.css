@@ -76,8 +76,8 @@
     font-size:15px;
     
 }
-.cart .result-price span.text{
-    float:left;
+.cart .result-price {
+    text-align: left;
 }
 .cart .result-price span.value{
     float: right;
