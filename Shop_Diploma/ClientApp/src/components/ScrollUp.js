@@ -17,7 +17,7 @@ class ScrollUp extends Component {
             elem.setAttribute('class','ScrollUp show');
         }
         else{
-            elem.setAttribute('class','ScrollUp tet');
+            elem.setAttribute('class','ScrollUp hide-animation');
         }
     }
     click(e){

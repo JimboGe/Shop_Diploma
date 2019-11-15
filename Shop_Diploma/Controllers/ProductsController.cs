@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Shop_Diploma.DAL;
 using Shop_Diploma.DAL.Entities;
 using Shop_Diploma.Helpers;
@@ -26,7 +27,6 @@ namespace Shop_Diploma.Controllers
         private readonly EFDbContext _ctx;
         private readonly IConfiguration _configuration;
         private readonly IHostingEnvironment _env;
-
         public ProductsController(EFDbContext _ctx, IConfiguration _configuration, IHostingEnvironment _env)
         {
             this._ctx = _ctx;
@@ -37,8 +37,7 @@ namespace Shop_Diploma.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> All()
         {
-            var products = await _ctx.Products.GroupBy(x => x.Id)
-                .Select(x => x.Take(1).Select(p => new
+            var products = await _ctx.Products.OrderByDescending(x=>x.Id).Select(p => new
                 {
                     p.Id,
                     p.Name,
@@ -52,11 +51,13 @@ namespace Shop_Diploma.Controllers
                     p.Subcategory,
                     p.Images,
                     p.SizeImage,
-                    p.Reviews
-                })).ToListAsync();
+                    p.Reviews,
+                    Date = p.Date.ToString("d")
+                }).ToListAsync();
+            
             if (products != null)
             {
-                return Ok(products);
+                return Ok(products.GroupBy(x => x.Id));
             }
             return BadRequest("Не найдено продуктів");
         }
@@ -78,6 +79,7 @@ namespace Shop_Diploma.Controllers
                     p.Brand,
                     p.Subcategory,
                     p.Images,
+                    p.Date,
                     p.SizeImage,
                     p.Reviews
                 })).SingleOrDefaultAsync();
@@ -106,11 +108,21 @@ namespace Shop_Diploma.Controllers
                 x.Subcategory,
                 x.Images,
                 x.SizeImage,
+                Date = x.Date.ToString("d"),
                 x.Reviews
             }).ToListAsync();
-            if (!String.IsNullOrEmpty(gender)) products = products.Where(x => x.Gender == gender).ToList();
-            if (!String.IsNullOrEmpty(brand)) products = products.Where(x => x.Brand.Name == brand).ToList();
-            if (!String.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(gender))
+            {
+                var list_Gender = products.Where(x => x.Gender == gender).ToList();
+                var list_Gender_All = products.Where(x => x.Gender == "all").ToList();
+                products = list_Gender.Concat(list_Gender_All).ToList();
+            }
+            if (!string.IsNullOrEmpty(brand))
+            {
+
+                products = products.Where(x => x.Brand.Name == brand).ToList();
+            }
+            if (!string.IsNullOrEmpty(category))
             {
                 var searchCategories = await _ctx.Products.Where(x => x.Subcategory.Category.Name == category).Select(x => new {
                     x.Id,
@@ -125,25 +137,64 @@ namespace Shop_Diploma.Controllers
                     x.Subcategory,
                     x.Images,
                     x.SizeImage,
+                    Date = x.Date.ToString("d"),
                     x.Reviews
                 }).ToListAsync();
 
                 if (searchCategories.Count > 0)
-                    products = searchCategories;
+                {
+                    if (!string.IsNullOrEmpty(gender))
+                    {
+                        var list_Gender = searchCategories.Where(x => x.Gender == gender).ToList();
+                        var list_Gender_All = searchCategories.Where(x => x.Gender == "all").ToList();
+                        searchCategories = list_Gender.Concat(list_Gender_All).ToList();
+                    }
+                    products = searchCategories.ToList();
+                }
                 else
+                {
                     products = products.Where(x => x.Subcategory.Name == category).ToList();
+                }
             }
-            if (!String.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
-            if (!String.IsNullOrEmpty(size)) products = products.Where(x=>x.Sizes.Select(r=>r).Where(c=>c == size).Any() == true).ToList();
-            if (Decimal.TryParse(minprice, out min) && Decimal.TryParse(maxprice, out max))
+            if (!string.IsNullOrEmpty(color)) products = products.Where(x => x.Color == color).ToList();
+            if (!string.IsNullOrEmpty(size)) products = products.Where(x=>x.Sizes.Select(r=>r).Where(c=>c == size).Any() == true).ToList();
+            if (decimal.TryParse(minprice, out min) && decimal.TryParse(maxprice, out max))
             {
                products = products.Where(x => x.Price >= min && x.Price <= max).ToList();
             }
+
             if (products.Count > 0)
             {
                 return Ok(products.GroupBy(x => x.Id));
             }
             return BadRequest("Не найдено продуктів");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Product>>> News()
+        {
+            var products = await _ctx.Products.Where(x=>DateTime.Today.DayOfYear - 7 < x.Date.DayOfYear).Select(x => new
+            {
+                x.Id,
+                x.Name,
+                x.Description,
+                x.Gender,
+                x.Color,
+                x.Count,
+                x.Sizes,
+                x.Price,
+                x.Brand,
+                x.Subcategory,
+                x.Images,
+                x.SizeImage,
+                x.Reviews,
+                Date = x.Date.ToString("d")
+            }).ToListAsync();
+            if(products.Count > 0)
+            {
+                return Ok(products.GroupBy(x => x.Id));
+            }
+            return BadRequest("Немає нових продуктів");
         }
 
         [HttpPost]
@@ -206,7 +257,6 @@ namespace Shop_Diploma.Controllers
 
         }
 
-        //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Product>>> EditProduct([FromRoute]int id, [FromBody] Product product)

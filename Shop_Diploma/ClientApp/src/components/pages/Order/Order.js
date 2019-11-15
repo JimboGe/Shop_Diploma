@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Order.css';
-import OrderForm from './OrderForm';
 
 class Order extends Component {
   constructor(props) {
@@ -10,7 +9,9 @@ class Order extends Component {
 
   render() {
     return (
-        <OrderForm />
+        <div>
+          Order
+        </div>
     );
   }
 }

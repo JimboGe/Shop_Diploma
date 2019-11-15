@@ -166,7 +166,7 @@ button.button-move.next:after{
 }
 .product-page .size input[type='radio']:after{
     content: attr(value);
-    color:rgb(131, 131, 131);
+    color:#6d6d6d;
     font-size:16px;
     text-shadow: none;
 }
@@ -202,12 +202,13 @@ button.button-move.next:after{
  }
 .product-page .counter .button-number input[type='text']{
     width:53px;
+    height: 39px;
     border: none;
     border-top:1px solid black;
     border-bottom:1px solid black;
     outline: none;
-    height: 39px;
     text-align: center;
+    padding-top:0px;
 }
 .product-page .counter .button-number button.btn.btn-default:hover{
     background: black;
@@ -237,7 +238,7 @@ button.button-move.next:after{
 }
 .product-page .description p{
     margin-top:-7px;
-    color:#999999;
+    color:#6d6d6d;
     font-size:13.5px;
 }
 .product-page .add-review>button{
@@ -407,4 +408,20 @@ span.help-block.danger {
 }
 .help-block .fa{
     margin-right:5px;
+}
+.fa.fa-search-plus{
+    position: absolute;
+    z-index: 2;
+    top:15px;
+    right:15px;
+    font-size:20px;
+    background-color: white;
+    padding:6.5px;
+    border-radius: 50%;
+    transition-duration: 500ms;
+}
+.product-page .fa.fa-search-plus:hover{
+    background-color:black;
+    color:white;
+    cursor: pointer;
 }

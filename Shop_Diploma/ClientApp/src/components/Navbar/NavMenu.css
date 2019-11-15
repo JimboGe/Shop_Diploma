@@ -21,7 +21,6 @@
   background:rgba(0, 0, 0, 0.89);
   max-height: 60px;
   height: 60px;
-  z-index: 3;
   margin:0;
 }
 .navbar.bot a{
@@ -51,15 +50,13 @@
 .navbar.bot li{
   margin-right: 1.5%;
 }
-.navbar.bot li:first-child{
-  margin-left:10%;
-}
-.navbar.bot ul{
-  padding-left:10%;
-}
+
 .nav{
   margin-top:5px;
   font-size:15px;
+  display: flex;
+  align-items: center;
+  justify-content: center
 }
 a.phone{
   font-size:18px;
@@ -68,19 +65,7 @@ a.phone{
 .services{
   font-size:13px;
 }
-.navbar.top .fa-shopping-cart{
-  border: 2px solid #919191;
-  border-radius: 50%;
-  padding-left:5px;
-  padding-top:5px;
-  padding-bottom:5px;
-  padding-right: 6px; 
-  color:#686868;
-  margin-top:-2px;
-  margin-right:5px;
-  margin-left:5px;
-  transition-duration: 400ms;
-}
+
 input.form-control{
   margin-top:-3px;
   border-width: 2px;
@@ -98,58 +83,7 @@ input.form-control:active, input.form-control:focus, input.form-control:hover{
    color:black;
    transition-duration: 400ms;
 }
-.container.dropdown {
-  font-size:16px;
-}
-.container.dropdown a{
-  color:black;
-  text-decoration: none;
-  transition-duration: 400ms;
-}
-.container.dropdown .row{
- padding-left:30px;
-}
-.container.dropdown a:hover, .container.dropdown .droplist li:hover{
-  color:black;
-} 
-.container.dropdown .droplist a li{
-  font-size:13px;
-  padding-top:3px;
-  margin-left:18px; 
-  color:rgb(97, 97, 97);
-  transition-duration: 400ms;
-}
-.container.dropdown{
-  background:white;
-  box-shadow: 0 3px 5px rgba(0,0,0,.2);
-  position: absolute;
-  margin-left:-135px;
-  margin-top:8px;
-  width:700px;
-  z-index: 5;
-  max-height: 0px;
-  overflow: hidden;
-}
-.dropdownmenu:hover .dropdown{
-  padding:25px;
-  max-height: 1000px;
-  transition-duration: 1s;
-  transition-delay: 400ms;
-}
-.navbar.top .cart{
-  position: absolute;
-  z-index:5;
-  width:220px;
-  background: white;
-  margin-left:-180px;
-  box-shadow: 0 3px 5px rgba(0,0,0,.2);
-  border-radius: 5px;
-  max-height: 0px;
-  overflow: hidden;
-  transition-duration: 500ms;
-  transition-delay: 400ms;
-  margin-top:10px;
-}
+
 
 #cart:hover .cart{
   max-height: 165px;
@@ -255,4 +189,19 @@ input.form-control:active, input.form-control:focus, input.form-control:hover{
 }
 .navbar.middle .right a:hover i, .navbar.middle .right a:hover span{
   color: black;
+}
+
+.navbar.middle .right span.cart-item-count:hover,
+.navbar.middle .right span.cart-item-count,
+.navbar.middle .right a:hover span.cart-item-count{
+  position: absolute;
+  top:5px;
+  background-color: black;
+  font-size: 13px;
+  color:white;
+  width:16px;
+  height: 16px;
+  text-align: center;
+  border-radius: 50%;
+  
 }

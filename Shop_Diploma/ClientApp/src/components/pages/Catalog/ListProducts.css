@@ -15,8 +15,10 @@
     border-radius: 4px;
     padding: 0;
 }   
-.list-products .filter-categories{
+.list-products .filter-categories,
+.list-products .filter-genders{
     border:1px solid #dddddd;
+    margin-bottom:25px;
 }
 .list-products .filter div.title{
     text-align: center;
@@ -43,14 +45,16 @@
 .list-products .filter-container li{
     margin-bottom:3px;
 }
-.list-products .filter-container li.checked a{
+.list-products .filter-container li.checked a,
+.list-products .filter-container li.checked i{
     color:black;
 }
 .list-products .filter-container li .fa{
     color:#919191;
     margin: 0 .25em 0 0;
 }
-.list-products .filter-container li.checked a::before{
+.list-products .filter-container li.checked a.category::before,
+.list-products .filter-container li.checked a.gender::before{
     content:'\f00c';
     font-family: 'fontawesome';
     color:black;
@@ -63,6 +67,18 @@
     font-size:13px;
     margin-left: 1px;
 }
+.list-products .filter-container li.checked a.color{
+    opacity: 1;
+    border-color:rgb(41, 41, 41);
+}
+.list-products .filter-container li.checked a.size,
+.list-products .filter-container li.checked a.brand
+{
+    border-color:black;
+    color:black;
+    font-weight: 700;
+}
+
 .list-products .filter li.has-submenu ul{
     margin:5px 0px 0px -5px;
 }
@@ -70,7 +86,6 @@
     font-size:13.5px;
 }
 .list-products .filters{
-    margin-top:25px;
     border:1px solid #dddddd;
 }
 .list-products .filters .filter-container h4{
@@ -109,9 +124,9 @@
 }
 .list-products .filters .filter-container .size
 {
-    padding-top:6px;
-    height: 2.5em;
-    width: 2.5em;
+    padding-top:4px;
+    height: 2.2em;
+    width: 2.2em;
 }
 .list-products .filters .filter-container .brand
 {

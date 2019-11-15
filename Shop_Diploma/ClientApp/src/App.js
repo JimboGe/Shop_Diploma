@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route } from 'react-router';
+
 import Layout from './components/Layout';
 import Home from './components/pages/Home/Home';
 import Service from './components/pages/Service/Service';
@@ -14,15 +15,21 @@ import Profile from './components/pages/Profile/Profile';
 import EditInfo from './components/pages/Profile/EditInfoPage/EditInformation';
 import ChangePassword from './components/pages/Profile/ChangePasswordPage/ChangePassword';
 import ChangeAddress from './components/pages/Profile/ChangeAddressPage/ChangeAddress';
+import News from './components/pages/News/News';
+
 import requireAuth from "./utils/requireAuth";
+
+import TestingPage from './components/TestingPage/TestingPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
 import Tet from './components/Tet';
 
-export default () => (
-  <Layout>
+class App extends Component{
+  render(){
+    return(
+      <Layout>
       <Route exact path='/' component={ Home } />
       <Route exact path='/services' component={ Service} />
       <Route exact path='/account/signup' component={ SignUpPage }/>
@@ -37,6 +44,12 @@ export default () => (
       <Route exact path='/profile/edit' component={requireAuth( EditInfo) }/>
       <Route exact path='/profile/changepassword' component={requireAuth( ChangePassword )}/>
       <Route exact path='/profile/ChangeAddress' component={requireAuth(ChangeAddress)}/>
+      <Route exact path='/news' component={ News }/>
+
+      <Route exact path='/testingPage' component={TestingPage}/>
   </Layout>
-);
+    );
+  }
+}
+export default App;
 

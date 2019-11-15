@@ -39,6 +39,14 @@ export function getProducts() {
       })
   }
 }
+export function getNewsProducts() {
+  return dispatch => {
+    return axios.get('api/products/News')
+      .then(res => {
+        dispatch(setProducts(res.data));
+      })
+  }
+}
 export function getProductById(id) {
   return dispatch => {
     return axios.get('api/products/ById/' + id)
@@ -47,14 +55,7 @@ export function getProductById(id) {
       })
   }
 }
-export function addProductReview(review) {
-  return dispatch => {
-    return axios.post('api/products/newreview', review)
-      .then(res => {
-        dispatch(addReview(res.data));
-      })
-  }
-}
+
 export function getProductsByParams(gender, category, brand, color, size, minprice, maxprice) {
   return dispatch => {
     return axios.get('api/products/ByParams?gender=' + gender + '&category=' + category + '&brand=' + brand
@@ -87,6 +88,14 @@ export function editProduct(id, product) {
     return axios.put('api/products/EditProduct/' + id, product)
       .then(res => {
         dispatch(putProduct(res.data));
+      })
+  }
+}
+export function addProductReview(review) {
+  return dispatch => {
+    return axios.post('api/products/newreview', review)
+      .then(res => {
+        dispatch(addReview(res.data));
       })
   }
 }

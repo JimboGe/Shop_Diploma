@@ -19,8 +19,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Content\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Content\**" />
+    <EmbeddedResource Remove="Content\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="Content\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -34,7 +38,6 @@
     <Folder Include="ClientApp\src\components\pages\SignUp\" />
     <Folder Include="ClientApp\src\components\pages\Navbar\" />
     <Folder Include="ClientApp\src\components\pages\Footer\" />
-    <Folder Include="Content\Products\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
