@@ -33,7 +33,15 @@ namespace Shop_Diploma.Controllers
             this._configuration = _configuration;
             this._env = _env;
         }
-        
+
+        [HttpGet]
+        public async Task<(decimal, decimal)> GetPriceByProduct()
+        {
+            var prices = await _ctx.Products.Select(x => x.Price).OrderBy(x=>x).ToListAsync();
+            var minPrice = prices[0];
+            var maxPrice = prices[prices.Count - 1];
+            return (minPrice, maxPrice);
+        }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> All()
         {

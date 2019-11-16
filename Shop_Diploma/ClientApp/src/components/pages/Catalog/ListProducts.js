@@ -8,7 +8,7 @@ import 'react-input-range/lib/css/index.css';
 import { getProducts, getProductsByParams } from '../../../actions/products';
 import { getCategories } from '../../../actions/categories';
 import { connect } from "react-redux";
-
+import { getMinMaxPriceByProducts } from '../../../helpers/getMinMaxPriceByProducts';
 
 class ListProducts extends Component {
     constructor(props) {
@@ -17,9 +17,14 @@ class ListProducts extends Component {
             sizeTable: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '36', '36.5', '37', '37.5', '38',
                 '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5',
                 '43', '43.5', '44', '44.5', '45', '45.5', '46', '46.5', '47'],
-            slidervalue: { min: 125, max: 3700 },
             error: '',
-            currentGender: ''
+            currentGender: '',
+            minPriceProduct: 0,
+            maxPriceProduct: 0,
+            priceFilter: {
+                min: 0,
+                max: 0
+            }
         };
     }
     componentDidUpdate() {
@@ -31,19 +36,31 @@ class ListProducts extends Component {
         this.getCurrentGender();
         this.getCategories();
         this.getProductsByParams();
+
+        getMinMaxPriceByProducts().then(res => {
+            this.setState(prevState => ({
+                priceFilter: {
+                    ...prevState.priceFilter,
+                    min: (res.data.item1),
+                    max: (res.data.item2),
+                }
+            }));
+            this.setState({ minPriceProduct: this.state.priceFilter.min, maxPriceProduct: this.state.priceFilter.max });
+        });
+
     }
 
     addHrefsForLinks() {
+
         const container = document.getElementsByClassName('filter')[0];
         let links = Array.from(container.getElementsByTagName('a'));
         let location, value, classType, localHref, word;
-        console.log('search----', document.location.search);
         links.forEach(link => {
-            //value = categoryName, color, size, brandName(shirts,black,S..)
-            value = link.getElementsByTagName('span')[0].getAttribute('checked-value');
-
             //classType = category,color,brand...
             classType = link.getAttribute('class');
+
+            //value = categoryName, color, size, brandName(shirts,black,S..)
+            value = link.getElementsByTagName('span')[0].getAttribute('checked-value');
 
             //?brand=man&category=shirts...
             location = document.location.search;
@@ -53,15 +70,14 @@ class ListProducts extends Component {
 
             localHref = `/catalog/search${location}`;
             //If selected Filter Category - ALL, we dont show in the Url	
-            if (value != 'all') {
+            if (value != 'all' && classType !== 'price') {
                 //if the word(category) is not found - we write category and value in the url
                 if (location.indexOf(classType) === -1) {
                     link.href = localHref.indexOf('?') !== -1 ? `${localHref}&${classType}=${value}` : `${localHref}?${classType}=${value}`;
                 }
                 else {
                     location = location.replace(word, value);
-                    localHref = `/catalog/search${location}`;
-                    link.href = localHref;
+                    link.href = `/catalog/search${location}`;
                     if (link.parentElement.getAttribute('class') === 'checked') {
                         location = location.indexOf(`&${classType}=${word}`) > 0 ? location.replace(`&${classType}=${word}`, '') : location;
                         location = location.indexOf(`${classType}=${word}&`) > 0 ? location.replace(`${classType}=${word}&`, '') : location;
@@ -69,6 +85,16 @@ class ListProducts extends Component {
                         localHref = `/catalog/search${location}`;
                         link.href = localHref;
                     }
+                }
+            }
+            if (classType === 'price') {
+                if (location.indexOf('minprice') === -1) {
+                    link.href = localHref.indexOf('?') !== -1 ? `${localHref}&${value}` : `${localHref}?${value}`;
+                }
+                else {
+                    location = location.replace(new URLSearchParams(location).get('minprice'), this.state.priceFilter.min);
+                    location = location.replace(new URLSearchParams(location).get('maxprice'), this.state.priceFilter.max);
+                    link.href = `/catalog/search${location}`;
                 }
             }
 
@@ -120,13 +146,15 @@ class ListProducts extends Component {
 
         filters.forEach(item =>
             Array.from(item.getElementsByTagName('a')).forEach(child => {
-                value = child.getElementsByTagName('span')[0].getAttribute('checked-value');
                 classType = child.getAttribute('class');
-                typeUrlSearch = new URLSearchParams(location).get(classType);
-                if (typeUrlSearch != null)
-                    value === typeUrlSearch ? child.parentElement.setAttribute('class', 'checked') : '';
-                else
-                    value === 'all' ? child.parentElement.setAttribute('class', 'checked') : '';
+                if (classType != 'price') {
+                    value = child.getElementsByTagName('span')[0].getAttribute('checked-value');
+                    typeUrlSearch = new URLSearchParams(location).get(classType);
+                    if (typeUrlSearch != null)
+                        value === typeUrlSearch ? child.parentElement.setAttribute('class', 'checked') : '';
+                    else
+                        value === 'all' ? child.parentElement.setAttribute('class', 'checked') : '';
+                }
             })
         );
     }
@@ -203,10 +231,32 @@ class ListProducts extends Component {
             </div>);
     }
 
+    changePrice() {
+        const min = parseInt(document.getElementById('min').value, 10);
+        let max = parseInt(document.getElementById('max').value, 10);
+        this.setState(prevState => {
+            let priceFilter = Object.assign({}, prevState.priceFilter);
+            if (isNaN(min)) {
+                priceFilter.min = 0;
+            }
+            else {
+                priceFilter.min = min;
+            }
+            if (isNaN(max)) {
+                priceFilter.max = 0;
+            }
+            else {
+                priceFilter.max = max;
+            }
+            return { priceFilter };
+        })
+    }
+
+
     render() {
 
-        let { products, categories} = this.props;
-        const { error, sizeTable, currentGender } = this.state;
+        let { products, categories } = this.props;
+        const { error, sizeTable, currentGender, priceFilter, minPriceProduct, maxPriceProduct } = this.state;
         let categoriesElem = this.createCategories(currentGender, categories);
         return (
             <div className='list-products'>
@@ -216,20 +266,20 @@ class ListProducts extends Component {
                             <div className='title'>
                                 <h4>СТАТЬ</h4>
                             </div>
-                                <ul className='filter-container'>
-                                    <li>
-                                        <a className='gender' href='#'>
-                                            <i className='fa fa-square-o'></i>
-                                            <span checked-value='man'>ЧОЛОВІЧА</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a className='gender' href='#'>
-                                            <i className='fa fa-square-o'></i>
-                                            <span checked-value='woman'>ЖІНОЧА</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                            <ul className='filter-container'>
+                                <li>
+                                    <a className='gender' href='#'>
+                                        <i className='fa fa-square-o'></i>
+                                        <span checked-value='man'>ЧОЛОВІЧА</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className='gender' href='#'>
+                                        <i className='fa fa-square-o'></i>
+                                        <span checked-value='woman'>ЖІНОЧА</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                         <div className='filter-categories'>
                             {categoriesElem}
@@ -276,6 +326,21 @@ class ListProducts extends Component {
                                         <a className='brand' href='#'><span checked-value='Gard'>Gard</span></a>
                                     </li>
                                 </ul>
+                                <h4>Ціна</h4>
+                                <div className='price-menu'>
+                                    <InputRange minValue={minPriceProduct}
+                                        maxValue={maxPriceProduct}
+                                        value={priceFilter}
+                                        onChange={priceFilter => this.setState({ priceFilter })} />
+                                    <input type='text' id='min' value={this.state.priceFilter.min}
+                                        onChange={() => this.changePrice()} />
+                                    <input type='text' id='max' value={this.state.priceFilter.max}
+                                        onChange={() => this.changePrice()} />
+                                    <a className='price' href='#'>
+                                        <span checked-value={`minprice=${priceFilter.min}&maxprice=${priceFilter.max}`}></span>
+                                        <i className="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </Col>
@@ -299,4 +364,4 @@ const mapStateToProps = (state) => {
         categories: state.categories.categories
     };
 }
-export default connect(mapStateToProps, { getProducts, getProductsByParams, getCategories})(ListProducts);
+export default connect(mapStateToProps, { getProducts, getProductsByParams, getCategories })(ListProducts);

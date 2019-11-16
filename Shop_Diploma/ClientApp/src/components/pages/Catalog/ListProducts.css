@@ -150,3 +150,52 @@
 .list-products ul.filter-container li:hover>a i{
     color:rgb(39, 39, 39);
 }
+div.input-range{
+    width:80%;
+    margin-left:15px;
+    margin-top:15px;
+}
+div.input-range__track--active{
+    background:black;
+}
+
+div.input-range__slider{
+    height: 15px;
+    width:15px;
+    margin-top:-0.9rem;
+    background:black;
+    border: 1px solid black;
+}
+div.input-range__track{
+    height: 4px;
+    top:0;
+}
+span.input-range__label-container{
+    visibility: collapse;
+} 
+.price-menu{
+    text-align: center;
+    
+}
+.price-menu input[type='text']{
+    width:41%;
+    margin-left:-10px;
+    margin-top:25px;
+    font-size:14px;
+    padding-left:35px;
+    outline: none;
+}
+.price-menu input[type='text']:active, .price-menu input[type='text']:focus{
+    border:1px solid black;
+}
+
+.price-menu input[type='text']:last-child{
+    margin-left:15px;
+}
+.list-products .filters .filter-container a.price{
+    border:none;
+    position: absolute;
+    right:-10px;
+    color:black;
+    font-size:30px;
+}
