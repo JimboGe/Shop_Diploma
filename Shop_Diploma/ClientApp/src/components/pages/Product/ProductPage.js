@@ -185,8 +185,8 @@ class ProductPage extends Component {
                                             </div>
                                         </Col>
                                         <Col lg={8}>
-                                            <Button type="submit" disabled={sizes == null && this.state.size === ''} className='order-btn'>
-                                                {this.state.size != '' ? 'В КОРЗИНУ' : 'Виберіть розмір'}</Button>
+                                            <Button type="submit" disabled={sizes.length > 0 && this.state.size === ''} className='order-btn'>
+                                                {this.state.size != '' ? 'В КОРЗИНУ' : sizes.length > 0?'Виберіть розмір' : 'В КОРЗИНУ'}</Button>
                                         </Col>
                                     </Row>
                                 </div>
