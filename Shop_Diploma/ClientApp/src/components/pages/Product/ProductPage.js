@@ -30,7 +30,7 @@ class ProductPage extends Component {
                 () => { },
                 (err) => { console.log("Error get data ", err); }
             );
-        this.props.getRecommendedProducts(category)
+        this.props.getRecommendedProducts(category,id)
             .then(
                 () => { },
                 (err) => { console.log("Error get data ", err); }
@@ -91,6 +91,7 @@ class ProductPage extends Component {
         const product = this.props.products;
         const { currentSlide } = this.state;
         const { recommended_products } = this.props;
+        console.log('rererer-er-e-r-er',recommended_products);
         var sizes = "";
         if (typeof sizes === 'string') {
             sizes = product.length > 0 ? product[0].sizes : '';
@@ -236,18 +237,19 @@ class ProductPage extends Component {
                     </Row>
                 </form>
                 <hr />
+                {recommended_products.length > 0 ?
                 <div className='recomended-products'>
                     <h4>РЕКОМЕНДОВАНІ ТОВАРИ</h4>
                     <Row style={{ margin: '25px 0px 25px 0px' }}>
-                        {/* NEED FIX TO GET NOT ALL PRODUCTS FROM SERVER */}
-                        {Array.from(recommended_products).map((value, index) =>
-                            value[0].id != this.state.idProduct && index < 4 &&
+                        {/* NEED FIX TO GET NOT ALL PRODUCTS FROM SERVER  @index < 4@*/}
+                        {recommended_products.map((value, index) =>
+                            index < 4 &&
                             <Col sm={12} md={3} className='product' >
                                 <Product product={value} key={index} />
                             </Col>)}
                     </Row>
-                </div>
-
+                </div>  :
+                ''}
             </div>
         );
     }
