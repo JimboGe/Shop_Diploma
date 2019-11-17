@@ -33,7 +33,7 @@ class Product extends Component {
 
 
         return (
-            <Col sm={12} md={3} className='product' >
+            
                 <Fade>
                     {newElement}
                     <div style={{ textAlign: 'center' }}>
@@ -64,7 +64,7 @@ class Product extends Component {
                         </div>
                     </div>
                 </Fade >
-            </Col>
+            
         );
     }
 }

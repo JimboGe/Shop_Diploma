@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Row, Col, Grid } from "react-bootstrap";
 import Product from '../../Product/Product';
 import './ListProducts.css';
@@ -345,13 +344,13 @@ class ListProducts extends Component {
                         </div>
                     </Col>
                     <Col xs={8} lg={10} className='container-products'>
-                        <div className='products'>
                             <Row>
                                 {!!error ? <h1 style={{ marginLeft: '25px' }}>{error}</h1> : ''}
                                 {products.map((value, index) =>
-                                    <Product product={value} key={index} />)}
+                                    <Col sm={12} md={3} className='product' >
+                                        <Product product={value} key={index} />
+                                    </Col>)}
                             </Row>
-                        </div>
                     </Col>
                 </Row>
             </div>

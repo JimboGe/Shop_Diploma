@@ -5,8 +5,11 @@ import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, Dot, DotGroup,
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import AddReview from './AddReview';
 import { getProductById } from '../../../actions/products';
+import { getRecommendedProducts } from '../../../actions/recommended_products';
 import { addProductToCart } from '../../../actions/cart';
 import { connect } from "react-redux";
+import Product from '../../Product/Product';
+
 import $ from 'jquery';
 
 class ProductPage extends Component {
@@ -20,13 +23,18 @@ class ProductPage extends Component {
         };
     }
     componentDidMount() {
-        this.setState({ idProduct: this.props.match.params.id });
-        const id = this.props.match.params.id;
+        const { id, category } = this.props.match.params;
+        this.setState({ idProduct: id });
         this.props.getProductById(id)
             .then(
                 () => { },
                 (err) => { console.log("Error get data ", err); }
-            )
+            );
+        this.props.getRecommendedProducts(category)
+            .then(
+                () => { },
+                (err) => { console.log("Error get data ", err); }
+            );
     }
 
     imageZoom(type, e) {
@@ -76,12 +84,13 @@ class ProductPage extends Component {
         const image = product[0].images[0].path;
         const { size, count } = this.state;
         const hrefProduct = `/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`;
-        this.props.addProductToCart({hrefProduct, image, name, price, size, count });
+        this.props.addProductToCart({ hrefProduct, image, name, price, size, count });
     }
-    
-    render() {        
+
+    render() {
         const product = this.props.products;
         const { currentSlide } = this.state;
+        const { recommended_products } = this.props;
         var sizes = "";
         if (typeof sizes === 'string') {
             sizes = product.length > 0 ? product[0].sizes : '';
@@ -162,22 +171,22 @@ class ProductPage extends Component {
                                         <span>Розмір:</span> : ''}
                                     <br />
                                     {typeof sizes === 'object' &&
-                                        sizes.map((value) => <input type='radio' 
-                                        onClick={(e)=>{this.setState({size:e.target.value})}} 
-                                        value={value} name='size' id={`size-${value}`} />)}
+                                        sizes.map((value) => <input type='radio'
+                                            onClick={(e) => { this.setState({ size: e.target.value }) }}
+                                            value={value} name='size' id={`size-${value}`} />)}
                                 </div>
                                 <div className='counter'>
                                     <Row>
                                         <Col lg={4}>
                                             <div className='button-number'>
-                                                <Button onClick={() => { this.setState({count: this.state.count>1?this.state.count - 1:this.state.count}) }} id='decrement'>-</Button>
+                                                <Button onClick={() => { this.setState({ count: this.state.count > 1 ? this.state.count - 1 : this.state.count }) }} id='decrement'>-</Button>
                                                 <input type='text' value={this.state.count}></input>
                                                 <Button onClick={() => { this.setState({ count: this.state.count + 1 }) }} id='increment'>+</Button>
                                             </div>
                                         </Col>
                                         <Col lg={8}>
-                                            <Button type="submit" disabled={sizes==null&&this.state.size===''}className='order-btn'>
-                                                {this.state.size!=''?'В КОРЗИНУ':'Виберіть розмір'}</Button>
+                                            <Button type="submit" disabled={sizes == null && this.state.size === ''} className='order-btn'>
+                                                {this.state.size != '' ? 'В КОРЗИНУ' : 'Виберіть розмір'}</Button>
                                         </Col>
                                     </Row>
                                 </div>
@@ -226,14 +235,29 @@ class ProductPage extends Component {
                         </Col>
                     </Row>
                 </form>
+                <hr />
+                <div className='recomended-products'>
+                    <h4>РЕКОМЕНДОВАНІ ТОВАРИ</h4>
+                    <Row style={{ margin: '25px 0px 25px 0px' }}>
+                        {/* NEED FIX TO GET NOT ALL PRODUCTS FROM SERVER */}
+                        {Array.from(recommended_products).map((value, index) =>
+                            value[0].id != this.state.idProduct && index < 4 &&
+                            <Col sm={12} md={3} className='product' >
+                                <Product product={value} key={index} />
+                            </Col>)}
+                    </Row>
+                </div>
+
             </div>
         );
     }
 }
 const mapStateToProps = (state) => {
+    console.log('store---', state);
     return {
         products: state.products.products,
-        cartProducts: state.cartProducts.cartProducts
+        cartProducts: state.cartProducts.cartProducts,
+        recommended_products: state.recommended_products.recommended_products
     };
 }
-export default connect(mapStateToProps, { getProductById, addProductToCart })(ProductPage);
+export default connect(mapStateToProps, { getProductById, addProductToCart, getRecommendedProducts })(ProductPage);

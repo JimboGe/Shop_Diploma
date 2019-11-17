@@ -14,23 +14,24 @@ class News extends Component {
     }
     componentDidMount() {
         this.props.getNewsProducts()
-          .then(
-            () => {},
-            (err) => { console.log("Error get data ", err); }
-          )
+            .then(
+                () => { },
+                (err) => { console.log("Error get data ", err); }
+            )
     }
 
     render() {
-      
-        var {products} = this.props;
+
+        var { products } = this.props;
         console.log(products);
         return (
             <div className='center'>
                 <h3>НОВИНКИ</h3>
                 <Row>
-                    <Col xs={8} lg={12}>
-                        {products.map((value, index) => <Product product={value} key={index} />)}
-                    </Col> 
+                        {products.map((value, index) =>
+                            <Col sm={12} md={3} className='product' >
+                                <Product product={value} key={index} />
+                            </Col>)})}
                 </Row>
             </div>
         );
@@ -39,7 +40,7 @@ class News extends Component {
 
 const mapStateToProps = (state) => {
     return {
-      products: state.products.products
+        products: state.products.products
     };
 }
 
