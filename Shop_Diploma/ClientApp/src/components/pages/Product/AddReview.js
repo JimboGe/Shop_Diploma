@@ -3,6 +3,7 @@ import './ProductPage.css';
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { addProductReview } from '../../../actions/products';
+import classnames from 'classnames';
 
 class AddReview extends Component {
     constructor(props) {
@@ -116,8 +117,12 @@ class AddReview extends Component {
             <div id='add-review-form'>
                 <form onSubmit={this.onSubmitForm}>
                     <h3>Написати відгук</h3>
-                    <input type="text" id='name' name='name' value={this.state.name} onChange={this.handleChange} className="form-control" placeholder="Ваше ім'я" />
-                    <textarea className="form-control" id='text' value={this.state.text} name='text' onChange={this.handleChange} placeholder="Ваш відгук" />
+                    <input type="text" id='name' name='name' value={this.state.name} onChange={this.handleChange}
+                        className={classnames('form-control', { 'error': !!errors.name })}  placeholder="Ваше ім'я" />
+                    {!!errors.name ? <span className="help-block">{errors.name}</span> : ''}
+                    <textarea className={classnames('form-control', { 'error': !!errors.text })}  
+                        id='text' value={this.state.text} name='text' onChange={this.handleChange} placeholder="Ваш відгук" />
+                    {!!errors.text ? <span className="help-block">{errors.text}</span> : ''}
                     <span>ОЦІНКА</span><br />
                     <span id='rating' onMouseLeave={() => this.choiceRatingComment('leave', null)}>
                         <i canChange='true' onMouseEnter={(e) => this.choiceRatingComment('hover', e)}
@@ -136,11 +141,9 @@ class AddReview extends Component {
                             onClick={(e) => this.choiceRatingComment('click', e)}
                             class="fa fa-star" rating='5'></i>
                     </span>
+                    {!!errors.rating ? <span className="help-block">{errors.rating}</span> : ''}
                     <br />
                     <Button style={{marginBottom:'15px'}}type="submit">ВІДПРАВИТИ ВІДГУК</Button>
-                    {!!errors.name ? <span className="help-block danger"><span class="fa fa-exclamation-circle"/>{errors.name}</span> : ''}
-                    {!!errors.text ? <span className="help-block danger"><span class="fa fa-exclamation-circle"/>{errors.text}</span> : ''}
-                    {!!errors.rating ? <span className="help-block danger"><span class="fa fa-exclamation-circle"/>{errors.rating}</span> : ''}
                 </form>
             </div>
         );

@@ -113,7 +113,7 @@ class NavMenu extends Component {
             <div className='container'>
               <ul className="nav">
                 <li className="nav-item">
-                  <Link className="nav-link" to='/'>Головна</Link>
+                  <a className="nav-link" href='/'>Головна</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href='/catalog/search?gender=man'>Чоловіче</a>
@@ -128,10 +128,10 @@ class NavMenu extends Component {
                   <a className="nav-link" href="/catalog/search?category=bananki">Бананки</a>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/news">Новинки</Link>
+                  <a className="nav-link" href="/news">Новинки</a>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/discounts">Знижки</Link>
+                  <a className="nav-link" href="/discounts">Знижки</a>
                 </li>
               </ul>
             </div>

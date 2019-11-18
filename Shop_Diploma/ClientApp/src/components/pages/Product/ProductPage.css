@@ -400,16 +400,7 @@ button.button-move.next:after{
 .product-page .reviews>div div.text{
     font-size:14px;
 }
-.help-block.danger{
-    color:red;
-}
-span.help-block.danger {
-    font-size:13px;
-}
-.help-block .fa{
-    margin-right:5px;
-}
-.fa.fa-search-plus{
+.product-page .fa.fa-search-plus{
     position: absolute;
     z-index: 2;
     top:15px;
@@ -424,4 +415,17 @@ span.help-block.danger {
     background-color:black;
     color:white;
     cursor: pointer;
+}
+.product-page .reviews .form-control.error{
+    border: 1px solid red;
+}
+.product-page .reviews .help-block{
+    color:red;
+    margin-top:-10px;
+}
+.product-page .recomended-products{
+    margin-top:50px;
+}
+.product-page .recomended-products h4{
+    text-align: center;
 }
