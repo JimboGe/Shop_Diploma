@@ -7,7 +7,7 @@ import 'react-input-range/lib/css/index.css';
 import { getProducts, getProductsByParams } from '../../../actions/products';
 import { getCategories } from '../../../actions/categories';
 import { connect } from "react-redux";
-import { getMinMaxPriceByProducts } from '../../../helpers/getMinMaxPriceByProducts';
+import axios from 'axios';
 
 class ListProducts extends Component {
     constructor(props) {
@@ -35,8 +35,11 @@ class ListProducts extends Component {
         this.getCurrentGender();
         this.getCategories();
         this.getProductsByParams();
+        this.getMinMaxPriceByProducts();
+    }
 
-        getMinMaxPriceByProducts().then(res => {
+    getMinMaxPriceByProducts(){
+        axios.get('https://localhost:44399/api/products/getPriceByProduct').then(res=>{
             this.setState(prevState => ({
                 priceFilter: {
                     ...prevState.priceFilter,
@@ -46,7 +49,6 @@ class ListProducts extends Component {
             }));
             this.setState({ minPriceProduct: this.state.priceFilter.min, maxPriceProduct: this.state.priceFilter.max });
         });
-
     }
 
     addHrefsForLinks() {
@@ -253,7 +255,6 @@ class ListProducts extends Component {
 
 
     render() {
-
         let { products, categories } = this.props;
         const { error, sizeTable, currentGender, priceFilter, minPriceProduct, maxPriceProduct } = this.state;
         let categoriesElem = this.createCategories(currentGender, categories);
