@@ -9,6 +9,7 @@ import { getRecommendedProducts } from '../../../actions/recommended_products';
 import { addProductToCart } from '../../../actions/cart';
 import { connect } from "react-redux";
 import Product from '../../Product/Product';
+import Alert from '../../Alert/Alert';
 
 import $ from 'jquery';
 
@@ -19,7 +20,11 @@ class ProductPage extends Component {
             idProduct: 0,
             currentSlide: 0,
             size: '',
-            count: 1
+            count: 1,
+            alert: {
+                messsage: '',
+                type: ''
+            }
         };
     }
     componentDidMount() {
@@ -85,15 +90,21 @@ class ProductPage extends Component {
         let pos_img = elem.getBoundingClientRect();
         let pos_left = 0;
         let pos_top = 0;
-        
+
+        elem.style.visibility = 'visible';
 
         const id_interval = setInterval(function () {
             if (pos_left + pos_img.x >= pos_cart.left) {
                 clearInterval(id_interval);
+                elem.style.visibility = 'hidden';
+                elem.style.top = 0;
+                elem.style.left = 10 + 'px';
             }
             else {
-                pos_left++; 
+                pos_left += 6;
                 elem.style.left = pos_left + 'px';
+                pos_top -= 1.5;
+                elem.style.top = pos_top + 'px';
                
             }
         });
@@ -101,29 +112,55 @@ class ProductPage extends Component {
 
     addProductToCart = (e) => {
         e.preventDefault();
+        const { cartProducts } = this.props;
         const product = this.props.products;
+        const id = product[0].id;
         const { name, price } = product[0];
         const image = product[0].images[0].path;
         const { size, count } = this.state;
         const hrefProduct = `/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`;
-        this.props.addProductToCart({ hrefProduct, image, name, price, size, count });
-        this.animationMoveToCart();
+        if (!cartProducts.find(value => {
+            if (value.id === id && value.size === size) {
+                return true;
+            }
+            else {
+                return false
+            }
+        })) {
+            this.props.addProductToCart({ id, hrefProduct, image, name, price, size, count });
+            this.animationMoveToCart();
+        }
+        else {
+            alert('Цей продукт уже доданий до Кошика');
+            this.setState(prevState => ({
+                alert: {
+                    ...prevState.alert,
+                    messsage: 'something',
+                    type: 'error'
+                }   
+            }));
+           
+        }
     }
 
     render() {
         const product = this.props.products;
-        const { currentSlide } = this.state;
+        const { currentSlide,alert} = this.state;
+        
         const { recommended_products } = this.props;
+       
         var sizes = "";
         if (typeof sizes === 'string') {
             sizes = product.length > 0 ? product[0].sizes : '';
         }
+      
         var reviews = product.length > 0 ? product[0].reviews : '';
         var rating = 0;
         if (reviews.length > 0) reviews.map((value) => rating = rating + value.rating);
         rating = rating / reviews.length;
         return (
             <div className='product-page container'>
+               
                 <form onSubmit={this.addProductToCart}>
                     <Row>
                         <Col lg={6}>
@@ -143,12 +180,14 @@ class ProductPage extends Component {
                                     <DotGroup className='dot-group' />
                                     <div className='dot-group-image' >
                                         {product.length > 0 && product[0].images.map((value, index, array) =>
-                                            <Dot slide={index} className='dot-image'>
-                                                <Image
-                                                    src={value.path}>
-                                                </Image>
-                                                {index === 0 && <Image src={value.path} className='move_to_cart' />}
-                                            </Dot>
+                                            <div>
+                                                <Dot slide={index} className='dot-image'>
+                                                    <Image
+                                                        src={value.path}>
+                                                    </Image>
+                                                </Dot>
+                                                {index === 0 && <img src={value.path} style={{ visibility: 'hidden' }} className='move_to_cart' />}
+                                            </div>
                                         )}
                                     </div>
                                 </CarouselProvider>

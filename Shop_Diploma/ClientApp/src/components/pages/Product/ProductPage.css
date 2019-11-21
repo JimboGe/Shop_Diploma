@@ -429,11 +429,12 @@ button.button-move.next:after{
 .product-page .recomended-products h4{
     text-align: center;
 }
-.product-page img.move_to_cart{
+.product-page .move_to_cart{
     position:absolute;
     width:88px;
     height: 118px;
-    opacity:1  !important;
+    top:0;
+    left:10px;
 }
 
 
