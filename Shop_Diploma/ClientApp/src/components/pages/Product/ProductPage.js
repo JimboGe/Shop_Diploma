@@ -30,7 +30,7 @@ class ProductPage extends Component {
                 () => { },
                 (err) => { console.log("Error get data ", err); }
             );
-        this.props.getRecommendedProducts(category,id)
+        this.props.getRecommendedProducts(category, id)
             .then(
                 () => { },
                 (err) => { console.log("Error get data ", err); }
@@ -77,6 +77,28 @@ class ProductPage extends Component {
         $('html,body').animate({ scrollTop: pos }, 1200, 'swing');
     }
 
+    animationMoveToCart() {
+        const elem = document.getElementsByClassName('move_to_cart')[0];
+        const cart_elem = document.getElementById('cart');
+
+        let pos_cart = cart_elem.getBoundingClientRect();
+        let pos_img = elem.getBoundingClientRect();
+        let pos_left = 0;
+        let pos_top = 0;
+        
+
+        const id_interval = setInterval(function () {
+            if (pos_left + pos_img.x >= pos_cart.left) {
+                clearInterval(id_interval);
+            }
+            else {
+                pos_left++; 
+                elem.style.left = pos_left + 'px';
+               
+            }
+        });
+    }
+
     addProductToCart = (e) => {
         e.preventDefault();
         const product = this.props.products;
@@ -85,13 +107,13 @@ class ProductPage extends Component {
         const { size, count } = this.state;
         const hrefProduct = `/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`;
         this.props.addProductToCart({ hrefProduct, image, name, price, size, count });
+        this.animationMoveToCart();
     }
 
     render() {
         const product = this.props.products;
         const { currentSlide } = this.state;
         const { recommended_products } = this.props;
-        console.log('rererer-er-e-r-er',recommended_products);
         var sizes = "";
         if (typeof sizes === 'string') {
             sizes = product.length > 0 ? product[0].sizes : '';
@@ -125,7 +147,9 @@ class ProductPage extends Component {
                                                 <Image
                                                     src={value.path}>
                                                 </Image>
-                                            </Dot>)}
+                                                {index === 0 && <Image src={value.path} className='move_to_cart' />}
+                                            </Dot>
+                                        )}
                                     </div>
                                 </CarouselProvider>
                             </div>
@@ -181,13 +205,14 @@ class ProductPage extends Component {
                                         <Col lg={4}>
                                             <div className='button-number'>
                                                 <Button onClick={() => { this.setState({ count: this.state.count > 1 ? this.state.count - 1 : this.state.count }) }} id='decrement'>-</Button>
-                                                <input type='text' value={this.state.count}></input>
+                                                <input type='text' value={this.state.count} />
                                                 <Button onClick={() => { this.setState({ count: this.state.count + 1 }) }} id='increment'>+</Button>
                                             </div>
                                         </Col>
                                         <Col lg={8}>
                                             <Button type="submit" disabled={sizes.length > 0 && this.state.size === ''} className='order-btn'>
-                                                {this.state.size != '' ? 'В КОРЗИНУ' : sizes.length > 0?'Виберіть розмір' : 'В КОРЗИНУ'}</Button>
+                                                {this.state.size != '' ? 'В КОРЗИНУ' : sizes.length > 0 ? 'Виберіть розмір' : 'В КОРЗИНУ'}
+                                            </Button>
                                         </Col>
                                     </Row>
                                 </div>
@@ -238,18 +263,18 @@ class ProductPage extends Component {
                 </form>
                 <hr />
                 {recommended_products.length > 0 ?
-                <div className='recomended-products'>
-                    <h4>РЕКОМЕНДОВАНІ ТОВАРИ</h4>
-                    <Row style={{ margin: '25px 0px 25px 0px' }}>
-                        {/* NEED FIX TO GET NOT ALL PRODUCTS FROM SERVER  @index < 4@*/}
-                        {recommended_products.map((value, index) =>
-                            index < 4 &&
-                            <Col sm={12} md={3} className='product' >
-                                <Product product={value} key={index} />
-                            </Col>)}
-                    </Row>
-                </div>  :
-                ''}
+                    <div className='recomended-products'>
+                        <h4>РЕКОМЕНДОВАНІ ТОВАРИ</h4>
+                        <Row style={{ margin: '25px 0px 25px 0px' }}>
+                            {/* NEED FIX TO GET NOT ALL PRODUCTS FROM SERVER  @index < 4@*/}
+                            {recommended_products.map((value, index) =>
+                                index < 4 &&
+                                <Col sm={12} md={3} className='product' >
+                                    <Product product={value} key={index} />
+                                </Col>)}
+                        </Row>
+                    </div> :
+                    ''}
             </div>
         );
     }

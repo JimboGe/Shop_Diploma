@@ -123,19 +123,24 @@ class Cart extends Component {
                             </table>
                         </div>
                         <div className='result-price'>
-                            <div>
-                                <span className='text'>Всього товарів:</span>
-                                <span className='value'>{count} шт.</span><br />
-
-                                <span className='text'>Ціна товарів:</span>
-                                <span className='value'>{priceCart} грн.</span><br />
-                                
-                                <span className='text'>Доставка:</span>
-                                <span className='value'>(40-60) грн.</span><br />
-                               
-                                <span className='text'>До оплати:</span>
-                                <span className='value'>({priceCart + 40}-{priceCart + 60}) грн.</span>
-                            </div>
+                          
+                                <div>
+                                    <span className='text'>Всього товарів:</span>
+                                    <span className='value'>{count} шт.</span>
+                                </div>
+                                <div>
+                                    <span className='text'>Ціна товарів:</span>
+                                    <span className='value'>{priceCart} грн.</span>
+                                </div>
+                                <div>
+                                    <span className='text'>Доставка:</span>
+                                    <span className='value'>(40-60) грн.</span>
+                                </div>
+                                <div>
+                                    <span className='text'>До оплати:</span>
+                                    <span className='value'>({priceCart + 40}-{priceCart + 60}) грн.</span>
+                                </div>
+                          
                             
                             <button className="btn btn-dark" onClick={this.submit}>ОФОРМИТИ ЗАМОВЛЕННЯ</button>
                         </div>

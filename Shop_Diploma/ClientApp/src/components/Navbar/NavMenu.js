@@ -32,7 +32,7 @@ class NavMenu extends Component {
 
     const { isAuthenticated, user } = this.props.auth;
     var guestElem = (<div>
-      <Link to='/cart'>
+      <Link to='/cart' id='cart'>
         <i className="fa fa-shopping-cart"></i>
         <span>КОРЗИНА</span>
         <span className='cart-item-count'>{countItemCart}</span>
