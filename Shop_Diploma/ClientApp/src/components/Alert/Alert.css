@@ -1,0 +1,24 @@
+
+@keyframes remove-anim{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+.alert {
+    text-align: center; 
+}
+.custom-alert div{
+    position: absolute;
+    top:208.5px;
+    left:40%;
+    right:40%;
+}
+
+.custom-alert div.remove{
+   animation-name:remove-anim !important;
+   -webkit-animation-name :remove-anim !important;
+   -moz-animation-name :remove-anim !important;
+}

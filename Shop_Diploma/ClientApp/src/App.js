@@ -26,28 +26,36 @@ import 'font-awesome/css/font-awesome.min.css';
 
 import Tet from './components/Tet';
 
-class App extends Component{
-  render(){
-    return(
-      <Layout>
-      <Route exact path='/' component={ Home } />
-      <Route exact path='/services' component={ Service} />
-      <Route exact path='/account/signup' component={ SignUpPage }/>
-      <Route exact path='/account/signin' component={ SignIn }/>
-      <Route exact path='/cart' component={ Cart }/>
-      <Route exact path='/catalog/search/:gender?/:category?/:brand?/:size?/:color?/:price?' component={ ListProducts }/>
-      <Route exact path='/catalog/:gender/:category/:brand/p:id' component={ ProductPage }/>
-      <Route exact path='/tet' component={ Tet }/>
-      <Route exact path='/admin' component={ AdminPage }/>
-      <Route exact path='/order' component={ Order }/>
-      <Route exact path='/profile' component={requireAuth( Profile) }/>
-      <Route exact path='/profile/edit' component={requireAuth( EditInfo) }/>
-      <Route exact path='/profile/changepassword' component={requireAuth( ChangePassword )}/>
-      <Route exact path='/profile/ChangeAddress' component={requireAuth(ChangeAddress)}/>
-      <Route exact path='/news' component={ News }/>
+import { connect } from "react-redux";
+import ScrollUp from './components/ScrollUp';
 
-      <Route exact path='/testingPage' component={TestingPage}/>
-  </Layout>
+
+
+class App extends Component {
+
+  render() {
+ 
+    
+    return (
+      <Layout>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/services' component={Service} />
+        <Route exact path='/account/signup' component={SignUpPage} />
+        <Route exact path='/account/signin' component={SignIn} />
+        <Route exact path='/cart' component={Cart} />
+        <Route exact path='/catalog/search/:gender?/:category?/:brand?/:size?/:color?/:price?' component={ListProducts} />
+        <Route exact path='/catalog/:gender/:category/:brand/p:id' component={ProductPage} />
+        <Route exact path='/tet' component={Tet} />
+        <Route exact path='/admin' component={AdminPage} />
+        <Route exact path='/order' component={Order} />
+        <Route exact path='/profile' component={requireAuth(Profile)} />
+        <Route exact path='/profile/edit' component={requireAuth(EditInfo)} />
+        <Route exact path='/profile/changepassword' component={requireAuth(ChangePassword)} />
+        <Route exact path='/profile/ChangeAddress' component={requireAuth(ChangeAddress)} />
+        <Route exact path='/news' component={News} />
+        <Route exact path='/testingPage' component={TestingPage} />
+        <ScrollUp />
+      </Layout>
     );
   }
 }

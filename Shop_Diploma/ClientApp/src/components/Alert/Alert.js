@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
 import './Alert.css';
+import Fade from 'react-reveal/Fade';
 
-
-
-class Alert extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
-    render(){
-        const {alert} = this.props;
-        console.log(alert);
-        return(
-            <div>
-               gegegege
-            </div>
+class Alert extends Component {  
+    render() {
+        const { alert } = this.props;
+        return (
+            <Fade>
+                <div id='alert-fade' className={`alert alert-${alert.type}`}>
+                    {alert.message}
+                </div>
+            </Fade>
         );
     }
 }
-
 export default Alert;

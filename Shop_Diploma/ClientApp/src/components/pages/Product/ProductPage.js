@@ -9,7 +9,7 @@ import { getRecommendedProducts } from '../../../actions/recommended_products';
 import { addProductToCart } from '../../../actions/cart';
 import { connect } from "react-redux";
 import Product from '../../Product/Product';
-import Alert from '../../Alert/Alert';
+import {setAlert} from '../../../helpers/setAlert';
 
 import $ from 'jquery';
 
@@ -20,11 +20,7 @@ class ProductPage extends Component {
             idProduct: 0,
             currentSlide: 0,
             size: '',
-            count: 1,
-            alert: {
-                messsage: '',
-                type: ''
-            }
+            count: 1
         };
     }
     componentDidMount() {
@@ -85,7 +81,7 @@ class ProductPage extends Component {
     animationMoveToCart() {
         const elem = document.getElementsByClassName('move_to_cart')[0];
         const cart_elem = document.getElementById('cart');
-
+        
         let pos_cart = cart_elem.getBoundingClientRect();
         let pos_img = elem.getBoundingClientRect();
         let pos_left = 0;
@@ -127,28 +123,20 @@ class ProductPage extends Component {
                 return false
             }
         })) {
+            setAlert({message:'Продукт додано до Кошика',type:'success'});
             this.props.addProductToCart({ id, hrefProduct, image, name, price, size, count });
             this.animationMoveToCart();
         }
         else {
-            alert('Цей продукт уже доданий до Кошика');
-            this.setState(prevState => ({
-                alert: {
-                    ...prevState.alert,
-                    messsage: 'something',
-                    type: 'error'
-                }   
-            }));
-           
+            setAlert({message:'Цей продукт уже доданий до Кошика',type:'danger'});
         }
     }
 
     render() {
         const product = this.props.products;
-        const { currentSlide,alert} = this.state;
+        const { currentSlide} = this.state;
         
         const { recommended_products } = this.props;
-       
         var sizes = "";
         if (typeof sizes === 'string') {
             sizes = product.length > 0 ? product[0].sizes : '';
@@ -160,7 +148,6 @@ class ProductPage extends Component {
         rating = rating / reviews.length;
         return (
             <div className='product-page container'>
-               
                 <form onSubmit={this.addProductToCart}>
                     <Row>
                         <Col lg={6}>
@@ -174,7 +161,7 @@ class ProductPage extends Component {
                                         {product.length > 0 && product[0].images.map((value, index, array) =>
                                             <Slide key={index} index={index}><ImageWithZoom index={index} src={value.path} /></Slide>)}
                                     </Slider>
-                                    <ButtonBack className='button-move back' />
+                                    <ButtonBack className='button-move back' onClick={this.tet}/>
                                     <ButtonNext className='button-move next' />
 
                                     <DotGroup className='dot-group' />
@@ -319,7 +306,6 @@ class ProductPage extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    console.log('store---', state);
     return {
         products: state.products.products,
         cartProducts: state.cartProducts.cartProducts,

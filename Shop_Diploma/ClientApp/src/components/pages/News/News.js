@@ -31,7 +31,7 @@ class News extends Component {
                         {products.map((value, index) =>
                             <Col sm={12} md={3} className='product' >
                                 <Product product={value} key={index} />
-                            </Col>)})}
+                            </Col>)}
                 </Row>
             </div>
         );

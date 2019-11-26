@@ -32,29 +32,29 @@ class NavMenu extends Component {
 
     const { isAuthenticated, user } = this.props.auth;
     var guestElem = (<div>
-      <Link to='/cart' id='cart'>
+      <a href='/cart' id='cart'>
         <i className="fa fa-shopping-cart"></i>
         <span>КОРЗИНА</span>
         <span className='cart-item-count'>{countItemCart}</span>
-      </Link>
-      <Link to='/account/signin'>
+      </a>
+      <a href='/account/signin'>
         <i className="fa fa-user"></i>
         <span>УВІЙТИ</span>
-      </Link>
-      <Link to='/account/signup'>
+      </a>
+      <a href='/account/signup'>
         <i className="fa fa-user-plus"></i>
         <span>ЗАРЕЄСТРУВАТИСЯ</span>
-      </Link>
+      </a>
     </div>);
     var userElem = (<div>
-      <Link to='/cart'>
+      <a href='/cart' id='cart'>
         <i className="fa fa-shopping-cart"></i>
         <span>КОРЗИНА</span>
         <span className='cart-item-count'>{countItemCart}</span>
-      </Link>
-      <Link to='/profile'>
+      </a>
+      <a href='/profile'>
         <span>{isAuthenticated ? user.name.toUpperCase() : ''}</span>
-      </Link>
+      </a>
       <a href='/' onClick={this.logout}>
         <span>ВИЙТИ</span>
       </a>

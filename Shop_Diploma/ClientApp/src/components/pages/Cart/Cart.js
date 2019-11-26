@@ -3,12 +3,15 @@ import './Cart.css';
 import { connect } from "react-redux";
 import { getCartProducts, deleteProductByCart } from '../../../actions/cart';
 import { newOrder } from '../../../actions/order';
+import { setAlert } from '../../../helpers/setAlert';
+import { Redirect } from 'react-router';
+import $ from 'jquery';
 
 class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirect : false
+            redirect: false
         };
     }
     getPrice(cartProducts) {
@@ -50,9 +53,11 @@ class Cart extends Component {
                                 {value.name}
                             </a>
                         </div>
-                        <div className='product-size'>
-                            <span>Розмір: {value.size}</span>
-                        </div>
+                        {value.size != '' ?
+                            <div className='product-size'>
+                                <span>Розмір: {value.size}</span>
+                            </div>
+                            : ''}
                     </div>
                 </td>
                 <td>
@@ -79,31 +84,37 @@ class Cart extends Component {
         );
     }
 
-    submit=()=>{
-        const {isAuthenticated} = this.props.auth;
+    submit = () => {
+        const { isAuthenticated } = this.props.auth;
         const productId = 1;
         const fullPrice = 1000;
         const productCount = 1;
-        const productSize= 'S';
+        const productSize = 'S';
         const userId = '98f4b7c2-83e2-47cb-85b3-5b2432dc7713';
-        if(isAuthenticated){
-            this.props.newOrder({userId,productId ,fullPrice,productCount,productSize}).then(
+        $('html,body').animate({ scrollTop: 0 }, 1200, 'swing');
+        if (isAuthenticated) {
+            this.props.newOrder({ userId, productId, fullPrice, productCount, productSize }).then(
                 () => { }
             );
-            alert('Замовлення успішно додано');
-            //window.location.href = '/profile/historyOrders';
+
+            setAlert({ message: 'Замовлення успішно додано!', type: 'success' });
 
         }
-        else{
-            window.location.href = '/account/signin';
+        else {
+            setAlert({ message: 'Увійдіть до аккаунту!', type: 'danger' });
+            const timeout_id = setTimeout(() => {
+                this.setState({ redirect: true });
+                clearTimeout(timeout_id);
+            }, 5000);
         }
     }
 
     render() {
         const { cartProducts } = this.props;
-        
+
         const priceCart = this.getPrice(cartProducts);
         const count = this.getCountProduct(cartProducts);
+
         return (
             <div className='container cart'>
                 {cartProducts.length > 0 ?
@@ -123,25 +134,25 @@ class Cart extends Component {
                             </table>
                         </div>
                         <div className='result-price'>
-                          
-                                <div>
-                                    <span className='text'>Всього товарів:</span>
-                                    <span className='value'>{count} шт.</span>
-                                </div>
-                                <div>
-                                    <span className='text'>Ціна товарів:</span>
-                                    <span className='value'>{priceCart} грн.</span>
-                                </div>
-                                <div>
-                                    <span className='text'>Доставка:</span>
-                                    <span className='value'>(40-60) грн.</span>
-                                </div>
-                                <div>
-                                    <span className='text'>До оплати:</span>
-                                    <span className='value'>({priceCart + 40}-{priceCart + 60}) грн.</span>
-                                </div>
-                          
-                            
+
+                            <div>
+                                <span className='text'>Всього товарів:</span>
+                                <span className='value'>{count} шт.</span>
+                            </div>
+                            <div>
+                                <span className='text'>Ціна товарів:</span>
+                                <span className='value'>{priceCart} грн.</span>
+                            </div>
+                            <div>
+                                <span className='text'>Доставка:</span>
+                                <span className='value'>(40-60) грн.</span>
+                            </div>
+                            <div>
+                                <span className='text'>До оплати:</span>
+                                <span className='value'>({priceCart + 40}-{priceCart + 60}) грн.</span>
+                            </div>
+
+
                             <button className="btn btn-dark" onClick={this.submit}>ОФОРМИТИ ЗАМОВЛЕННЯ</button>
                         </div>
                     </div> :
@@ -151,6 +162,7 @@ class Cart extends Component {
                             Ви можете подивитися наш каталог
                         </a>
                     </div>}
+                {this.state.redirect ? <Redirect to='/account/signin/' /> : ''}
             </div>
         )
     }
