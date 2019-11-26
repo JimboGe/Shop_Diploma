@@ -14,7 +14,8 @@
 .signup .error input.form-control,
 .signup .error input.form-control:hover,
 .signup .error input.form-control:focus,
-.signup .error input.form-control:active{
+.signup .error input.form-control:active,
+.signup .error select{
     border: 1px solid red;
 }
 .error span{
