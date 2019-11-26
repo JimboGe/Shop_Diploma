@@ -26,21 +26,17 @@ import 'font-awesome/css/font-awesome.min.css';
 
 import Tet from './components/Tet';
 
-import { connect } from "react-redux";
 import ScrollUp from './components/ScrollUp';
 
 
 
 class App extends Component {
-
   render() {
- 
-    
     return (
       <Layout>
         <Route exact path='/' component={Home} />
         <Route exact path='/services' component={Service} />
-        <Route exact path='/account/signup' component={SignUpPage} />
+        <Route exact path='/account/signup' component={SignUpPage}/>
         <Route exact path='/account/signin' component={SignIn} />
         <Route exact path='/cart' component={Cart} />
         <Route exact path='/catalog/search/:gender?/:category?/:brand?/:size?/:color?/:price?' component={ListProducts} />

@@ -9,7 +9,7 @@ import { getRecommendedProducts } from '../../../actions/recommended_products';
 import { addProductToCart } from '../../../actions/cart';
 import { connect } from "react-redux";
 import Product from '../../Product/Product';
-import {setAlert} from '../../../helpers/setAlert';
+import { setAlert } from '../../../helpers/setAlert';
 
 import $ from 'jquery';
 
@@ -81,7 +81,7 @@ class ProductPage extends Component {
     animationMoveToCart() {
         const elem = document.getElementsByClassName('move_to_cart')[0];
         const cart_elem = document.getElementById('cart');
-        
+
         let pos_cart = cart_elem.getBoundingClientRect();
         let pos_img = elem.getBoundingClientRect();
         let pos_left = 0;
@@ -101,7 +101,7 @@ class ProductPage extends Component {
                 elem.style.left = pos_left + 'px';
                 pos_top -= 1.5;
                 elem.style.top = pos_top + 'px';
-               
+
             }
         });
     }
@@ -123,25 +123,25 @@ class ProductPage extends Component {
                 return false
             }
         })) {
-            setAlert({message:'Продукт додано до Кошика',type:'success'});
+            setAlert({ message: 'Продукт додано до Кошика', type: 'success' });
             this.props.addProductToCart({ id, hrefProduct, image, name, price, size, count });
             this.animationMoveToCart();
         }
         else {
-            setAlert({message:'Цей продукт уже доданий до Кошика',type:'danger'});
+            setAlert({ message: 'Цей продукт уже доданий до Кошика', type: 'danger' });
         }
     }
 
     render() {
         const product = this.props.products;
-        const { currentSlide} = this.state;
-        
+        const { currentSlide } = this.state;
+
         const { recommended_products } = this.props;
         var sizes = "";
         if (typeof sizes === 'string') {
             sizes = product.length > 0 ? product[0].sizes : '';
         }
-      
+
         var reviews = product.length > 0 ? product[0].reviews : '';
         var rating = 0;
         if (reviews.length > 0) reviews.map((value) => rating = rating + value.rating);
@@ -161,7 +161,7 @@ class ProductPage extends Component {
                                         {product.length > 0 && product[0].images.map((value, index, array) =>
                                             <Slide key={index} index={index}><ImageWithZoom index={index} src={value.path} /></Slide>)}
                                     </Slider>
-                                    <ButtonBack className='button-move back' onClick={this.tet}/>
+                                    <ButtonBack className='button-move back' />
                                     <ButtonNext className='button-move next' />
 
                                     <DotGroup className='dot-group' />
@@ -204,7 +204,6 @@ class ProductPage extends Component {
                                     {rating >= 5 ? <i style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star"></i> : <i class="fa fa-star"></i>}
                                     <span>
                                         {reviews.length + ' відгуків'}
-
                                     </span>
                                 </div>
 
@@ -215,8 +214,7 @@ class ProductPage extends Component {
                                             <img width='100%' alt='size-grid-img'
                                                 src={product.length > 0 && product[0].sizeImage.path} />
                                         </div>
-                                    </div>
-                                }
+                                    </div>}
                                 <div className='size'>
                                     {sizes != '' ?
                                         <span>Розмір:</span> : ''}

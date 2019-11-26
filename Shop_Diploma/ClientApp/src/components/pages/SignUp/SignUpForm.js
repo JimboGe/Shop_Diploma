@@ -7,6 +7,7 @@ import { register } from "../../../actions/auth";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { getCities, getRegions } from '../../../helpers/getDataForAddress';
+import { setAlert } from '../../../helpers/setAlert';
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -68,7 +69,12 @@ class SignUpForm extends Component {
             this.setState({ isLoading: true });
             this.props.register({ email, password, phonenumber, region, city, numberDelivery, firstName, lastName })
                 .then(
-                    () => this.setState({ done: true }),
+                    () => {
+                        setAlert({ message: 'Аккаунт успішно створено!', type: 'success' });
+                        setTimeout(() => {
+                            this.setState({ done: true })
+                        }, 5000);
+                    },
                     (err) => {
                         this.setState({ errors: err.response.data, isLoading: false });
                     }
@@ -79,8 +85,7 @@ class SignUpForm extends Component {
         }
     }
     render() {
-        console.log('----WINDOW---', this.state);
-        const { errors, isLoading } = this.state;
+        const { errors } = this.state;
         var form = (
             <div className='container sign'>
                 <Row>
