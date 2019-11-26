@@ -188,7 +188,7 @@ class ProductPage extends Component {
                                     </Slider>
                                     <ButtonBack className='button-move back' />
                                     <ButtonNext className='button-move next' />
-                                    <button onClick={() => this.imageZoom('hide', null)} className='close-modal'><i className="fa fa-times"></i></button>
+                                    <button type='button' onClick={() => this.imageZoom('hide', null)} className='close-modal'><i className="fa fa-times"></i></button>
                                 </CarouselProvider>
                             </div>
                         </Col>
@@ -209,7 +209,7 @@ class ProductPage extends Component {
 
                                 {product.length > 0 && product[0].sizeImage.categoryName != 'none' &&
                                     <div className='size-grid'>
-                                        <button onClick={(e) => { this.hide_show(e, 'size-grid-div') }}>РОЗМІРНА СІТКА</button>
+                                        <button type='button' onClick={(e) => { this.hide_show(e, 'size-grid-div') }}>РОЗМІРНА СІТКА</button>
                                         <div id='size-grid-div' className='hidden'>
                                             <img width='100%' alt='size-grid-img'
                                                 src={product.length > 0 && product[0].sizeImage.path} />
@@ -228,9 +228,9 @@ class ProductPage extends Component {
                                     <Row>
                                         <Col lg={4}>
                                             <div className='button-number'>
-                                                <Button onClick={() => { this.setState({ count: this.state.count > 1 ? this.state.count - 1 : this.state.count }) }} id='decrement'>-</Button>
+                                                <Button type='button' onClick={() => { this.setState({ count: this.state.count > 1 ? this.state.count - 1 : this.state.count }) }} id='decrement'>-</Button>
                                                 <input type='text' value={this.state.count} />
-                                                <Button onClick={() => { this.setState({ count: this.state.count + 1 }) }} id='increment'>+</Button>
+                                                <Button type='button' onClick={() => { this.setState({ count: this.state.count + 1 }) }} id='increment'>+</Button>
                                             </div>
                                         </Col>
                                         <Col lg={8}>
@@ -244,7 +244,7 @@ class ProductPage extends Component {
                                     <p>{product.length > 0 && product[0].description}</p>
                                 </div>
                                 <div className='add-review'>
-                                    <Button onClick={() => this.hide_show(null, 'new-review')}>ВІДГУКІВ ({reviews.length >= 0 && reviews.length})</Button>
+                                    <Button type='button' onClick={() => this.hide_show(null, 'new-review')}>ВІДГУКІВ ({reviews.length >= 0 && reviews.length})</Button>
                                     <div className='hidden' id='new-review'>
                                         <div className='reviews'>
                                             <span>ВІДГУКИ КЛІЄНТІВ</span>
