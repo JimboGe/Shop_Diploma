@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom';
 export const setAlert = (props) => {
 
     const alert = document.getElementById('alert');
-    const renderElement = <Alert alert={props}></Alert>;
-   
+    const renderElement = <Alert alert={props} />;
+
     ReactDOM.render(renderElement, alert);
     const alertFade = document.getElementById('alert-fade');
 
@@ -17,6 +17,6 @@ export const setAlert = (props) => {
             ReactDOM.unmountComponentAtNode(alert);
         }, 1000);
     }, 5000);
-
+    
 }
 

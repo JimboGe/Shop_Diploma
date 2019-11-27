@@ -9,15 +9,30 @@
 }
 .custom-alert div{
     position: absolute;
-    top:208.5px;
+    top:75px;
+    
     left:42%;
     right:40%;
-    border-radius: 0;
     text-align: center; 
+    background: rgba(0, 0, 0, 0.89);
+    color:white;
+    border:1px solid rgba(0, 0, 0, 0.89);
 }
 
 .custom-alert div.remove{
    animation-name:remove-anim !important;
    -webkit-animation-name :remove-anim !important;
    -moz-animation-name :remove-anim !important;
+}
+.alert .fa {
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-left: -5px;
+    font-size:20px;
+}
+.alert .fa.fa-exclamation-circle{
+    color:red;
+}
+.alert .fa.fa-check-circle{
+    color:rgb(0, 199, 0);
 }
