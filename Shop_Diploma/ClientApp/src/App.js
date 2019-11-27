@@ -23,7 +23,7 @@ import TestingPage from './components/TestingPage/TestingPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
-
+import './components/Alert/Alert.css';
 import Tet from './components/Tet';
 
 import ScrollUp from './components/ScrollUp';
