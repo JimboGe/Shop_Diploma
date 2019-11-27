@@ -14,15 +14,18 @@
         opacity: 0;
     }
 }
-.custom-alert div{
+.custom-alert {
     position: absolute;
     top:75px;
     left:42%;
     right:40%;
+}
+.custom-alert div{
+   position: relative;
     text-align: center; 
     background: rgb(26, 26, 26);
     color:white;
-    border:1px solid rgb(26, 26, 26);
+    border:1px solid rgb(141, 141, 141);
     animation-fill-mode: both;
     animation-duration: 1000ms;
     animation-delay: 0ms;
