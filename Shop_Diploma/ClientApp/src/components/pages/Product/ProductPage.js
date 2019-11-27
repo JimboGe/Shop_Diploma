@@ -148,7 +148,7 @@ class ProductPage extends Component {
         rating = rating / reviews.length;
         return (
             <div className='product-page container'>
-                <form onSubmit={this.addProductToCart}>
+                
                     <Row>
                         <Col lg={6}>
                             <div>
@@ -193,7 +193,9 @@ class ProductPage extends Component {
                             </div>
                         </Col>
                         <Col lg={6}>
+                        
                             <div className='content'>
+                            <form onSubmit={this.addProductToCart}>
                                 <div><h2 className='title'>{product.length > 0 && product[0].name} /{product.length > 0 && product[0].brand.name}</h2></div>
                                 <div><h2 className='price'>{product.length > 0 && product[0].price} грн</h2></div>
                                 <div className='review'>
@@ -240,6 +242,7 @@ class ProductPage extends Component {
                                         </Col>
                                     </Row>
                                 </div>
+                                </form>
                                 <div className='description'>
                                     <p>{product.length > 0 && product[0].description}</p>
                                 </div>
@@ -275,16 +278,16 @@ class ProductPage extends Component {
                                                         </div>
                                                     </Col>
                                                 </Row>)}
-                                            <AddReview idProduct={this.state.idProduct} />
+                                                <AddReview idProduct={this.state.idProduct} />
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
+                        
                         </Col>
                     </Row>
-                </form>
+               
+               
                 <hr />
                 {recommended_products.length > 0 ?
                     <div className='recomended-products'>
