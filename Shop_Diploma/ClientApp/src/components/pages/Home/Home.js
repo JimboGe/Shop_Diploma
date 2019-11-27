@@ -80,7 +80,7 @@ class Home extends Component {
           </div>
         </div>
         <div style={{textAlign:'center'}}><h3>НОВИНКИ</h3></div>
-        <Row style={{margin:'-0px -5px 50px -5px'}}>
+        <Row style={{margin:'-0px 0 50px 0'}}>
           {products.map((value, index) =>
             <Col sm={12} md={3} className='product' >
               <Product product={value} key={index} />
