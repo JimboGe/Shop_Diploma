@@ -25,7 +25,7 @@ class News extends Component {
         var { products } = this.props;
         console.log(products);
         return (
-            <div className='center news'>
+            <div className='news'>
                 <h3>НОВИНКИ</h3>
                 <Row>
                     {products.map((value, index) =>
