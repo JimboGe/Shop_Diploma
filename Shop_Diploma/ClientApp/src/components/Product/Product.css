@@ -1,15 +1,23 @@
 .product{
     margin:20px 0;
+    overflow: hidden;
+    position: relative;
 }
+
 .product .description{
     padding-top:15px;
     background: white;
-    position: relative;
     z-index: 2;
-    height: 95px;
-    overflow: hidden;
-    transition-duration: 400ms;
+    position: relative;
+    transition-duration: 300ms;
+    transition-property: transform;
+    margin-top:-40px;
+    transform: translate(0,30%);
+    left:0;
+    bottom: 0;
+    right: 0;
 }
+
 .product .image-box img{
     width:100%;
     z-index: 3;
@@ -24,11 +32,13 @@
 .product .description div a:hover{
     color:rgb(119, 119, 119);
 }
-.product .description div a.btn{
+.product .description .btn{
     color:white;
     background: #4b4848;
+    transition-property: all;
+    transition-duration: .5s;
 }
-.product .description div a.btn:hover{
+.product .description .btn:hover{
     color:white;
     background: #0a0a0a;
 }
@@ -45,28 +55,11 @@
     padding-left:5px;
     color:rgb(128, 126, 126);
 }
-.product button.btn.btn-dark {
-    color:black;
-    border:2px solid black;
-    border-radius: 6px;
-    background:white;
-    transition-duration: 400ms;
 
-}
-.product button.btn.btn-dark:hover{
-    background: black;
-    color:white;
-}
  .product .image-box .second-image{
-    position: relative;
-    top:0px;
-    left:0px;
-    padding-right:15px;
-    padding-left:15px;
-    width:100%;
-}
-.product .image-box .second-image{
     position: absolute;
+    left:0px;
+    width:100%;
     opacity:0; 
     z-index: 1;
 }
@@ -74,9 +67,10 @@
     opacity:1;
 }
 .product:hover .description{
-    height: 135px;
-    margin-top:-44px;
+    overflow: visible;
+    transform: translate(0,0%);
 }
+
 .product .new-product{
     position: absolute;
     width:35px;
@@ -85,7 +79,8 @@
     color:white;
     font-size:12px;
     padding:2px;
-    right:20px;
+    right: 10px;
+    
     top:5px;
     z-index:2;
     text-align: center;

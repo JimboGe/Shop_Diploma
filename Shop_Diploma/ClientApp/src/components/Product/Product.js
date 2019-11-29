@@ -34,10 +34,10 @@ class Product extends Component {
 
         return (
             
-                <Fade>
-                    {newElement}
+                <div className='product'>
                     <div style={{ textAlign: 'center' }}>
                         <div className='image-box'>
+                        {newElement}
                             <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`}>
 
                                 {product[0].images.length > 0 && <img src={product[0].images[0].path}
@@ -63,7 +63,7 @@ class Product extends Component {
                             </div>
                         </div>
                     </div>
-                </Fade >
+                </div >
             
         );
     }

@@ -348,7 +348,7 @@ class ListProducts extends Component {
                             <Row>
                                 {!!error ? <h1 style={{ marginLeft: '25px' }}>{error}</h1> : ''}
                                 {products.map((value, index) =>
-                                    <Col sm={12} md={3} className='product' >
+                                    <Col sm={12} md={3}>
                                         <Product product={value} key={index} />
                                     </Col>)}
                             </Row>
