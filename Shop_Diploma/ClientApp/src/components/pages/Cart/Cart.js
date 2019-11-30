@@ -35,6 +35,7 @@ class Cart extends Component {
     deleteProduct = (e) => {
         const index = e.target.parentElement.parentElement.parentElement.parentElement.getAttribute('index');
         this.props.deleteProductByCart(index);
+        setAlert({ message: 'Товар успішно видаленно з Корзини!', type: 'success' });
     }
 
     addCartItems(value, index) {
