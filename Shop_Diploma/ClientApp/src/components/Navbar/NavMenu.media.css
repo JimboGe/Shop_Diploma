@@ -1,0 +1,48 @@
+@media (min-width: 768px){
+    .navbar.bot .navbar-toggler{
+      display:none;
+    }
+  }
+  @media (max-width:768px){
+    .navbar.bot .navbar-toggler{
+      position: absolute;
+      left:30px;
+    }
+    .navbar.bot{
+      background: white !important;
+      z-index:3;
+    }
+     
+    .navbar.middle .logo{
+      position: absolute;
+      left:0px;
+      top:50px;
+      z-index:4;
+    }
+    .navbar.middle .logo img{
+      padding:15px !important;
+      margin:-5px 0px -20px 32px !important;
+    }
+    .navbar.middle .fa.fa-shopping-cart,
+    .navbar.middle .fa.fa-user,
+    .navbar.middle .fa.fa-user-plus{
+        position: absolute;
+        top:75px;
+        font-size:22px;
+        z-index:4;
+    }
+    .navbar.middle .fa.fa-shopping-cart{
+        right:20px;
+    }
+    .navbar.middle .fa.fa-user{
+        right:-20px;
+    }
+    .navbar.middle .fa.fa-user-plus{
+        right:-65px;
+    }
+    .navbar.middle .cart-item-count{
+        top:62px !important;
+        right:10px;
+        z-index:4;
+    }
+  }

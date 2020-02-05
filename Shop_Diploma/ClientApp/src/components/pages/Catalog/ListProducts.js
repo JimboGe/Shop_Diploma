@@ -115,21 +115,17 @@ class ListProducts extends Component {
             .get("size")) != null ? (new URLSearchParams(this.props.location.search).get("size")) : "";
         let minprice = (new URLSearchParams(this.props.location.search)
             .get("minprice")) != null ? (new URLSearchParams(this.props.location.search).get("minprice")) : "";
+        let name = (new URLSearchParams(this.props.location.search)
+        .get("name")) != null ? (new URLSearchParams(this.props.location.search).get("name")) : "";
         let maxprice = (new URLSearchParams(this.props.location.search)
             .get("maxprice")) != null ? (new URLSearchParams(this.props.location.search).get("maxprice")) : "";
-        this.props.getProductsByParams(gender, category, brand, color, size, minprice, maxprice)
+        this.props.getProductsByParams(gender, category, brand, color, size, minprice, maxprice, name)
             .then(
                 () => { },
                 (err) => this.setState({ error: err.response.data })
             )
 
-        if (gender == null && brand == null && category == null && color == null && size == null && minprice == null && maxprice == null) {
-            this.props.getProducts()
-                .then(
-                    () => { },
-                    (err) => { console.log("Error get data ", err); }
-                )
-        }
+        
     }
 
     getCategories() {
@@ -258,6 +254,7 @@ class ListProducts extends Component {
         let { products, categories } = this.props;
         const { error, sizeTable, currentGender, priceFilter, minPriceProduct, maxPriceProduct } = this.state;
         let categoriesElem = this.createCategories(currentGender, categories);
+        
         return (
             <div className='list-products'>
                 <Row>

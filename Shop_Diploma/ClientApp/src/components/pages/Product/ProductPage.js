@@ -133,6 +133,7 @@ class ProductPage extends Component {
     }
 
     render() {
+        console.log('tetetetet',this.props.match);
         const product = this.props.products;
         const { currentSlide } = this.state;
 

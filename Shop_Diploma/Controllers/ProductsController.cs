@@ -97,8 +97,9 @@ namespace Shop_Diploma.Controllers
             }
             return BadRequest("Не найдено продуктів");
         }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> ByParams(string gender, string category, string brand, string color, string size, string minprice, string maxprice)
+        public async Task<ActionResult<IEnumerable<Product>>> ByParams(string gender, string category, string brand, string color, string size, string minprice, string maxprice, string name)
         {
             decimal min;
             decimal max;
@@ -171,6 +172,62 @@ namespace Shop_Diploma.Controllers
             {
                 products = products.Where(x => x.Price >= min && x.Price <= max).ToList();
             }
+            if (!string.IsNullOrEmpty(name))
+            {
+                #region Change Registr 
+                List<string> string_ToUpper_ToLower = new List<string>();
+                string_ToUpper_ToLower.Add(name);
+                var container = string.Empty;
+                //if search_params = tet
+                //Tet
+                container = string.Empty;
+                foreach (var item in name)
+                {
+                    container += item.ToString().ToLower();
+                }
+                container = container[0].ToString().ToUpper() + container.Remove(0, 1);
+                string_ToUpper_ToLower.Add(container);
+                //tET
+                container = string.Empty;
+                foreach (var item in name)
+                {
+                    container += item.ToString().ToUpper();
+                }
+                container = container[0].ToString().ToLower() + container.Remove(0, 1);
+                string_ToUpper_ToLower.Add(container);
+                //TET
+                container = string.Empty;
+                foreach (var item in name)
+                {
+                    container += item.ToString().ToUpper();
+                }
+                container = container[0].ToString().ToUpper() + container.Remove(0, 1);
+                string_ToUpper_ToLower.Add(container);
+                //tet
+                container = string.Empty;
+                foreach (var item in name)
+                {
+                    container += item.ToString().ToLower();
+                }
+                container = container[0].ToString().ToLower() + container.Remove(0, 1);
+                string_ToUpper_ToLower.Add(container);
+                #endregion
+
+                //need fix from 261 to 264 anonymous type List<T>
+                var productByName = products.ToList();
+                var productByBrand = products.ToList();
+                productByName.Clear();
+                productByBrand.Clear();
+
+                foreach (var item in string_ToUpper_ToLower)
+                {
+                    productByName = productByName.Concat(products.Where(x => x.Name.IndexOf(item) != -1)).ToList();
+                    productByBrand = productByBrand.Concat(products.Where(x => x.Brand.Name.IndexOf(item) != -1)).ToList();
+                }
+                
+                products = productByName.Concat(productByBrand).ToList();
+                products = products.Distinct().ToList();
+            }
 
             if (products.Count > 0)
             {
@@ -205,6 +262,7 @@ namespace Shop_Diploma.Controllers
             }
             return BadRequest("Немає нових продуктів");
         }
+       
 
         [HttpPost]
         public async Task<ActionResult<IEnumerable<Product>>> NewReview([FromBody] Review review)
@@ -214,7 +272,6 @@ namespace Shop_Diploma.Controllers
             await _ctx.SaveChangesAsync();
             return Ok(review);
         }
-
 
         [HttpPost]
         [Authorize(Roles = "Admin")]

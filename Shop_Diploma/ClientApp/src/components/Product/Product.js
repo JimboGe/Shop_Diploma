@@ -31,7 +31,6 @@ class Product extends Component {
         });
 
 
-
         return (
             
                 <div className='product'>

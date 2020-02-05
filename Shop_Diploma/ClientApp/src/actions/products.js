@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_PRODUCTS, ADD_PRODUCT_REVIEW, NEW_PRODUCT, DELETE_PRODUCT, EDIT_PRODUCT, GET_RECOMMENDED_PRODUCTS } from './types';
+import { GET_PRODUCTS, ADD_PRODUCT_REVIEW, NEW_PRODUCT, DELETE_PRODUCT, EDIT_PRODUCT} from './types';
 
 export function setProducts(data) {
   return {
@@ -55,10 +55,10 @@ export function getProductById(id) {
       })
   }
 }
-export function getProductsByParams(gender, category, brand, color, size, minprice, maxprice) {
+export function getProductsByParams(gender, category, brand, color, size, minprice, maxprice, name) {
   return dispatch => {
     return axios.get('api/products/ByParams?gender=' + gender + '&category=' + category + '&brand=' + brand
-      + '&color=' + color + '&size=' + size + '&minprice=' + minprice + '&maxprice=' + maxprice)
+      + '&color=' + color + '&size=' + size + '&minprice=' + minprice + '&maxprice=' + maxprice + '&name=' + name)
       .then(res => {
         dispatch(setProducts(res.data));
       })
