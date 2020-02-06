@@ -110,13 +110,13 @@ class NavMenu extends Component {
             </div>
           </nav>
         </div>
-        <nav className="navbar bot navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar bot navbar-expand-lg navbar-light bg-light" >
           <button id='btn-menu-show'
-            className="navbar-toggler"
+            className="navbar-toggler mobile"
             type="button"
             data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
+            data-target="#mob-navbar-menu"
+            aria-controls="mob-navbar-menu"
             aria-expanded="false"
             aria-label="Toggle navigation">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -134,8 +134,19 @@ class NavMenu extends Component {
             </svg>
             <label className='btn-menu-show text' for='btn-menu-show'> Меню</label>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className='logo mobile'>
+            <a href='/' >
+              <img src='/img/logo.png' alt='logo-mobile' />
+              <span style={{ display: 'block' }}>
+                The clothest, that live your life.
+              </span>
+            </a>
+          </div>
+          <div className="collapse navbar-collapse" id="mob-navbar-menu">
             <ul className="nav justify-content-center">
+              <li className="nav-item mobile">
+                <a className="fa fa-times" onClick={()=>{document.getElementById('mob-navbar-menu').classList.remove('show')}} />
+              </li>
               <li className="nav-item">
                 <a className="nav-link" href='/'>Головна</a>
               </li>
@@ -156,6 +167,18 @@ class NavMenu extends Component {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/discounts">Знижки</a>
+              </li>
+              <li className="nav-item mobile">
+                <a className="nav-link" href="/services">Доставка, оплата, повернення</a>
+              </li>
+              <li className="nav-item mobile">
+                <a className="nav-link" href="/cart">Корзина</a>
+              </li>
+              <li className="nav-item mobile">
+                <a className="nav-link" href="/account/signin">Увійти</a>
+              </li>
+              <li className="nav-item mobile">
+                <a className="nav-link" href="/account/signup">Зареєструватися</a>
               </li>
             </ul>
           </div>

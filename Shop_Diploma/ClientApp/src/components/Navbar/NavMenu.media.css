@@ -1,48 +1,80 @@
 @media (min-width: 768px){
-    .navbar.bot .navbar-toggler{
-      display:none;
+    .mobile{
+      display:none !important;
     }
   }
-  @media (max-width:768px){
-    .navbar.bot .navbar-toggler{
-      position: absolute;
-      left:30px;
-    }
+@media (max-width:768px){
     .navbar.bot{
       background: white !important;
       z-index:3;
     }
-     
-    .navbar.middle .logo{
-      position: absolute;
-      left:0px;
-      top:50px;
-      z-index:4;
+    .navbar.bot .navbar-toggler{
+      left:3%;
+      margin-right:10px;
+      padding:0px;
+      background: transparent;
+      border:none;
     }
-    .navbar.middle .logo img{
-      padding:15px !important;
-      margin:-5px 0px -20px 32px !important;
+    .navbar.bot .logo.mobile{
+      text-align:center;
     }
-    .navbar.middle .fa.fa-shopping-cart,
-    .navbar.middle .fa.fa-user,
-    .navbar.middle .fa.fa-user-plus{
-        position: absolute;
-        top:75px;
-        font-size:22px;
-        z-index:4;
+     .navbar.bot .logo.mobile img{
+        width:125px;
+     }
+     .navbar.bot .logo.mobile span{
+       color: rgb(139, 139, 139);
+       font-size:14px;
+     }
+    .navbar.bot .btn-menu-show.text{
+      position:relative;
+      color:rgba(0,0,0,.5);
+      text-transform: uppercase;
+      top:1.5px;
+      cursor: pointer;
+      padding-right:2px;
     }
-    .navbar.middle .fa.fa-shopping-cart{
-        right:20px;
+    .navbar.middle{
+      display:none;
     }
-    .navbar.middle .fa.fa-user{
-        right:-20px;
+    .navbar.top{
+      display: none;
     }
-    .navbar.middle .fa.fa-user-plus{
-        right:-65px;
+    .navbar.bot .navbar-collapse.show{
+      position:fixed;
+      top:0;
+      overflow-y: visible;
+      bottom:0;
+      width:80%;
+      background: white;
+      box-shadow: 250px 0 0 rgba(0,0,0,0.5);
     }
-    .navbar.middle .cart-item-count{
-        top:62px !important;
-        right:10px;
-        z-index:4;
+    .navbar.bot .navbar-collapse.show .nav-link {
+      color:rgba(0, 0, 0, 0.8) !important;
+      font-size:14px;
+      text-transform: uppercase;
+    }
+    .navbar.bot .navbar-collapse.show .nav-item{
+      display:block;
+      width:100%;
+    }
+    .navbar.bot .navbar-collapse.show .nav-item .fa-times::after{
+      content: 'Закрити';
+      text-transform: uppercase;
+      display: inline-block;
+      margin-left:5px;
+      font-size:14px;
+      position: relative;
+      top:-1px;
+      
+    }
+    .navbar.bot .navbar-collapse.show .nav-item .fa-times{
+      font-size:20px;
+      margin-left:-20px;
+      
+    }
+    .navbar.bot .nav-item:first-child{
+      border-bottom:1px solid rgba(0, 0, 0, 0.644);
+      padding-bottom:5px;
+      margin-bottom:5px;
     }
   }
