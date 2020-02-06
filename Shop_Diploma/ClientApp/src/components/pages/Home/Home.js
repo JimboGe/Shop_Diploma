@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Home.css';
+import './Home.media.css';
 import { CarouselProvider, Slider, Slide, DotGroup, Image } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { connect } from "react-redux";
@@ -36,7 +37,7 @@ class Home extends Component {
                                 naturalSlideWidth={40} naturalSlideHeight={12} totalSlides={4}>
                 <Slider>
                   {this.state.arrImages.map((value, index, arr) =>
-                    <Slide index={index} key={index}><Image src={value} /></Slide>)};
+                    <Slide index={index} key={index}><Image src={value} /></Slide>)}
                   </Slider>
                 <DotGroup className='dot-group' />
               </CarouselProvider>
