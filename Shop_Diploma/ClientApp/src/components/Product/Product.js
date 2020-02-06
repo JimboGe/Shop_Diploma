@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Col } from "react-bootstrap";
 import './Product.css';
-import Fade from 'react-reveal/Fade';
+import './Product.media.css';
 
 class Product extends Component {
     constructor(props) {
@@ -32,38 +31,37 @@ class Product extends Component {
 
 
         return (
-            
-                <div className='product'>
-                    <div style={{ textAlign: 'center' }}>
-                        <div className='image-box'>
-                        {newElement}
-                            <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`}>
 
-                                {product[0].images.length > 0 && <img src={product[0].images[0].path}
-                                    className='first-image'
-                                    alt='product-img-first' />}
-                                {product[0].images.length > 1 && <img src={product[0].images[1].path}
-                                    className='second-image'
-                                    alt='product-img-second' />}
+            <div className='product'>
+                <div style={{ textAlign: 'center' }}>
+                    <div className='image-box'>
+                        {newElement}
+                        <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`}>
+                            {product[0].images.length > 0 && <img src={product[0].images[0].path}
+                                className='first-image'
+                                alt='product-img-first' />}
+                            {product[0].images.length > 1 && <img src={product[0].images[1].path}
+                                className='second-image'
+                                alt='product-img-second' />}
+                        </a>
+                    </div>
+                    <div className='description'>
+                        <div>
+                            <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`}>
+                                {product[0].name}
                             </a>
                         </div>
-                        <div className='description'>
-                            <div>
-                                <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`}>
-                                    {product[0].name}
-                                </a>
-                            </div>
-                            <div className='price'>{product[0].price} грн</div>
-                            <div className='size'>
-                                <span>{sizes}</span>
-                            </div>
-                            <div>
-                                <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`} className='btn btn-dark'>Детальніше</a>
-                            </div>
+                        <div className='price'>{product[0].price} грн</div>
+                        <div className='size'>
+                            <span>{sizes}</span>
+                        </div>
+                        <div>
+                            <a href={`/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`} className='btn btn-dark'>Детальніше</a>
                         </div>
                     </div>
-                </div >
-            
+                </div>
+            </div >
+
         );
     }
 }
