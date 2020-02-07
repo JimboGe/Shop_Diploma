@@ -33,20 +33,32 @@
       cursor: pointer;
       padding-right:2px;
     }
-    .navbar.middle{
+    .navbar.middle,
+    .navbar.top{
       display:none;
     }
-    .navbar.top{
-      display: none;
-    }
-    .navbar.bot .navbar-collapse.show{
+    .navbar.bot .navbar-collapse{
       position:fixed;
       top:0;
-      overflow-y: visible;
-      bottom:0;
+      left:-80%;
       width:80%;
+      bottom:0;
       background: white;
-      box-shadow: 250px 0 0 rgba(0,0,0,0.5);
+      padding-left:45px;
+    }
+    .navbar.bot .navbar-collapse.collapsing{
+      height: 100%;
+     transition:.4s all ease;
+     -webkit-transition: .4s all ease;
+     -moz-transition: .4s all ease;
+     -o-transition: .4s all ease;
+    }
+    .navbar.bot .navbar-collapse.collapse.show{
+      transition: .4s all ease;
+      -webkit-transition: .4s all ease;
+      -moz-transition: .4s all ease;
+      -o-transition: .4s all ease;
+      left:0;
     }
     .navbar.bot .navbar-collapse.show .nav-link {
       color:rgba(0, 0, 0, 0.8) !important;
@@ -70,11 +82,35 @@
     .navbar.bot .navbar-collapse.show .nav-item .fa-times{
       font-size:20px;
       margin-left:-20px;
-      
     }
     .navbar.bot .nav-item:first-child{
       border-bottom:1px solid rgba(0, 0, 0, 0.644);
       padding-bottom:5px;
       margin-bottom:5px;
+    }
+    .navbar-toggler:focus{
+      outline: none;
+    }
+    .navbar.bot .mob-navbar-shadow{
+      position:fixed;
+      width:20%;
+      right:0;
+      top:0;
+      bottom:0;
+      background: transparent;
+      transition: .4s background ease;
+      -webkit-transition: .4s background ease;
+     -moz-transition: .4s background ease;
+     -o-transition: .4s background ease;
+    }
+    .navbar.bot .mob-navbar-shadow.collapsing{
+      height: 100%;
+      transition: .4s all ease;
+      -webkit-transition: .4s all ease;
+     -moz-transition: .4s all ease;
+     -o-transition: .4s all ease;
+    }
+    .navbar.bot .mob-navbar-shadow.show{
+      background: rgba(0, 0, 0, 0.55);
     }
   }

@@ -115,8 +115,8 @@ class NavMenu extends Component {
             className="navbar-toggler mobile"
             type="button"
             data-toggle="collapse"
-            data-target="#mob-navbar-menu"
-            aria-controls="mob-navbar-menu"
+            data-target="#mob-navbar-menu, .mob-navbar-shadow"
+            aria-controls="mob-navbar-menu, mob-navbar-shadow"
             aria-expanded="false"
             aria-label="Toggle navigation">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -143,9 +143,10 @@ class NavMenu extends Component {
             </a>
           </div>
           <div className="collapse navbar-collapse" id="mob-navbar-menu">
-            <ul className="nav justify-content-center">
+            <ul className="navbar-nav justify-content-center">
               <li className="nav-item mobile">
-                <a className="fa fa-times" onClick={()=>{document.getElementById('mob-navbar-menu').classList.remove('show')}} />
+                <a className="fa fa-times" data-toggle="collapse" data-target="#mob-navbar-menu, .mob-navbar-shadow"
+                  aria-controls="mob-navbar-menu, mob-navbar-shadow" />
               </li>
               <li className="nav-item">
                 <a className="nav-link" href='/'>Головна</a>
@@ -182,7 +183,9 @@ class NavMenu extends Component {
               </li>
             </ul>
           </div>
+          <div className='mob-navbar-shadow collapse'/>
         </nav>
+
       </div>
     );
   }
