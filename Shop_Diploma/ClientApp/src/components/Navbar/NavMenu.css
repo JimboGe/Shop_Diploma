@@ -57,9 +57,9 @@
 .navbar.bot a:hover, .navbar.bot a:focus,.navbar.bot a:active{
   background: transparent;
 }
-
-
-
+.navbar.bot .navbar-nav {
+  width:100%;
+}
 
 .nav{
   margin-top:5px;
