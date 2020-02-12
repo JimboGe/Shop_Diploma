@@ -138,13 +138,13 @@ class Cart extends Component {
 
                             <div>
                                 <span className='text'>Всього товарів:</span>
-                                <span className='value'>{count} шт.</span>
-                            </div>
-                            <div>
+
+                                <span className='value'>{count} шт.</span><br />
+                               
                                 <span className='text'>Ціна товарів:</span>
-                                <span className='value'>{priceCart} грн.</span>
-                            </div>
-                            <div>
+                                <span className='value'>{priceCart} грн.</span><br />
+                               
+
                                 <span className='text'>Доставка:</span>
                                 <span className='value'>(40-60) грн.</span>
                             </div>

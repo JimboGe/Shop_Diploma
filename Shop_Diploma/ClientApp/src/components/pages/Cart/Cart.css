@@ -68,12 +68,13 @@
     color:rgb(145, 145, 145);
     cursor: pointer;
 }
-.cart .result-price{
-    border: 1px solid black;
-}
 
 .cart .result-price span{
     font-size:15px;
+}
+.cart .result-price {
+    text-align: left;
+     border: 1px solid black;
 }
 
 .cart .result-price span.value{
