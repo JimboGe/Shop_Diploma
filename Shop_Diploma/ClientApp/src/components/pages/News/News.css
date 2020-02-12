@@ -1,0 +1,9 @@
+.news {
+    margin-right :15px;
+    margin-left:15px;
+    padding: 0;
+    width:100%;
+}
+.news h3{
+    text-align: center;
+}

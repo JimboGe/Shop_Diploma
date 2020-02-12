@@ -9,6 +9,7 @@ import { getRecommendedProducts } from '../../../actions/recommended_products';
 import { addProductToCart } from '../../../actions/cart';
 import { connect } from "react-redux";
 import Product from '../../Product/Product';
+import { setAlert } from '../../../helpers/setAlert';
 
 import $ from 'jquery';
 
@@ -30,7 +31,7 @@ class ProductPage extends Component {
                 () => { },
                 (err) => { console.log("Error get data ", err); }
             );
-        this.props.getRecommendedProducts(category,id)
+        this.props.getRecommendedProducts(category, id)
             .then(
                 () => { },
                 (err) => { console.log("Error get data ", err); }
@@ -77,32 +78,78 @@ class ProductPage extends Component {
         $('html,body').animate({ scrollTop: pos }, 1200, 'swing');
     }
 
+    animationMoveToCart() {
+        const elem = document.getElementsByClassName('move_to_cart')[0];
+        const cart_elem = document.getElementById('cart');
+
+        let pos_cart = cart_elem.getBoundingClientRect();
+        let pos_img = elem.getBoundingClientRect();
+        let pos_left = 0;
+        let pos_top = 0;
+
+        elem.style.visibility = 'visible';
+
+        const id_interval = setInterval(function () {
+            if (pos_left + pos_img.x >= pos_cart.left) {
+                clearInterval(id_interval);
+                elem.style.visibility = 'hidden';
+                elem.style.top = 0;
+                elem.style.left = 10 + 'px';
+            }
+            else {
+                pos_left += 6;
+                elem.style.left = pos_left + 'px';
+                pos_top -= 1.5;
+                elem.style.top = pos_top + 'px';
+
+            }
+        });
+    }
+
     addProductToCart = (e) => {
         e.preventDefault();
+        const { cartProducts } = this.props;
         const product = this.props.products;
+        const id = product[0].id;
         const { name, price } = product[0];
         const image = product[0].images[0].path;
         const { size, count } = this.state;
         const hrefProduct = `/catalog/${product[0].gender}/${product[0].subcategory.name}/${product[0].brand.name}/p${product[0].id}`;
-        this.props.addProductToCart({ hrefProduct, image, name, price, size, count });
+        if (!cartProducts.find(value => {
+            if (value.id === id && value.size === size) {
+                return true;
+            }
+            else {
+                return false
+            }
+        })) {
+            setAlert({ message: 'Продукт додано до Кошика', type: 'success' });
+            this.props.addProductToCart({ id, hrefProduct, image, name, price, size, count });
+            this.animationMoveToCart();
+        }
+        else {
+            setAlert({ message: 'Цей продукт уже доданий до Кошика', type: 'danger' });
+        }
     }
 
     render() {
+        console.log('tetetetet',this.props.match);
         const product = this.props.products;
         const { currentSlide } = this.state;
+
         const { recommended_products } = this.props;
-        console.log('rererer-er-e-r-er',recommended_products);
         var sizes = "";
         if (typeof sizes === 'string') {
             sizes = product.length > 0 ? product[0].sizes : '';
         }
+
         var reviews = product.length > 0 ? product[0].reviews : '';
         var rating = 0;
         if (reviews.length > 0) reviews.map((value) => rating = rating + value.rating);
         rating = rating / reviews.length;
         return (
             <div className='product-page container'>
-                <form onSubmit={this.addProductToCart}>
+                
                     <Row>
                         <Col lg={6}>
                             <div>
@@ -121,11 +168,15 @@ class ProductPage extends Component {
                                     <DotGroup className='dot-group' />
                                     <div className='dot-group-image' >
                                         {product.length > 0 && product[0].images.map((value, index, array) =>
-                                            <Dot slide={index} className='dot-image'>
-                                                <Image
-                                                    src={value.path}>
-                                                </Image>
-                                            </Dot>)}
+                                            <div>
+                                                <Dot slide={index} className='dot-image'>
+                                                    <Image
+                                                        src={value.path}>
+                                                    </Image>
+                                                </Dot>
+                                                {index === 0 && <img src={value.path} style={{ visibility: 'hidden' }} className='move_to_cart' />}
+                                            </div>
+                                        )}
                                     </div>
                                 </CarouselProvider>
                             </div>
@@ -138,12 +189,14 @@ class ProductPage extends Component {
                                     </Slider>
                                     <ButtonBack className='button-move back' />
                                     <ButtonNext className='button-move next' />
-                                    <button onClick={() => this.imageZoom('hide', null)} className='close-modal'><i className="fa fa-times"></i></button>
+                                    <button type='button' onClick={() => this.imageZoom('hide', null)} className='close-modal'><i className="fa fa-times"></i></button>
                                 </CarouselProvider>
                             </div>
                         </Col>
                         <Col lg={6}>
+                        
                             <div className='content'>
+                            <form onSubmit={this.addProductToCart}>
                                 <div><h2 className='title'>{product.length > 0 && product[0].name} /{product.length > 0 && product[0].brand.name}</h2></div>
                                 <div><h2 className='price'>{product.length > 0 && product[0].price} грн</h2></div>
                                 <div className='review'>
@@ -154,19 +207,17 @@ class ProductPage extends Component {
                                     {rating >= 5 ? <i style={{ color: 'rgb(44, 44, 44)' }} class="fa fa-star"></i> : <i class="fa fa-star"></i>}
                                     <span>
                                         {reviews.length + ' відгуків'}
-
                                     </span>
                                 </div>
 
                                 {product.length > 0 && product[0].sizeImage.categoryName != 'none' &&
                                     <div className='size-grid'>
-                                        <button onClick={(e) => { this.hide_show(e, 'size-grid-div') }}>РОЗМІРНА СІТКА</button>
+                                        <button type='button' onClick={(e) => { this.hide_show(e, 'size-grid-div') }}>РОЗМІРНА СІТКА</button>
                                         <div id='size-grid-div' className='hidden'>
                                             <img width='100%' alt='size-grid-img'
                                                 src={product.length > 0 && product[0].sizeImage.path} />
                                         </div>
-                                    </div>
-                                }
+                                    </div>}
                                 <div className='size'>
                                     {sizes != '' ?
                                         <span>Розмір:</span> : ''}
@@ -180,22 +231,24 @@ class ProductPage extends Component {
                                     <Row>
                                         <Col lg={4}>
                                             <div className='button-number'>
-                                                <Button onClick={() => { this.setState({ count: this.state.count > 1 ? this.state.count - 1 : this.state.count }) }} id='decrement'>-</Button>
-                                                <input type='text' value={this.state.count}></input>
-                                                <Button onClick={() => { this.setState({ count: this.state.count + 1 }) }} id='increment'>+</Button>
+                                                <Button type='button' onClick={() => { this.setState({ count: this.state.count > 1 ? this.state.count - 1 : this.state.count }) }} id='decrement'>-</Button>
+                                                <input type='text' value={this.state.count} />
+                                                <Button type='button' onClick={() => { this.setState({ count: this.state.count + 1 }) }} id='increment'>+</Button>
                                             </div>
                                         </Col>
                                         <Col lg={8}>
                                             <Button type="submit" disabled={sizes.length > 0 && this.state.size === ''} className='order-btn'>
-                                                {this.state.size != '' ? 'В КОРЗИНУ' : sizes.length > 0?'Виберіть розмір' : 'В КОРЗИНУ'}</Button>
+                                                {this.state.size != '' ? 'В КОРЗИНУ' : sizes.length > 0 ? 'Виберіть розмір' : 'В КОРЗИНУ'}
+                                            </Button>
                                         </Col>
                                     </Row>
                                 </div>
+                                </form>
                                 <div className='description'>
                                     <p>{product.length > 0 && product[0].description}</p>
                                 </div>
                                 <div className='add-review'>
-                                    <Button onClick={() => this.hide_show(null, 'new-review')}>ВІДГУКІВ ({reviews.length >= 0 && reviews.length})</Button>
+                                    <Button type='button' onClick={() => this.hide_show(null, 'new-review')}>ВІДГУКІВ ({reviews.length >= 0 && reviews.length})</Button>
                                     <div className='hidden' id='new-review'>
                                         <div className='reviews'>
                                             <span>ВІДГУКИ КЛІЄНТІВ</span>
@@ -226,36 +279,35 @@ class ProductPage extends Component {
                                                         </div>
                                                     </Col>
                                                 </Row>)}
-                                            <AddReview idProduct={this.state.idProduct} />
+                                                <AddReview idProduct={this.state.idProduct} />
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
+                        
                         </Col>
                     </Row>
-                </form>
+               
+               
                 <hr />
                 {recommended_products.length > 0 ?
-                <div className='recomended-products'>
-                    <h4>РЕКОМЕНДОВАНІ ТОВАРИ</h4>
-                    <Row style={{ margin: '25px 0px 25px 0px' }}>
-                        {/* NEED FIX TO GET NOT ALL PRODUCTS FROM SERVER  @index < 4@*/}
-                        {recommended_products.map((value, index) =>
-                            index < 4 &&
-                            <Col sm={12} md={3} className='product' >
-                                <Product product={value} key={index} />
-                            </Col>)}
-                    </Row>
-                </div>  :
-                ''}
+                    <div className='recomended-products'>
+                        <h4>РЕКОМЕНДОВАНІ ТОВАРИ</h4>
+                        <Row style={{ margin: '25px 0px 25px 0px' }}>
+                            {/* NEED FIX TO GET NOT ALL PRODUCTS FROM SERVER  @index < 4@*/}
+                            {recommended_products.map((value, index) =>
+                                index < 4 &&
+                                <Col sm={12} md={3} className='product' >
+                                    <Product product={value} key={index} />
+                                </Col>)}
+                        </Row>
+                    </div> :
+                    ''}
             </div>
         );
     }
 }
 const mapStateToProps = (state) => {
-    console.log('store---', state);
     return {
         products: state.products.products,
         cartProducts: state.cartProducts.cartProducts,

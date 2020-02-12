@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Home.css';
+import './Home.media.css';
 import { CarouselProvider, Slider, Slide, DotGroup, Image } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { connect } from "react-redux";
@@ -32,11 +33,11 @@ class Home extends Component {
         <div className='grid' id='grid'>
           <div className='item1'>
             <div className='carousel big' >
-              <CarouselProvider hasMasterSpinner={true} isPlaying={true}  interval={7500} 
+              <CarouselProvider id ='main-carousel'hasMasterSpinner={true} isPlaying={true}  interval={7500} 
                                 naturalSlideWidth={40} naturalSlideHeight={12} totalSlides={4}>
                 <Slider>
                   {this.state.arrImages.map((value, index, arr) =>
-                    <Slide index={index} key={index}><Image src={value} /></Slide>)};
+                    <Slide index={index} key={index}><Image src={value} /></Slide>)}
                   </Slider>
                 <DotGroup className='dot-group' />
               </CarouselProvider>
@@ -80,9 +81,9 @@ class Home extends Component {
           </div>
         </div>
         <div style={{textAlign:'center'}}><h3>НОВИНКИ</h3></div>
-        <Row style={{margin:'-0px -5px 50px -5px'}}>
+        <Row style={{margin:'-0px 0 50px 0'}}>
           {products.map((value, index) =>
-            <Col sm={12} md={3} className='product' >
+            <Col xs={6} sm={6} md={3} className='product' >
               <Product product={value} key={index} />
             </Col>)}
           </Row>

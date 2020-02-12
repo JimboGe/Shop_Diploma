@@ -7,7 +7,7 @@ import 'react-input-range/lib/css/index.css';
 import { getProducts, getProductsByParams } from '../../../actions/products';
 import { getCategories } from '../../../actions/categories';
 import { connect } from "react-redux";
-import { getMinMaxPriceByProducts } from '../../../helpers/getMinMaxPriceByProducts';
+import axios from 'axios';
 
 class ListProducts extends Component {
     constructor(props) {
@@ -35,8 +35,11 @@ class ListProducts extends Component {
         this.getCurrentGender();
         this.getCategories();
         this.getProductsByParams();
+        this.getMinMaxPriceByProducts();
+    }
 
-        getMinMaxPriceByProducts().then(res => {
+    getMinMaxPriceByProducts(){
+        axios.get('https://localhost:44399/api/products/getPriceByProduct').then(res=>{
             this.setState(prevState => ({
                 priceFilter: {
                     ...prevState.priceFilter,
@@ -46,7 +49,6 @@ class ListProducts extends Component {
             }));
             this.setState({ minPriceProduct: this.state.priceFilter.min, maxPriceProduct: this.state.priceFilter.max });
         });
-
     }
 
     addHrefsForLinks() {
@@ -113,21 +115,17 @@ class ListProducts extends Component {
             .get("size")) != null ? (new URLSearchParams(this.props.location.search).get("size")) : "";
         let minprice = (new URLSearchParams(this.props.location.search)
             .get("minprice")) != null ? (new URLSearchParams(this.props.location.search).get("minprice")) : "";
+        let name = (new URLSearchParams(this.props.location.search)
+        .get("name")) != null ? (new URLSearchParams(this.props.location.search).get("name")) : "";
         let maxprice = (new URLSearchParams(this.props.location.search)
             .get("maxprice")) != null ? (new URLSearchParams(this.props.location.search).get("maxprice")) : "";
-        this.props.getProductsByParams(gender, category, brand, color, size, minprice, maxprice)
+        this.props.getProductsByParams(gender, category, brand, color, size, minprice, maxprice, name)
             .then(
                 () => { },
                 (err) => this.setState({ error: err.response.data })
             )
 
-        if (gender == null && brand == null && category == null && color == null && size == null && minprice == null && maxprice == null) {
-            this.props.getProducts()
-                .then(
-                    () => { },
-                    (err) => { console.log("Error get data ", err); }
-                )
-        }
+        
     }
 
     getCategories() {
@@ -253,10 +251,10 @@ class ListProducts extends Component {
 
 
     render() {
-
         let { products, categories } = this.props;
         const { error, sizeTable, currentGender, priceFilter, minPriceProduct, maxPriceProduct } = this.state;
         let categoriesElem = this.createCategories(currentGender, categories);
+        
         return (
             <div className='list-products'>
                 <Row>
@@ -347,7 +345,7 @@ class ListProducts extends Component {
                             <Row>
                                 {!!error ? <h1 style={{ marginLeft: '25px' }}>{error}</h1> : ''}
                                 {products.map((value, index) =>
-                                    <Col sm={12} md={3} className='product' >
+                                    <Col sm={12} md={3}>
                                         <Product product={value} key={index} />
                                     </Col>)}
                             </Row>

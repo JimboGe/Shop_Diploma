@@ -4,7 +4,6 @@ import { Redirect } from "react-router";
 
 export default function (ComposedComponent) {
   class Authenticate extends React.Component {
-
     state = {
       redirect: false
     };

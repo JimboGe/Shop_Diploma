@@ -1,0 +1,11 @@
+@media (max-width: 1000px){
+    .product .description div  {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .product .description {
+        transform: translate(0, 0%);
+        margin-top:0px;
+    }
+  }

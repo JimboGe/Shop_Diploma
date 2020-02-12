@@ -25,13 +25,13 @@ class News extends Component {
         var { products } = this.props;
         console.log(products);
         return (
-            <div className='center'>
+            <div className='news'>
                 <h3>НОВИНКИ</h3>
                 <Row>
-                        {products.map((value, index) =>
-                            <Col sm={12} md={3} className='product' >
-                                <Product product={value} key={index} />
-                            </Col>)})}
+                    {products.map((value, index) =>
+                        <Col sm={12} md={3} className='product' >
+                            <Product product={value} key={index} />
+                        </Col>)}
                 </Row>
             </div>
         );

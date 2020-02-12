@@ -12,7 +12,7 @@ function createOptions(name, data) {
     catch (ex) { console.log(ex) }
 }
 
-export const getCities=()=>{
+export function getCities(){
     var settings = {
         "url": "https://api.novaposhta.ua/v2.0/json/",
         data: {
@@ -23,7 +23,7 @@ export const getCities=()=>{
    return axios.post(settings.url, settings.data).then(res=>{createOptions('city', res.data.data);});
 }
 
-export const getRegions=()=> {
+export function getRegions() {
     var settings = {
         "url": "https://api.novaposhta.ua/v2.0/json/",
         data: {

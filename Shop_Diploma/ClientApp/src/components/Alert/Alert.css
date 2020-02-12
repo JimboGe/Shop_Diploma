@@ -1,0 +1,56 @@
+@keyframes create-anim{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes remove-anim{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+.custom-alert {
+    position: absolute;
+    top:75px;
+    left:42%;
+    right:40%;
+}
+.custom-alert div{
+   position: relative;
+    text-align: center; 
+    background: rgb(26, 26, 26);
+    color:white;
+    border:1px solid rgb(141, 141, 141);
+    animation-fill-mode: both;
+    animation-duration: 1000ms;
+    animation-delay: 0ms;
+    animation-iteration-count: 1;
+    opacity: 1;
+    animation-name:create-anim;
+    -webkit-animation-name :create-anim;
+    -moz-animation-name :create-anim;
+    z-index: 3;
+}
+
+.custom-alert div.remove{
+   animation-name:remove-anim;
+   -webkit-animation-name :remove-anim;
+   -moz-animation-name :remove-anim;
+}
+.alert .fa {
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-left: -5px;
+    font-size:20px;
+}
+.alert .fa.fa-exclamation-circle{
+    color:red;
+}
+.alert .fa.fa-check-circle{
+    color:rgb(0, 199, 0);
+}

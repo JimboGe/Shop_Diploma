@@ -53,7 +53,7 @@
 .cart .result-price {
     padding:25px;
     float:right;
-    text-align: center;
+   
 }
 .cart .result-price span{
     font-size:22px;
@@ -62,23 +62,21 @@
 .cart .header a{
     text-decoration: none;
     color:black;
-    
     font-size:17px;
 }
 .cart .header a:hover{
     color:rgb(145, 145, 145);
     cursor: pointer;
 }
-.cart .result-price{
-    border: 1px solid black;
-}
+
 .cart .result-price span{
     font-size:15px;
-    
 }
 .cart .result-price {
     text-align: left;
+     border: 1px solid black;
 }
+
 .cart .result-price span.value{
     float: right;
     font-weight: 600;

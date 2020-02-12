@@ -16,13 +16,12 @@ class AddReview extends Component {
             errors:{}
         };
     }
-    onSubmitForm = (e) => {
+    AddReview = (e) => {
         
         let errors = {};
         if (this.state.name === ''||this.state.name.length>25||this.state.name.length<3) errors.name = "Ім'я повинно бути від 3 до 25 символів!"
         if (this.state.text === ''||this.state.text.length>200||this.state.text.length<10) errors.text = "Текст відгуку повинен бути від 10 до 200 символів!"
         if (this.state.rating === 0) errors.rating = "Будь ласка, виберіть оцінку!"
-
         const isValid = Object.keys(errors).length === 0;
         if (isValid) {
             const { name,text,rating } = this.state;
@@ -37,9 +36,8 @@ class AddReview extends Component {
         }
         else {
             this.setState({ errors });
+            e.preventDefault();
         }
-        if(!isValid) 
-        e.preventDefault();
     }
     handleChange = (e) => {
         this.setStateByErrors(e.target.name, e.target.value);
@@ -115,7 +113,7 @@ class AddReview extends Component {
         const { errors } = this.state;
         return (
             <div id='add-review-form'>
-                <form onSubmit={this.onSubmitForm}>
+                <form onSubmit={this.AddReview}>
                     <h3>Написати відгук</h3>
                     <input type="text" id='name' name='name' value={this.state.name} onChange={this.handleChange}
                         className={classnames('form-control', { 'error': !!errors.name })}  placeholder="Ваше ім'я" />

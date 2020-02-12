@@ -1,4 +1,4 @@
-@keyframes moving {
+/* @keyframes moving {
     0%,100%{
         transform: translate(0,0) rotate(10deg);
     }
@@ -17,6 +17,31 @@
     background:transparent;
     animation: moving 3s ease-in-out  infinite;
     -webkit-animation:moving 3s ease-in-out  infinite;
+} */
+.test img{
+  max-width: 100%;
+}
+.product-tet{
+    overflow: hidden;
+    
 }
 
+.product-tet .description{
+    color:white !important;
+    position: relative;
+    bottom:0px;
+    transition-property: bottom;
+    transition-duration: .5s;
+}
+
+.product-tet:hover .description{
+    bottom:25px;
+    
+}
+.product-tet .btn{
+    color:white !important;
+}
+.product-tet .price, .product-tet .size{
+color:black;
+}
 

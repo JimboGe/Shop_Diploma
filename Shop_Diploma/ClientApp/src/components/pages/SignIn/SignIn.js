@@ -19,7 +19,9 @@ class SignIn extends Component {
                     <Col xs={12} md={6}>
                         <div className='signin box'>
                             <h4>НОВИЙ КЛІЄНТ</h4>
+
                             <p>Якщо ви ще не реєструвалися на нашому сайті, натисніть кнопку "Зареєструватися".</p>
+
                            <Link to='/account/signup'><button className="btn btn-dark">РЕЄСТРАЦІЯ</button></Link> 
                         </div>
                     </Col>

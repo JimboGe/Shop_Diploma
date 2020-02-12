@@ -16,6 +16,7 @@ import EditInfo from './components/pages/Profile/EditInfoPage/EditInformation';
 import ChangePassword from './components/pages/Profile/ChangePasswordPage/ChangePassword';
 import ChangeAddress from './components/pages/Profile/ChangeAddressPage/ChangeAddress';
 import News from './components/pages/News/News';
+import Search from './components/pages/Search/Search';
 
 import requireAuth from "./utils/requireAuth";
 
@@ -23,31 +24,36 @@ import TestingPage from './components/TestingPage/TestingPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
-
+import './components/Alert/Alert.css';
 import Tet from './components/Tet';
 
-class App extends Component{
-  render(){
-    return(
-      <Layout>
-      <Route exact path='/' component={ Home } />
-      <Route exact path='/services' component={ Service} />
-      <Route exact path='/account/signup' component={ SignUpPage }/>
-      <Route exact path='/account/signin' component={ SignIn }/>
-      <Route exact path='/cart' component={ Cart }/>
-      <Route exact path='/catalog/search/:gender?/:category?/:brand?/:size?/:color?/:price?' component={ ListProducts }/>
-      <Route exact path='/catalog/:gender/:category/:brand/p:id' component={ ProductPage }/>
-      <Route exact path='/tet' component={ Tet }/>
-      <Route exact path='/admin' component={ AdminPage }/>
-      <Route exact path='/order' component={ Order }/>
-      <Route exact path='/profile' component={requireAuth( Profile) }/>
-      <Route exact path='/profile/edit' component={requireAuth( EditInfo) }/>
-      <Route exact path='/profile/changepassword' component={requireAuth( ChangePassword )}/>
-      <Route exact path='/profile/ChangeAddress' component={requireAuth(ChangeAddress)}/>
-      <Route exact path='/news' component={ News }/>
+import ScrollUp from './components/ScrollUp';
 
-      <Route exact path='/testingPage' component={TestingPage}/>
-  </Layout>
+
+
+class App extends Component {
+  render() {
+    return (
+      <Layout>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/services' component={Service} />
+        <Route exact path='/account/signup' component={SignUpPage}/>
+        <Route exact path='/account/signin' component={SignIn} />
+        <Route exact path='/cart' component={Cart} />
+        <Route exact path='/catalog/search/:gender?/:category?/:brand?/:size?/:color?/:price?/:name?' component={ListProducts} />
+        <Route exact path='/catalog/:gender/:category/:brand/p:id' component={ProductPage} />
+        <Route exact path='/tet' component={Tet} />
+        <Route exact path='/admin' component={AdminPage} />
+        <Route exact path='/order' component={Order} />
+        <Route exact path='/profile' component={requireAuth(Profile)} />
+        <Route exact path='/profile/edit' component={requireAuth(EditInfo)} />
+        <Route exact path='/profile/changepassword' component={requireAuth(ChangePassword)} />
+        <Route exact path='/profile/ChangeAddress' component={requireAuth(ChangeAddress)} />
+        <Route exact path='/news' component={News} />
+        <Route exact path='/search/:name' component={Search} />
+        <Route exact path='/testingPage' component={TestingPage} />
+        <ScrollUp />
+      </Layout>
     );
   }
 }

@@ -6,7 +6,10 @@ import classnames from 'classnames';
 import { register } from "../../../actions/auth";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
-import {getCities,getRegions} from '../../../helpers/getDataForAddress';
+import { getCities, getRegions } from '../../../helpers/getDataForAddress';
+import { setAlert } from '../../../helpers/setAlert';
+import Inputmask from "inputmask";
+import $ from 'jquery';
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -16,7 +19,7 @@ class SignUpForm extends Component {
             lastName: '',
             email: '',
             password: '',
-            phonenumber: '',
+            phoneNumber: '',
             region: '',
             city: '',
             numberDelivery: '',
@@ -29,6 +32,7 @@ class SignUpForm extends Component {
     componentDidMount() {
         getRegions();
         getCities();
+        new Inputmask('(380)-99-999-99-99').mask(document.getElementById('phoneNumber'));
     }
 
     setStateByErrors = (name, value) => {
@@ -53,23 +57,28 @@ class SignUpForm extends Component {
 
     onSubmitForm = (e) => {
         e.preventDefault();
+        $('html').animate({scrollTop: 0},1000, 'swing');
         let errors = {};
-        if (this.state.lastName === '') errors.lastName = "Прізвище повинно бути від 1 до 32 символів!"
-        if (this.state.firstName === '') errors.firstName = "Ім'я повинне бути від 1 до 32 символів!"
-        if (this.state.email === '') errors.email = "Некоректний адрес електронної пошти!"
-        if (this.state.password === '') errors.password = "Пароль повинен бути від 4 до 20 символів!"
-        if (this.state.phonenumber === '') errors.phonenumber = "Некоректний телефон!"
-        if (this.state.region === '') errors.region = "Виберіть область!"
-        if (this.state.city === '') errors.city = "Виберіть місто!"
-        if (this.state.numberDelivery === '') errors.numberDelivery = "Виберіть відділення Нової почти!"
-
+        if (this.state.lastName === '') errors.lastName = "Прізвище повинно бути від 1 до 32 символів!";
+        if (this.state.firstName === '') errors.firstName = "Ім'я повинне бути від 1 до 32 символів!";
+        if (this.state.email === '') errors.email = "Некоректний адрес електронної пошти!";
+        if (this.state.phoneNumber === '' ) errors.phoneNumber = "Не коректний телефон!";
+        if (this.state.region === '') errors.region = "Виберіть область!";
+        if (this.state.city === '') errors.city = "Виберіть місто!";
+        if (this.state.numberDelivery === '') errors.numberDelivery = "Введіть відділення Нової почти!";
+        console.log(this.state);
         const isValid = Object.keys(errors).length === 0;
         if (isValid) {
-            const { lastName, firstName, email, password, phonenumber, region, city, numberDelivery } = this.state;
+            const { lastName, firstName, email, password, phoneNumber, region, city, numberDelivery } = this.state;
             this.setState({ isLoading: true });
-            this.props.register({ email, password, phonenumber, region, city, numberDelivery, firstName, lastName })
+            this.props.register({ email, password, phoneNumber, region, city, numberDelivery, firstName, lastName })
                 .then(
-                    () => this.setState({ done: true }),
+                    () => {
+                        setAlert({ message: 'Аккаунт успішно створено!', type: 'success' });
+                        setTimeout(() => {
+                            this.setState({ done: true })
+                        }, 5000);
+                    },
                     (err) => {
                         this.setState({ errors: err.response.data, isLoading: false });
                     }
@@ -80,8 +89,7 @@ class SignUpForm extends Component {
         }
     }
     render() {
-        console.log('----WINDOW---',this.state);
-        const { errors, isLoading } = this.state;
+        const { errors } = this.state;
         var form = (
             <div className='container sign'>
                 <Row>
@@ -125,28 +133,37 @@ class SignUpForm extends Component {
                                     <input type="password" className="form-control"
                                         id="password"
                                         name="password"
+                                        required
                                         value={this.state.password}
                                         onChange={this.handleChange} />
                                     {!!errors.password ? <span className="help-block">{errors.password}</span> : ''}
                                 </div>
-                                <div className={classnames('form-group', { 'error': !!errors.password })}>
+                                <div className={classnames('form-group', { 'error': !!errors.phoneNumber })}>
                                     <label>ТЕЛЕФОН</label>
-                                    <input type="text" className="form-control"
-                                        id="phonenumber"
-                                        name="phonenumber"
+                                    <input type="tel" className="form-control"
+                                        id="phoneNumber"
+                                        name="phoneNumber"
                                         value={this.state.phonenumber}
-                                        onChange={this.handleChange} />
-                                    {!!errors.phonenumber ? <span className="help-block">{errors.phonenumber}</span> : ''}
+                                        onChange={this.handleChange}/>
+                                    {!!errors.phoneNumber ? <span className="help-block">{errors.phoneNumber}</span> : ''}
                                 </div>
                                 <div className={classnames('form-group', { 'error': !!errors.region })}>
                                     <label>ОБЛАСТЬ</label>
-                                    <select className="form-control" name='region' id='region' value={this.state.region} onChange={this.handleChange}>
+                                    <select className="form-control"
+                                        name='region' id='region'
+                                        value={this.state.region}
+                                        onChange={this.handleChange}>
+                                        <option></option>
                                     </select>
                                     {!!errors.region ? <span className="help-block">{errors.region}</span> : ''}
                                 </div>
                                 <div className={classnames('form-group', { 'error': !!errors.city })}>
                                     <label>МІСТО</label>
-                                    <select className="form-control" name='city' id='city' value={this.state.city} onChange={this.handleChange}>
+                                    <select className="form-control"
+                                        name='city' id='city'
+                                        value={this.state.city}
+                                        onChange={this.handleChange}>
+                                        <option></option>
                                     </select>
                                     {!!errors.city ? <span className="help-block">{errors.city}</span> : ''}
                                 </div>

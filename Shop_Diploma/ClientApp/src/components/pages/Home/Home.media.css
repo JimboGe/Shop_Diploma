@@ -1,0 +1,24 @@
+@media (max-width: 1200px){
+    .item .tt-description span{
+        font-size:1.7vw;
+    }
+  }
+  @media (max-width: 768px){
+    .item .tt-description span{
+        font-size:4vw;
+    }
+    .grid {
+        grid-template-areas: 
+            "b b b b b b b b"
+            "c c c c c c c c"
+            "d d d d d d d d"
+            "g g g g g g g g"
+            "e e e e e e e e"
+            "h h h h h h h h";
+            margin:25px;
+      }
+      .item1{
+          display: none;
+      }
+      
+  }

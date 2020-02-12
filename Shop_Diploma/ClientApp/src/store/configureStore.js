@@ -20,7 +20,7 @@ export default function configureStore(history, initialState) {
     profile,
     cartProducts,
     recommended_products
-  };
+    };
 
   const middleware = [
     thunk,
